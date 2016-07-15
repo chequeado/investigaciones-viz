@@ -4,6 +4,30 @@ $icon-font-path: '../fonts/';
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+#circle-tooltip{
+	background-color:#ccc;
+	padding: 10px;
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: 10;
+	pointer-events:none;
+	opacity:0;
+}
+
+circle.selected {
+
+}
+
+circle{
+	stroke-width: 0px;
+}
+
+circle:hover{
+	stroke-width: 3px;
+	cursor:pointer; 
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
 

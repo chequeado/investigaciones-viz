@@ -57,11 +57,11 @@ var CHQ;
     };
 
     CHQ.startEvents = function(){
-        $(window).resize(function() {
+        /*$(window).resize(function() {
             clearTimeout(CHQ.timeoutId);
             CHQ.timeoutId = setTimeout(CHQ.render, 500);
             
-        });
+        });*/
         $('#year').change(function(){
             $('#detalle').html('');
             CHQ.filterData($(this).val());
@@ -83,7 +83,7 @@ var CHQ;
             clusterPadding = 10, // separation between different-color circles
             maxRadius = w/20;
 
-        var color = d3.scale.category10()
+        var color = d3.scale.category20()
             .domain(CHQ.categories);
 
             console.log('color',color.domain());
@@ -120,7 +120,10 @@ var CHQ;
             .start();
 
         if(!CHQ.svg) {
-            CHQ.svg = d3.select('#chart-container').append('svg')            
+            CHQ.svg = d3.select('#chart-container').append('svg');
+            CHQ.tooltip = d3.select('body')
+                .append('div')
+                .attr('id','circle-tooltip');
         }
 
         CHQ.svg
@@ -135,6 +138,26 @@ var CHQ;
             .append('circle')
             .on('click',function(d){
                 $('#detalle').html('BASE: ' + JSON.stringify(d.data)+ ' HISTORICO: '+JSON.stringify(CHQ.dataById[d.data.id]));
+            })
+            .on('mouseenter',function(d){
+              CHQ.tooltip
+                .html(
+                  '<strong>'+d.data.empresa+'</strong> pagó el <strong>'+d.data.porcentaje+'%</strong> en el año <strong>'+d.data.anio+'</strong>'
+                )
+                .style('opacity',1);
+
+                d3.select(this).attr('stroke',d3.rgb(color(d.data.sector)).darker().toString());
+            })
+            .on('mousemove', function(){
+                CHQ.tooltip
+                  .style('top',(d3.event.pageY-20)+'px')
+                  .style('left',(d3.event.pageX+20)+'px');
+            })
+            .on('mouseout',function(d){
+              CHQ.tooltip.style('opacity',0);
+              d3.select(this).attr('fill',function(){
+
+              });
             });
 
         circle
