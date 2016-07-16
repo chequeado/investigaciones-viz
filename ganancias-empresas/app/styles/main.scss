@@ -4,6 +4,37 @@ $icon-font-path: '../fonts/';
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+body.loading{
+	background-image: url('../images/loading.gif');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+body.loading .container-fluid{
+	display: none;
+}
+
+#chart-container{
+	width: 100%;
+}
+
+#close-details{
+	position: absolute;
+	right: 0px;
+}
+
+#selectors{
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:20;
+}
+
+#details{
+	display: none;
+	background-color: #eee;
+}
+
 #circle-tooltip{
 	background-color:#ccc;
 	padding: 10px;
@@ -15,12 +46,12 @@ $icon-font-path: '../fonts/';
 	opacity:0;
 }
 
-circle.selected {
-
-}
-
 circle{
 	stroke-width: 0px;
+}
+
+circle.selected {
+	stroke-width: 3px;
 }
 
 circle:hover{
