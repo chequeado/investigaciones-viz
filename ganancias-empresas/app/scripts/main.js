@@ -15,6 +15,9 @@ var CHQ;
 
     CHQ.circles;
 
+    CHQ.year = '2015';
+    CHQ.group = 'center';
+
     CHQ.init = function(){
         var w = CHQ.$body.width();
         CHQ.$body.css('min-height',(w*9)/16);
@@ -42,7 +45,7 @@ var CHQ;
     CHQ.dataLoaded = function(data,tabletop){
         CHQ.rawData = data.detalle.elements.map(CHQ.postProcess);
         CHQ.groups = d3.nest()
-            .key(function(d) { return d.sector; })
+            .key(function(d) { return d.sector.trim(); })
             .map(CHQ.rawData);
         CHQ.categories = d3.keys(CHQ.groups);
         CHQ.dataById = d3.nest()
@@ -55,16 +58,15 @@ var CHQ;
             return d.max;
         });
         CHQ.$body.removeClass('loading');
-        CHQ.filterData('2015');
         CHQ.render();
-        setTimeout(CHQ.startEvents,1000);
+        setTimeout(CHQ.startEvents,2000);
     };
 
-    CHQ.filterData = function(y){
+    CHQ.filterData = function(){
         var filtered = CHQ.rawData.filter(function(d){
-            return !isNaN(d['porcentaje_'+y]);
+            return !isNaN(d['porcentaje_'+CHQ.year]);
         });
-        CHQ.data = filtered.map(function(d){return {id:d.id,empresa:d.empresa,sector:d.sector,anio:y,porcentaje:d['porcentaje_'+y]}});
+        CHQ.data = filtered.map(function(d){return {id:d.id,empresa:d.empresa,sector:d.sector,anio:CHQ.year,porcentaje:d['porcentaje_'+CHQ.year]}});
     };
 
     CHQ.startEvents = function(){
@@ -102,8 +104,16 @@ var CHQ;
             CHQ.timeoutId = setTimeout(CHQ.render, 500);
             
         });
-        $('#year').change(function(){
-            CHQ.filterData($(this).val());
+        $('.btn-year').on('click',function(){
+            $('.btn-year').removeClass('btn-primary');
+            $(this).addClass('btn-primary');
+            CHQ.year = $(this).data('value');
+            CHQ.render();
+        });
+        $('.btn-order').on('click',function(){
+            $('.btn-order').removeClass('btn-primary');
+            $(this).addClass('btn-primary');
+            CHQ.group = $(this).data('value');
             CHQ.render();
         });
         $('#close-details').on('click',CHQ.closeDetails);
@@ -115,40 +125,104 @@ var CHQ;
 //        console.log(CHQ.categories);
 //        console.log(CHQ.maxValue);
 
+        CHQ.filterData();
+
         var w = $('#chart-container').width();
 
         var h = (CHQ.$colChart.hasClass('col-md-12'))?(w*9)/16:w;
 
         var width = w,
             height = h,
-            padding = 1.5, // separation between same-color circles
-            clusterPadding = 10, // separation between different-color circles
+            padding = 2, // separation between same-color circles
+            clusterPadding = 2, // separation between different-color circles
             maxRadius = w/25,
-            minRadius = w/100;
+            minRadius = w/100,
+            max2Radius = w/75,
+            min2Radius = w/150;
 
         CHQ.color = d3.scale.category20()
             .domain(CHQ.categories);
 
-        var rScale = d3.scale.linear()
-            .domain([0,CHQ.maxValue])
-            .range([minRadius,maxRadius]);
+        var clusters,nodes,rScale;
 
+        switch(CHQ.group){
+          case 'center':
+            rScale = d3.scale.linear()
+              .domain([0,CHQ.maxValue])
+              .range([minRadius,maxRadius]);
+            // The largest node for each cluster.
+            clusters = new Array(CHQ.categories.length);
 
-        // The largest node for each cluster.
-        var clusters = new Array(CHQ.categories.length);
+            nodes = CHQ.data.map(function(d) {
+              var i = d.sector,
+                  r = rScale(d.porcentaje),
+                  d = {cluster: i, radius: r,data:d};
+                  
+                  if (!clusters[i] || (r > clusters[i].radius)){
+                    clusters[i] = d;
+                  }
 
-        var nodes = CHQ.data.map(function(d) {
-          var i = d.sector,
-              r = rScale(d.porcentaje),
-              d = {cluster: i, radius: r,data:d};
-              
-              if (!clusters[i] || (r > clusters[i].radius)){
-                clusters[i] = d;
-              }
+              return d;
+            });
+          break;
+          case 'sector':
+            rScale = d3.scale.linear()
+              .domain([0,CHQ.maxValue])
+              .range([min2Radius,max2Radius]);
 
-          return d;
-        });
+            clusters = new Array(CHQ.categories.length);
+            var clusterPoints = new Array(CHQ.categories.length);
+            var examples = [];
+
+            var wCol = Math.floor(width/11),
+                hRow = Math.floor(height/4),
+                cols = d3.range(0,width,wCol),
+                rows = d3.range(0,height,hRow),
+                ixCols = 0,
+                ixRows = 1;
+
+            nodes = CHQ.data.map(function(d) {
+              var i = d.sector,
+                  r = rScale(d.porcentaje),
+                  d = {cluster: i, radius: r,data:d};
+                  
+                  if (!clusterPoints[i]){
+                    if(cols[ixCols+2]){
+                      ixCols += 1;
+                    }else{
+                      ixCols = 1;
+                      ixRows += 1;
+                    }
+                    clusterPoints[i] = {x:cols[ixCols],y:rows[ixRows],radius:3};
+                    examples.push(clusterPoints[i]);
+                  }
+
+                  if (!clusters[i] || (r > clusters[i].radius)){
+                    clusters[i] = d;
+                  }
+
+              return d;
+            });
+
+           /* console.log(clusterPoints);
+
+            CHQ.points = CHQ.svg.selectAll('circle.cluster')
+              .data(examples);
         
+            CHQ.points.enter()
+                .append('circle')
+                .classed('cluster',true)
+                
+            CHQ.points.attr('r', function(d) { return 3; })
+                .attr('cx', function(d) { return d.x; })
+                .attr('cy', function(d) { return d.y; })
+                .style('fill', 'red');
+
+            CHQ.points.exit().remove();*/
+
+          break;
+        }
+
         //console.log(nodes);
         //console.log(clusters);
 
@@ -168,15 +242,16 @@ var CHQ;
         }
 
         CHQ.svg
-            .attr('width', width)
-            .attr('height', height);
+          .attr('width', width)
+          .attr('height', height);
 
-        CHQ.circles = CHQ.svg.selectAll('circle')
+        CHQ.circles = CHQ.svg.selectAll('circle.company')
             .data(nodes);
 
         CHQ.circles
             .enter()
-            .append('circle');
+            .append('circle')
+            .classed('company',true);
 
         CHQ.circles
             .attr('r', function(d) { return d.radius; })
@@ -203,8 +278,14 @@ var CHQ;
             if(cluster){
                 // For cluster nodes, apply custom gravity.
                 if (cluster === d) {
-                  cluster = {x: width / 2, y: height / 2, radius: -d.radius};
-                  k = .1 * Math.sqrt(d.radius);
+                  if(clusterPoints){
+                    cluster = clusterPoints[d.cluster];
+                    cluster = {x: cluster.x, y: cluster.y, radius: -cluster.radius};
+                    k = .5 * Math.sqrt(d.radius);
+                  } else {
+                    cluster = {x: width / 2, y: height / 2, radius: -d.radius};
+                    k = .1 * Math.sqrt(d.radius);
+                  }
                 }
 
                 var x = d.x - cluster.x,
@@ -260,7 +341,7 @@ var CHQ;
         CHQ.$details.fadeIn();
       }
 
-      var template = $('#template').html();
+      var template = $('#tpl-details').html();
       Mustache.parse(template);   // optional, speeds up future uses
       data.color = CHQ.color(data.sector);
       var rendered = Mustache.render(template, data);
@@ -327,7 +408,6 @@ var CHQ;
                 label: 'Ganancias / Ventas'
               },
               x: {
-                min: 0,
                 type: 'category'
               }
           }
@@ -341,6 +421,7 @@ var CHQ;
       CHQ.$colChart.removeClass('col-md-6').addClass('col-md-12');
       CHQ.render();
       CHQ.$details.hide();
+      d3.selectAll('circle').classed('selected',false);
     };
 
 
