@@ -32,11 +32,12 @@ body.loading .container-fluid{
 
 #details{
 	display: none;
-	background-color: #eee;
+	border-left: 1px solid #eeeeee;
+	border-right: 1px solid #eeeeee;
 }
 
 #circle-tooltip{
-	background-color:#ccc;
+	background-color:#fff;
 	padding: 10px;
 	position: absolute;
 	top:0;
@@ -44,6 +45,8 @@ body.loading .container-fluid{
 	z-index: 10;
 	pointer-events:none;
 	opacity:0;
+	color: #890900;
+	border: 1px solid #890900;
 }
 
 circle{
@@ -57,6 +60,39 @@ circle.selected {
 circle:hover{
 	stroke-width: 3px;
 	cursor:pointer; 
+}
+
+.c3-axis .domain,
+.c3-axis .tick{
+	stroke-width: 0;
+}
+
+.c3-ygrid-line line{
+	stroke-width: 1px;
+	stroke: #eeeeee;
+}
+
+.c3-chart-lines path.c3-shape{
+	stroke-width: 5px;
+}
+
+.btn-chq{
+	color: #890900;
+	border: 1px solid #890900;
+	border-radius: 0px;
+}
+
+.btn-chq:hover{
+	color: #890900;
+}
+
+.btn-chq.btn-selected{
+	background-color: #890900;
+	color: #fff;
+}
+
+#close-details{
+	color: #890900;
 }
 
 /* Responsive: Portrait tablets and up */

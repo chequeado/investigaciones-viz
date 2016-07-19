@@ -32,24 +32,24 @@
 
         <div id="selectors" class="col-md-6">
           <p>
-            <a class="btn btn-default btn-year" data-value="2012">2012</a>
-            <a class="btn btn-default btn-year" data-value="2013">2013</a>
-            <a class="btn btn-default btn-year" data-value="2014">2014</a>
-            <a class="btn btn-default btn-year btn-primary" data-value="2015">2015</a>
+            <a class="btn btn-chq btn-year" data-value="2012">2012</a>
+            <a class="btn btn-chq btn-year" data-value="2013">2013</a>
+            <a class="btn btn-chq btn-year" data-value="2014">2014</a>
+            <a class="btn btn-chq btn-year btn-selected" data-value="2015">2015</a>
           </p>
           <p>
-            <a class="btn btn-default btn-order btn-primary" data-value="center">Centro</a>
-            <a class="btn btn-default btn-order" data-value="sector">Sector</a>
+            <a class="btn btn-chq btn-order btn-selected" data-value="center">Centro</a>
+            <a class="btn btn-chq btn-order" data-value="sector">Sector</a>
           </p>
         </div>
         <div id="col-chart-container" class="col-md-12">
-          <div id="chart-container">
+            <div id="chart-container">
           </div>
         </div>
         <div id="details" class="col-md-6">
-          <a id="close-details" class="btn btn-link"><i class="glyphicon glyphicon-remove"></i></a>
-          <div id="details-block"></div>
-          <div id="line-chart"></div>
+              <a id="close-details" class="btn btn-link"><i class="glyphicon glyphicon-remove"></i></a>
+              <div id="details-block"></div>
+              <div id="line-chart"></div>
         </div>
     </div>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -95,6 +95,21 @@
     <script id="tpl-details" type="x-tmpl-mustache">
       <h2 class="text-center">{{empresa}}</h2>
       <h4 class="text-center" style="color:{{ color }};">{{ sector }}</h4>
+      <hr/>
+      <div class="row">
+        <h5 class="text-center">Porcentaje de pago sobre ganancias</h5>
+        <div class="col-xs-6">
+          {{#selectedValue}}
+            <h3>{{ selectedValue }}%</h3>
+            <p>Pagado en el año {{ selectedYear }}</p>
+          {{/selectedValue}}
+        </div>
+        <div class="col-xs-6">
+          <div id="per-chart"></div>
+        </div>
+      </div>
+      <hr/>
+      <h5 class="text-center">Ventas y ganancias de la empresa</h5>
     </script>
 
     <script type="text/javascript">

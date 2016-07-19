@@ -81,7 +81,7 @@ var CHQ;
             .on('mouseenter',function(d){
               CHQ.tooltip
                 .html(
-                  '<strong>'+d.data.empresa+'</strong> pagó el <strong>'+d.data.porcentaje+'%</strong> en el año <strong>'+d.data.anio+'</strong>'
+                  '<strong>'+d.data.empresa+'</strong> pagó el <strong>'+(d.data.porcentaje+'').replace('.',',')+'%</strong> en el año <strong>'+d.data.anio+'</strong>'
                 )
                 .style('opacity',1);
 
@@ -105,14 +105,14 @@ var CHQ;
             
         });
         $('.btn-year').on('click',function(){
-            $('.btn-year').removeClass('btn-primary');
-            $(this).addClass('btn-primary');
+            $('.btn-year').removeClass('btn-selected');
+            $(this).addClass('btn-selected');
             CHQ.year = $(this).data('value');
             CHQ.render();
         });
         $('.btn-order').on('click',function(){
-            $('.btn-order').removeClass('btn-primary');
-            $(this).addClass('btn-primary');
+            $('.btn-order').removeClass('btn-selected');
+            $(this).addClass('btn-selected');
             CHQ.group = $(this).data('value');
             CHQ.render();
         });
@@ -254,11 +254,18 @@ var CHQ;
             .classed('company',true);
 
         CHQ.circles
+            .attr('id',function(d){return 'e'+d.id})
             .attr('r', function(d) { return d.radius; })
             .style('fill', function(d) { return CHQ.color(d.cluster); })
             .call(force.drag);
 
         CHQ.circles.exit().remove();
+
+        if(CHQ.selectedId){
+          CHQ.openDetails(CHQ.dataById[CHQ.selectedId]);
+          d3.selectAll('circle').classed('selected',false);
+          d3.select('#e'+CHQ.selectedId).classed('selected',true);
+        }
 
         function tick(e) {
           CHQ.circles
@@ -335,6 +342,8 @@ var CHQ;
 
     CHQ.openDetails = function(data){
 
+      CHQ.selectedId = data.id;
+
       if(CHQ.$colChart.hasClass('col-md-12')){
         CHQ.$colChart.removeClass('col-md-12').addClass('col-md-6');
         CHQ.render();
@@ -344,6 +353,8 @@ var CHQ;
       var template = $('#tpl-details').html();
       Mustache.parse(template);   // optional, speeds up future uses
       data.color = CHQ.color(data.sector);
+      data.selectedYear = CHQ.year;
+      data.selectedValue = (data['porcentaje_'+CHQ.year]+'').replace('.',',');
       var rendered = Mustache.render(template, data);
       $('#details-block').html(rendered);
 
@@ -373,18 +384,67 @@ var CHQ;
         json.push(obj);
       });
 
+      var pconfig = {
+              json: json,
+              keys: {
+                x: 'anio',
+                value: ['porcentaje'],
+              },
+              type: 'bar',
+              colors: {
+                porcentaje: data.color
+              }
+          };
+
+
+      CHQ.pchart = c3.generate({
+        bindto: '#per-chart',
+        data: pconfig,
+        bar: {
+          width: {
+            ratio: 0.5
+          }
+        },
+        size: {
+            height: 100
+        },
+        axis: {
+            y:{
+              label: 'Porcentaje',
+              min: 0,
+              show:false
+            },
+            x: {
+              type: 'category'
+            }
+        },
+        grid: {
+              y: {
+                lines: [
+                  {value: 0, text: ' '}
+                ]
+              }
+            },
+        legend: {
+          show: false
+        },
+        tooltip: {
+          format: {
+            value: function (value, ratio, id, index) { return (value+'%').replace('.',','); }
+          }
+        }
+      });
+
       var config = {
               json: json,
               keys: {
                 x: 'anio',
-                value: ['ganancias', 'ventas','porcentaje'],
-              },
-              axes: {
-                'porcentaje': 'y2'
+                value: ['ganancias', 'ventas'],
               },
               type: 'line',
-              types:{
-                'porcentaje':'bar'
+              colors: {
+                ganancias: data.color,
+                ventas: d3.rgb(data.color).darker()
               }
           };
 
@@ -392,25 +452,28 @@ var CHQ;
         CHQ.chart = c3.generate({
           bindto: '#line-chart',
           data: config,
-          bar: {
-            width: {
-              ratio: 0.2
-            }
-          },
           axis: {
-              y2: {
-                  show: true,
-                  min: 0,
-                  label: 'Porcentaje'
-              },
               y:{
                 min: 0,
-                label: 'Ganancias / Ventas'
+                tick: {
+                  //format: d3.format('$,'),
+                  format: function (d) { return d3.format('$,')(d).replace(/,/g,'.'); }
+                }
               },
               x: {
-                type: 'category'
+                type: 'category',
+                tick:{
+                  outer:false
+                }
               }
-          }
+          },
+          grid: {
+                y: {
+                  lines: [
+                    {value: 0, text: ' '}
+                  ]
+                }
+              }
         });
       } else {
         CHQ.chart.load(config);
@@ -418,6 +481,7 @@ var CHQ;
     };
 
     CHQ.closeDetails = function(){
+      CHQ.selectedId = false;
       CHQ.$colChart.removeClass('col-md-6').addClass('col-md-12');
       CHQ.render();
       CHQ.$details.hide();
