@@ -1,5 +1,11 @@
 var CHQ;
 
+d3.selection.prototype.moveToFront = function() {  
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};
+
 ;(function(global, document, $, Tabletop, Mustache){
 
     'use strict';
@@ -79,13 +85,24 @@ var CHQ;
                 //$('#details').html('BASE: ' + JSON.stringify(d.data)+ ' HISTORICO: '+JSON.stringify(CHQ.dataById[d.data.id]));
             })
             .on('mouseenter',function(d){
+              var c = d3.select(this);
+              CHQ.selector
+                .attr('stroke',d3.rgb(CHQ.color(d.data.sector)).darker().toString())
+                .attr('r',Math.round(c.attr('r')))
+                .attr('cx',c.attr('cx'))
+                .attr('cy',c.attr('cy'))
+                .style('opacity',1)
+                .transition()
+                .delay(200)
+                .style('opacity',0)
+                .attr('r',Math.round(c.attr('r'))+30);
               CHQ.tooltip
                 .html(
                   '<strong>'+d.data.empresa+'</strong> pagó el <strong>'+(d.data.porcentaje+'').replace('.',',')+'%</strong> en el año <strong>'+d.data.anio+'</strong>'
                 )
                 .style('opacity',1);
 
-                d3.select(this).attr('stroke',d3.rgb(CHQ.color(d.data.sector)).darker().toString());
+                c.attr('stroke',d3.rgb(CHQ.color(d.data.sector)).darker().toString());
             })
             .on('mousemove', function(){
                 CHQ.tooltip
@@ -239,6 +256,11 @@ var CHQ;
             CHQ.tooltip = d3.select('body')
                 .append('div')
                 .attr('id','circle-tooltip');
+            CHQ.selector = CHQ.svg.append('circle')
+                .attr('id','selector')
+                .style('stroke-width',3)
+                .style('opacity',0)
+                .attr('fill','none');
         }
 
         CHQ.svg
@@ -254,12 +276,14 @@ var CHQ;
             .classed('company',true);
 
         CHQ.circles
-            .attr('id',function(d){return 'e'+d.id})
+            .attr('id',function(d){return 'e'+d.data.id})
             .attr('r', function(d) { return d.radius; })
             .style('fill', function(d) { return CHQ.color(d.cluster); })
             .call(force.drag);
 
         CHQ.circles.exit().remove();
+
+        CHQ.selector.moveToFront();
 
         if(CHQ.selectedId){
           CHQ.openDetails(CHQ.dataById[CHQ.selectedId]);
