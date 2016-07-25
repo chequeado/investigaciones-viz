@@ -72,6 +72,17 @@ circle:hover{
 	stroke: #eeeeee;
 }
 
+#details-block .c3-ygrid-line line{
+	stroke-width: 1px;
+	stroke: #000;
+	stroke-dasharray: 5,5;
+}
+
+.c3-ygrid-line text{
+	fill: #000;
+}
+
+
 .c3-chart-lines path.c3-shape{
 	stroke-width: 5px;
 }

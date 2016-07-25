@@ -21,7 +21,7 @@ d3.selection.prototype.moveToFront = function() {
 
     CHQ.circles;
 
-    CHQ.year = '2015';
+    CHQ.year = 'promedio';
     CHQ.group = 'center';
 
     CHQ.init = function(){
@@ -96,10 +96,17 @@ d3.selection.prototype.moveToFront = function() {
                 .delay(200)
                 .style('opacity',0)
                 .attr('r',Math.round(c.attr('r'))+30);
+
+              var html = '<strong>'+d.data.empresa+'</strong> pagó el <strong>'+(d.data.porcentaje+'').replace('.',',')+'%</strong>';
+
+              if(d.data.anio=='promedio'){
+                html += ' en promedio en <strong>2012 a 2015</strong>';
+              } else {
+                html += ' en el año <strong>'+d.data.anio+'</strong>';
+              }
+
               CHQ.tooltip
-                .html(
-                  '<strong>'+d.data.empresa+'</strong> pagó el <strong>'+(d.data.porcentaje+'').replace('.',',')+'%</strong> en el año <strong>'+d.data.anio+'</strong>'
-                )
+                .html(html)
                 .style('opacity',1);
 
                 c.attr('stroke',d3.rgb(CHQ.color(d.data.sector)).darker().toString());
@@ -378,6 +385,7 @@ d3.selection.prototype.moveToFront = function() {
       Mustache.parse(template);   // optional, speeds up future uses
       data.color = CHQ.color(data.sector);
       data.selectedYear = CHQ.year;
+      data.isPromedio = (CHQ.year == 'promedio')
       data.selectedValue = (data['porcentaje_'+CHQ.year]+'').replace('.',',');
       var rendered = Mustache.render(template, data);
       $('#details-block').html(rendered);
@@ -408,6 +416,18 @@ d3.selection.prototype.moveToFront = function() {
         json.push(obj);
       });
 
+      var promedio = json.filter(function(a){
+                return a.anio == 'promedio'
+              })[0];
+
+      var lines = [
+                  {value: promedio.porcentaje, text: 'Promedio'},
+                ];
+
+      json = json.filter(function(e){
+                return e.anio != 'promedio';
+              });
+
       var pconfig = {
               json: json,
               keys: {
@@ -419,7 +439,6 @@ d3.selection.prototype.moveToFront = function() {
                 porcentaje: data.color
               }
           };
-
 
       CHQ.pchart = c3.generate({
         bindto: '#per-chart',
@@ -444,9 +463,7 @@ d3.selection.prototype.moveToFront = function() {
         },
         grid: {
               y: {
-                lines: [
-                  {value: 0, text: ' '}
-                ]
+                lines: lines
               }
             },
         legend: {
