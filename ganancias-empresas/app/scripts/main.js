@@ -65,6 +65,7 @@ d3.selection.prototype.moveToFront = function() {
         });
         CHQ.$body.removeClass('loading');
         CHQ.render();
+        CHQ.renderSelect();
         setTimeout(CHQ.startEvents,2000);
     };
 
@@ -82,7 +83,6 @@ d3.selection.prototype.moveToFront = function() {
                 CHQ.openDetails(CHQ.dataById[d.data.id]);
                 d3.selectAll('circle').classed('selected',false);
                 d3.select(this).classed('selected',true);
-                //$('#details').html('BASE: ' + JSON.stringify(d.data)+ ' HISTORICO: '+JSON.stringify(CHQ.dataById[d.data.id]));
             })
             .on('mouseenter',function(d){
               var c = d3.select(this);
@@ -153,7 +153,9 @@ d3.selection.prototype.moveToFront = function() {
 
         var w = $('#chart-container').width();
 
-        var h = (CHQ.$colChart.hasClass('col-md-12'))?(w*9)/16:w;
+        CHQ.smallDevice = (w < 992);
+
+        var h = (!CHQ.smallDevice && !CHQ.selectedId)?(w*9)/16:w;
 
         var width = w,
             height = h,
@@ -188,6 +190,10 @@ d3.selection.prototype.moveToFront = function() {
 
               return d;
             });
+
+            if(CHQ.titles){
+              CHQ.titles.style('opacity',0);
+            }
           break;
           case 'sector':
             rScale = d3.scale.linear()
@@ -196,7 +202,7 @@ d3.selection.prototype.moveToFront = function() {
 
             clusters = new Array(CHQ.categories.length);
             var clusterPoints = new Array(CHQ.categories.length);
-            var examples = [];
+            var textos = [];
 
             var wCol = Math.floor(width/11),
                 hRow = Math.floor(height/4),
@@ -217,8 +223,8 @@ d3.selection.prototype.moveToFront = function() {
                       ixCols = 1;
                       ixRows += 1;
                     }
-                    clusterPoints[i] = {x:cols[ixCols],y:rows[ixRows],radius:3};
-                    examples.push(clusterPoints[i]);
+                    clusterPoints[i] = {x:cols[ixCols],y:rows[ixRows],radius:3,title:i};
+                    textos.push(clusterPoints[i]);
                   }
 
                   if (!clusters[i] || (r > clusters[i].radius)){
@@ -228,21 +234,29 @@ d3.selection.prototype.moveToFront = function() {
               return d;
             });
 
-           /* console.log(clusterPoints);
+            if(!CHQ.smallDevice){
+              //titles
+              CHQ.titles = CHQ.svg.selectAll('text.group-title')
+                  .data(textos);
 
-            CHQ.points = CHQ.svg.selectAll('circle.cluster')
-              .data(examples);
-        
-            CHQ.points.enter()
-                .append('circle')
-                .classed('cluster',true)
-                
-            CHQ.points.attr('r', function(d) { return 3; })
-                .attr('cx', function(d) { return d.x; })
-                .attr('cy', function(d) { return d.y; })
-                .style('fill', 'red');
+              CHQ.titles.enter()
+                  .append('text')
+                  .classed('group-title',true)
+                  .attr('text-anchor','middle')
+                  
+              CHQ.titles
+                  .text(function(d){ return d.title;})
+                  .attr('x', function(d) { return d.x; })
+                  .attr('y', function(d) { return d.y + max2Radius; })
+                  .style('opacity',1);
 
-            CHQ.points.exit().remove();*/
+              CHQ.titles.exit().remove();
+            } else {
+              CHQ.svg.selectAll('text.group-title').style('opacity',0);
+            }
+
+            //Render select
+            CHQ.renderSelect();
 
           break;
         }
@@ -371,6 +385,50 @@ d3.selection.prototype.moveToFront = function() {
         }
     };
 
+    CHQ.renderSelect = function(cat){
+      if(CHQ.selectedId){
+        var selected = CHQ.dataById[CHQ.selectedId];
+  //      cat = selected.sector;
+        cat = (cat)?cat:selected.sector;
+      }
+      var template = $('#tpl-select-industry').html();
+      Mustache.parse(template);
+
+      var data = {
+        categories: CHQ.categories.map(function(c){
+          var sel = (cat)?c==cat:false;
+          return {val: c, txt: c, sel: sel};
+        }),
+        empresasOption: (cat)?true:false,
+        empresas: (cat)?CHQ.groups[cat].map(function(e){
+          var sel = e.id==CHQ.selectedId;
+          return {val: e.id, txt: e.empresa, sel: sel}
+        }):false
+      };
+
+      data.categories.unshift({val: '', txt: '< Selecciones un sector >', sel: (cat)?false:true});
+
+      var rendered = Mustache.render(template, data);
+      $('#select-block').html(rendered);
+
+      $('#category').on('change',function(){
+        var cat = $(this).val();
+        if(cat != '' ){
+          CHQ.renderSelect(cat);
+          $('#empresa').change();          
+        }
+      });
+
+      $('#empresa').on('change',function(){
+        var id = $(this).val();
+        CHQ.openDetails(CHQ.dataById[id]);
+        d3.selectAll('circle').classed('selected',false);
+        d3.select('circle#e'+id).classed('selected',true);
+      });
+
+
+    };
+
     CHQ.openDetails = function(data){
 
       CHQ.selectedId = data.id;
@@ -421,7 +479,7 @@ d3.selection.prototype.moveToFront = function() {
               })[0];
 
       var lines = [
-                  {value: promedio.porcentaje, text: 'Promedio'},
+                  {value: promedio.porcentaje, text: promedio.porcentaje + '% promedio'},
                 ];
 
       json = json.filter(function(e){
@@ -519,6 +577,8 @@ d3.selection.prototype.moveToFront = function() {
       } else {
         CHQ.chart.load(config);
       }
+      //Render select
+      CHQ.renderSelect();
     };
 
     CHQ.closeDetails = function(){

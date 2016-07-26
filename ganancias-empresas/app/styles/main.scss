@@ -106,6 +106,17 @@ circle:hover{
 	color: #890900;
 }
 
+text.group-title{
+	pointer-events: none;
+}
+
+.select-chq{
+	color: #890900;
+	border: 1px solid #890900;
+	border-radius: 0;
+	-webkit-appearance: none;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
 

@@ -29,29 +29,34 @@
     <![endif]-->
 
       <div class="container-fluid">
-
-        <div id="selectors" class="col-md-6">
-          <p>
-            <a class="btn btn-chq btn-year" data-value="2012">2012</a>
-            <a class="btn btn-chq btn-year" data-value="2013">2013</a>
-            <a class="btn btn-chq btn-year" data-value="2014">2014</a>
-            <a class="btn btn-chq btn-year" data-value="2015">2015</a>
-            <a class="btn btn-chq btn-year btn-selected" data-value="promedio">Promedio</a>
-          </p>
-          <p>
-            <a class="btn btn-chq btn-order btn-selected" data-value="center">Centro</a>
-            <a class="btn btn-chq btn-order" data-value="sector">Sector</a>
-          </p>
-        </div>
-        <div id="col-chart-container" class="col-md-12">
-            <div id="chart-container">
+        <div class="row">
+          <div id="selectors" class="col-md-6">
+            <p>
+              <a class="btn btn-chq btn-year" data-value="2012">2012</a>
+              <a class="btn btn-chq btn-year" data-value="2013">2013</a>
+              <a class="btn btn-chq btn-year" data-value="2014">2014</a>
+              <a class="btn btn-chq btn-year" data-value="2015">2015</a>
+              <a class="btn btn-chq btn-year btn-selected" data-value="promedio">Promedio</a>
+            </p>
+            <p>
+              <a class="btn btn-chq btn-order btn-selected" data-value="center">Centro</a>
+              <a class="btn btn-chq btn-order" data-value="sector">Sector</a>
+            </p>
           </div>
-        </div>
-        <div id="details" class="col-md-6">
-              <a id="close-details" class="btn btn-link"><i class="glyphicon glyphicon-remove"></i></a>
-              <div id="details-block"></div>
-              <div id="line-chart"></div>
-        </div>
+          <div id="col-chart-container" class="col-md-12">
+              <div id="chart-container"></div>
+          </div>
+          <div id="select-block" class="col-md-12 visible-xs-block visible-sm-block">
+
+          </div>
+          <div id="details" class="col-md-6">
+                <a id="close-details" class="btn btn-link visible-md-block visible-lg-block"><i class="glyphicon glyphicon-remove"></i></a>
+                <div id="details-block"></div>
+                <hr/>
+                <h5 class="text-center">Ventas y ganancias de la empresa</h5>
+                <div id="line-chart"></div>
+          </div>
+      </div>
     </div>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
@@ -114,8 +119,31 @@
           <div id="per-chart"></div>
         </div>
       </div>
-      <hr/>
-      <h5 class="text-center">Ventas y ganancias de la empresa</h5>
+    </script>
+
+    <script id="tpl-select-industry" type="x-tmpl-mustache">
+      <div class="form-group">
+        <label for="category">Sector:</label>
+        <select id="category" class="form-control select-chq">
+          {{#categories}}
+            <option value="{{val}}" {{#sel}}selected{{/sel}}>
+              {{txt}}
+            </option>
+          {{/categories}}
+        </select>
+      </div>
+      {{#empresasOption}}
+        <div class="form-group">
+          <label for="empresa">Empresa:</label>
+          <select id="empresa" class="form-control select-chq">
+            {{#empresas}}
+              <option value="{{val}}" {{#sel}}selected{{/sel}}>
+                {{txt}}
+              </option>
+            {{/empresas}}
+          </select>
+        </div>
+      {{/empresasOption}}
     </script>
 
     <script type="text/javascript">
