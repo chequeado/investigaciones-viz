@@ -9,6 +9,8 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
 
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="/bower_components/c3/c3.css" />
@@ -30,21 +32,30 @@
 
       <div class="container-fluid">
         <div class="row">
-          <div id="selectors" class="col-md-6">
-            <p>
-              <a class="btn btn-chq btn-year" data-value="2012">2012</a>
-              <a class="btn btn-chq btn-year" data-value="2013">2013</a>
-              <a class="btn btn-chq btn-year" data-value="2014">2014</a>
-              <a class="btn btn-chq btn-year" data-value="2015">2015</a>
-              <a class="btn btn-chq btn-year btn-selected" data-value="promedio">Promedio</a>
-            </p>
-            <p>
-              <a class="btn btn-chq btn-order btn-selected" data-value="center">Centro</a>
-              <a class="btn btn-chq btn-order" data-value="sector">Sector</a>
-            </p>
+          <div id="selectors" class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-md-8">
+              <strong>Filtrá:</strong>
+              <hr/>
+              <p class="buttons">
+                <a class="btn btn-chq btn-year btn-sm" data-value="2012">2012</a>
+                <a class="btn btn-chq btn-year btn-sm" data-value="2013">2013</a>
+                <a class="btn btn-chq btn-year btn-sm" data-value="2014">2014</a>
+                <a class="btn btn-chq btn-year btn-sm" data-value="2015">2015</a>
+                <a class="btn btn-chq btn-year btn-sm btn-selected" data-value="promedio">Promedio</a>
+              </p>
+            </div>
+            <div class="col-md-4">
+              <strong>Agrupá:</strong>
+              <hr/>
+              <p class="buttons">
+                <a class="btn btn-chq btn-order btn-selected btn-sm" data-value="center">Juntas</a>
+                <a class="btn btn-chq btn-order btn-sm" data-value="sector">Sector</a>
+              </p>
+            </div>
           </div>
           <div id="col-chart-container" class="col-md-12">
               <div id="chart-container"></div>
+              <div id="legend-container"></div>
           </div>
           <div id="select-block" class="col-md-12 visible-xs-block visible-sm-block">
 
@@ -52,9 +63,10 @@
           <div id="details" class="col-md-6">
                 <a id="close-details" class="btn btn-link visible-md-block visible-lg-block"><i class="glyphicon glyphicon-remove"></i></a>
                 <div id="details-block"></div>
-                <hr/>
-                <h5 class="text-center">Ventas y ganancias de la empresa</h5>
-                <div id="line-chart"></div>
+                <div class="row">
+                  <h5 class="text-center full-h5">Ventas vs. ganancias, en pesos</h5>
+                  <div id="line-chart"></div>
+                </div>
           </div>
       </div>
     </div>
@@ -79,6 +91,8 @@
     <!-- endbower -->
     <!-- endbuild -->
     
+    <script src="https://d3plus.org/js/d3plus-text.v0.8.full.min.js"></script>
+
     <!-- build:js scripts/plugins.js -->
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js"></script>
@@ -99,23 +113,33 @@
     <!-- endbuild -->
 
     <script id="tpl-details" type="x-tmpl-mustache">
-      <h2 class="text-center">{{empresa}}</h2>
+      <h2 class="text-center text-uppercase">{{empresa}}</h2>
       <h4 class="text-center" style="color:{{ color }};">{{ sector }}</h4>
-      <hr/>
       <div class="row">
-        <h5 class="text-center">Porcentaje de pago sobre ganancias</h5>
-        <div class="col-xs-6">
-          {{#selectedValue}}
-            <h3>{{ selectedValue }}%</h3>
-            {{#isPromedio}}
-              <p>Pagado en promedio de 2012 a 2015</p>
-            {{/isPromedio}}
-            {{^isPromedio}}
-              <p>Pagado en el año {{ selectedYear }}</p>
-            {{/isPromedio}}
-          {{/selectedValue}}
+        <h5 class="text-center full-h5">Pago del impuesto a las ganancias por año en porcentaje.</h5>
+        <div class="col-xs-3">
+            {{#selectedValue}}
+              {{^noPresentaron}}
+                <h3>{{ selectedValue }}%</h3>
+                {{#isPromedio}}
+                  <p>Pagado en promedio de 2012 a 2015</p>
+                {{/isPromedio}}
+                {{^isPromedio}}
+                  <p>Pagado en el año {{ selectedYear }}</p>
+                {{/isPromedio}}
+              {{/noPresentaron}}
+              {{#noPresentaron}}
+                <h3>NO DECLARARON</h3>
+                {{#isPromedio}}
+                  <p>públicamente sus ganacias de 2012 a 2015</p>
+                {{/isPromedio}}
+                {{^isPromedio}}
+                  <p>públicamente sus ganacias en el año {{ selectedYear }}</p>
+                {{/isPromedio}}
+              {{/noPresentaron}}
+            {{/selectedValue}}
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-9">
           <div id="per-chart"></div>
         </div>
       </div>
@@ -123,7 +147,8 @@
 
     <script id="tpl-select-industry" type="x-tmpl-mustache">
       <div class="form-group">
-        <label for="category">Sector:</label>
+        <label for="category">Seleccioná un sector:</label>
+        <hr>
         <select id="category" class="form-control select-chq">
           {{#categories}}
             <option value="{{val}}" {{#sel}}selected{{/sel}}>
@@ -134,7 +159,8 @@
       </div>
       {{#empresasOption}}
         <div class="form-group">
-          <label for="empresa">Empresa:</label>
+          <label for="empresa">Seleccioná un empresa:</label>
+          <hr>
           <select id="empresa" class="form-control select-chq">
             {{#empresas}}
               <option value="{{val}}" {{#sel}}selected{{/sel}}>
@@ -144,6 +170,33 @@
           </select>
         </div>
       {{/empresasOption}}
+    </script>
+
+    <script id="tpl-legend" type="x-tmpl-mustache">
+      <div id="legend" class="{{classContainer}}">
+        <strong>Referencias:</strong>
+        <hr/>
+        <div class="{{classRef}}">
+          <p class="text-center">
+            <span class="reference" style="width:{{maxSize}}px;height:{{maxSize}}px;padding-top:{{txtPadding}}px;"></span>
+            <span class="reference" style="width:{{midSize}}px;height:{{midSize}}px;margin-top:{{midPadding}}px;"></span>
+            <span class="reference" style="width:{{minSize}}px;height:{{minSize}}px;margin-top:{{minPadding}}px;padding-top:2px;"></span>
+            <span style="margin-top:{{txtPadding}}px;"><strong>Pagó</strong></span>
+          </p>
+        </div>
+        <div class="{{classRef}}">
+          <p class="text-center">
+            <span class="reference" style="width:{{minSize}}px;height:{{minSize}}px;margin-top:{{minPadding}}px;background-color:#FFF;border:2px solid #ddd;"></span>
+            <span style="margin-top:{{txtPadding}}px;"><strong>Pagó 0%</strong></span>
+          </p>
+        </div>     
+        <div class="{{classRef}}">
+          <p class="text-center">
+            <span class="reference" style="width:{{minSize}}px;height:{{minSize}}px;margin-top:{{minPadding}}px;background-color:#000"></span>
+            <span style="margin-top:{{txtPadding}}px;"><strong>No declaró</strong></span>
+          </p>
+        </div>
+      </div>
     </script>
 
     <script type="text/javascript">

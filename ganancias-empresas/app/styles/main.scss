@@ -14,6 +14,10 @@ body.loading .container-fluid{
 	display: none;
 }
 
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
 #chart-container{
 	width: 100%;
 }
@@ -30,10 +34,25 @@ body.loading .container-fluid{
 	z-index:20;
 }
 
+#selectors hr,
+#legend-container hr,
+#select-block hr{
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border-top: 2px solid #eeeeee;
+}
+
 #details{
 	display: none;
 	border-left: 1px solid #eeeeee;
-	border-right: 1px solid #eeeeee;
+	border: 1px solid #eeeeee;
+	padding-bottom: 20px;
+}
+
+#details .full-h5{
+	background-color: #eee;
+	padding: 10px;
+	margin: 20px 0px 30px 0px;
 }
 
 #circle-tooltip{
@@ -62,14 +81,19 @@ circle:hover{
 	cursor:pointer; 
 }
 
+circle.zero {
+	stroke-width: 1px;
+}
+
 .c3-axis .domain,
-.c3-axis .tick{
+.c3-axis .tick line{
 	stroke-width: 0;
 }
 
-.c3-ygrid-line line{
-	stroke-width: 1px;
-	stroke: #eeeeee;
+.c3-axis-x .domain,
+.c3-axis-x .tick line{
+	stroke-width: 1;
+	stroke: #ccc;
 }
 
 #details-block .c3-ygrid-line line{
@@ -91,6 +115,7 @@ circle:hover{
 	color: #890900;
 	border: 1px solid #890900;
 	border-radius: 0px;
+	text-transform: uppercase;
 }
 
 .btn-chq:hover{
@@ -103,10 +128,11 @@ circle:hover{
 }
 
 #close-details{
-	color: #890900;
+	color: #ccc;
 }
 
-text.group-title{
+text.d3plus-textBox,
+text.d3plus-textBox tspan{
 	pointer-events: none;
 }
 
@@ -115,6 +141,32 @@ text.group-title{
 	border: 1px solid #890900;
 	border-radius: 0;
 	-webkit-appearance: none;
+}
+
+#legend {
+	pointer-events: none;
+	padding-bottom: 20px;
+	padding-top: 10px;
+}
+
+#legend-container{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	pointer-events: none;
+}
+
+#legend-container span{
+	float:left;
+	margin-right: 5px;
+}
+
+#legend-container .reference{
+	display:block;
+	border-radius: 50%;
+	background-color: #ddd;
+	text-align: center;
 }
 
 /* Responsive: Portrait tablets and up */
