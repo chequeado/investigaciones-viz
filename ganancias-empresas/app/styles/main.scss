@@ -49,6 +49,13 @@ body {
 	padding-bottom: 20px;
 }
 
+#tips{
+	position:absolute;
+	top:0;
+	right:0;
+	z-index:20;	
+}
+
 #details .full-h5{
 	background-color: #eee;
 	padding: 10px;
@@ -169,7 +176,16 @@ text.d3plus-textBox tspan{
 	text-align: center;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
+.detailsOpened #selectors{
 
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (max-width: 768px) {
+	#selectors{
+		position:static;
+	}
+	#legend-container{
+		position:static;
+	}
 }

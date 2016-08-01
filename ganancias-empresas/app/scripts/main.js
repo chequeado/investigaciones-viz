@@ -15,6 +15,8 @@ d3.selection.prototype.moveToFront = function() {
 
     CHQ.$details = $('#details');
 
+    CHQ.$tips = $('#tips');
+
     CHQ.$body =  $('body'); 
 
     CHQ.$colChart = $('#col-chart-container');
@@ -138,8 +140,8 @@ d3.selection.prototype.moveToFront = function() {
           min: 0,
           minSize:0,
           maxSize:0,
-          classContainer: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-3':'col-sm-12 col-xs-12',
-          classRef: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-12':'col-sm-4 col-xs-4'
+          classContainer: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-4':'col-sm-12 col-xs-12',
+          classRef: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-12':'col-sm-6 col-xs-12'
         };
 
         switch(CHQ.group){
@@ -221,7 +223,7 @@ d3.selection.prototype.moveToFront = function() {
                 .text(function(d) { return d.title; })
                 .textAnchor(function(d) { return d.anchor; })
                 .x(function(d) { return d.x-(wCol/2); })
-                .y(function(d) { return d.y + max2Radius; })
+                .y(function(d) { return d.y + max2Radius*1.5; })
                 .fontSize(12)
                 ();
 
@@ -485,12 +487,15 @@ d3.selection.prototype.moveToFront = function() {
 
     CHQ.openDetails = function(data){
 
+      $('body').addClass('detailsOpened');
+
       CHQ.selectedId = data.id;
 
       if(CHQ.$colChart.hasClass('col-md-12')){
         CHQ.$colChart.removeClass('col-md-12').addClass('col-md-6');
         CHQ.render();
         CHQ.$details.fadeIn();
+        CHQ.$tips.hide();
       }
 
       var template = $('#tpl-details').html();
@@ -631,10 +636,12 @@ d3.selection.prototype.moveToFront = function() {
     };
 
     CHQ.closeDetails = function(){
+      $('body').removeClass('detailsOpened');
       CHQ.selectedId = false;
       CHQ.$colChart.removeClass('col-md-6').addClass('col-md-12');
       CHQ.render();
       CHQ.$details.hide();
+      CHQ.$tips.show();
       d3.selectAll('circle').classed('selected',false);
     };
 
