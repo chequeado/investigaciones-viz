@@ -601,6 +601,10 @@ d3.selection.prototype.moveToFront = function() {
                 value: ['ganancias', 'ventas'],
               },
               type: 'line',
+              names: {
+                ventas: 'Ventas',
+                ganancias: 'Pago de ganancias',
+              },
               colors: {
                 ganancias: data.color,
                 ventas: d3.rgb(data.color).darker()
