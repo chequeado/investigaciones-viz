@@ -141,7 +141,7 @@ d3.selection.prototype.moveToFront = function() {
           minSize:0,
           maxSize:0,
           classContainer: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-6':'col-sm-12 col-xs-12',
-          classRef: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-4':'col-sm-4 col-xs-6'
+          classRef: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-4':'col-sm-4 col-xs-12'
         };
 
         switch(CHQ.group){
@@ -150,7 +150,7 @@ d3.selection.prototype.moveToFront = function() {
               .domain([0,CHQ.maxValue])
               .range([minRadius,maxRadius]);
 
-            dataLegend.minSize = minRadius*2;
+            dataLegend.minSize = (minRadius<5)?20:minRadius*2;
             dataLegend.maxSize = maxRadius*2;
 
             // The largest node for each cluster.
@@ -177,7 +177,7 @@ d3.selection.prototype.moveToFront = function() {
               .domain([0,CHQ.maxValue])
               .range([min2Radius,max2Radius]);
 
-            dataLegend.minSize = min2Radius*2;
+            dataLegend.minSize = (min2Radius<5)?20:min2Radius*2;
             dataLegend.maxSize = max2Radius*2;
 
             clusters = new Array(CHQ.categories.length);
@@ -223,7 +223,13 @@ d3.selection.prototype.moveToFront = function() {
                 .text(function(d) { return d.title; })
                 .textAnchor(function(d) { return d.anchor; })
                 .x(function(d) { return d.x-(wCol/2); })
-                .y(function(d) { return d.y + max2Radius*1.5; })
+                .y(function(d) { 
+                  if(d.title == 'Banco'){
+                    return d.y + max2Radius*6;
+                  }
+                  var qty = CHQ.groups[d.title].length; 
+                  var gap = (qty<5)?max2Radius*1.5:(qty/6)*max2Radius*1.5; 
+                  return d.y + gap; })
                 .fontSize(12)
                 ();
 
@@ -257,7 +263,7 @@ d3.selection.prototype.moveToFront = function() {
             .nodes(nodes)
             .size([width, height])
             .gravity(0)
-            .charge(0)
+            .charge(0.8)
             .on('tick', tick)
             .start();
 
