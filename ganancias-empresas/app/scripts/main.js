@@ -205,8 +205,15 @@ d3.selection.prototype.moveToFront = function() {
                       ixCols = 1;
                       ixRows += 1;
                     }
-                    clusterPoints[i] = {x:cols[ixCols],y:rows[ixRows],radius:3,title:i,anchor:'middle'};
-                    textos.push(clusterPoints[i]);
+                    
+                    var qty = CHQ.groups[d.cluster].length; 
+                    var gap = max2Radius*3;
+                    gap = (qty>5)?max2Radius*2:gap;
+                    gap = (qty>10)?max2Radius*4:gap;
+                    gap = (qty>15)?max2Radius*5.5:gap;
+
+                    textos.push({x:cols[ixCols],y:rows[ixRows],radius:3,title:i,anchor:'middle'});
+                    clusterPoints[i] = {x:cols[ixCols],y:rows[ixRows]-gap,radius:3,title:i,anchor:'middle'};
                   }
 
                   if (!clusters[i] || (r > clusters[i].radius)){
@@ -226,14 +233,14 @@ d3.selection.prototype.moveToFront = function() {
                 .textAnchor(function(d) { return d.anchor; })
                 .x(function(d) { return d.x-(wCol/2); })
                 .y(function(d) { 
-                  if(d.title == 'Bancos'){
+                  /*if(d.title == 'Bancos'){
                     return d.y - max2Radius*6;
                   }
                   var qty = CHQ.groups[d.title].length; 
                   var gap = max2Radius*3;
                   gap = (qty>5)?max2Radius*4:gap;
                   gap = (qty>10)?max2Radius*5:gap;
-                  gap = (qty>15)?max2Radius*5.5:gap;
+                  gap = (qty>15)?max2Radius*5.5:gap;*/
                   return d.y; })
                 .fontSize(12)
                 ();
