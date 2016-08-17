@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet"> 
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
@@ -31,39 +31,54 @@
     <![endif]-->
 
       <div class="container-fluid">
-        <div class="row">
-          <div id="selectors" class="col-lg-6 col-md-6 col-sm-12">
-            <div class="col-md-7 col-sm-6">
-              <strong>Filtrá:</strong>
-              <hr/>
-              <p class="buttons">
-                <a class="btn btn-chq btn-year btn-sm" data-value="2012">2012</a>
-                <a class="btn btn-chq btn-year btn-sm" data-value="2013">2013</a>
-                <a class="btn btn-chq btn-year btn-sm" data-value="2014">2014</a>
-                <a class="btn btn-chq btn-year btn-sm" data-value="2015">2015</a>
-                <a class="btn btn-chq btn-year btn-sm btn-selected" data-value="promedio">Promedio</a>
-              </p>
-            </div>
-            <div class="col-md-5 col-sm-6">
-              <strong>Agrupá:</strong>
-              <hr/>
-              <p class="buttons">
-                <a class="btn btn-chq btn-order btn-selected btn-sm btn-block" data-value="center">Todas juntas</a>
-                <a class="btn btn-chq btn-order btn-sm btn-block" data-value="sector">Por Sector</a>
-              </p>
+        <div id="titulares" class="row">
+          <div class="titulo col-md-12">
+            <div class="col-md-10 col-md-offset-1">
+              <h2 class="text-center" >¿Cuánto de impuesto a las ganancias pagan las mayores empresas de la Argentina?</h2>
             </div>
           </div>
+          <div class="bajada col-md-10 col-md-offset-1">
+            <p class="text-center lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="row">
           <div id="col-chart-container" class="col-md-12">
+              <div id="selectors" class="col-sm-7">
+                <div class="row">
+                  <div class="col-md-7 col-sm-6">
+                    <strong>Filtrá:</strong>
+                    <hr/>
+                    <p class="buttons">
+                      <a class="btn btn-chq btn-year btn-sm" data-value="2012">2012</a>
+                      <a class="btn btn-chq btn-year btn-sm" data-value="2013">2013</a>
+                      <a class="btn btn-chq btn-year btn-sm" data-value="2014">2014</a>
+                      <a class="btn btn-chq btn-year btn-sm" data-value="2015">2015</a>
+                      <a class="btn btn-chq btn-year btn-sm btn-selected" data-value="promedio">Promedio</a>
+                    </p>
+                  </div>
+                  <div class="col-md-5 col-sm-6">
+                    <strong>Agrupá:</strong>
+                    <hr/>
+                    <p class="buttons">
+                      <a class="btn btn-chq btn-order btn-selected btn-sm" data-value="center">Todas juntas</a>
+                      <a class="btn btn-chq btn-order btn-sm" data-value="sector">Por Sector</a>
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div id="select-block">
+                  </div>
+                </div>
+              </div>
+              <div id="tips" class="col-md-5 hidden-xs">
+                <p class="text-right">Hacé click en los círculos<br/>para más información</p>
+              </div>
               <div id="chart-container"></div>
               <div id="legend-container"></div>
           </div>
-          <div id="select-block" class="col-md-12 visible-xs-block visible-sm-block">
-
-          </div>
-          <div id="tips" class="col-md-6 hidden-sm hidden-xs">
-            <p class="text-right">Hacé click en los círculos para más información</p>
-          </div>
-          <div id="details" class="col-md-6">
+          <div id="details" class="col-md-5">
                 <a id="close-details" class="btn btn-link visible-md-block visible-lg-block"><i class="glyphicon glyphicon-remove"></i></a>
                 <div id="details-block"></div>
                 <div class="row">
@@ -71,6 +86,14 @@
                   <div id="line-chart"></div>
                 </div>
           </div>
+      </div>
+
+    </div>
+    <div id="fuente" class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-center"><strong>Fuente:</strong> Elaboración de Chequeado sobre la base de los balances de los últimos cuatro años de las 112 compañías que hacen públicos sus datos.</p>
+        </div>
       </div>
     </div>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -125,7 +148,7 @@
               {{^noPresentaron}}
                 <h3>{{ selectedValue }}%</h3>
                 {{#isPromedio}}
-                  <p>Pagado en promedio de 2012 a 2015</p>
+                  <p>Pagado en promedio entre 2012 y 2015</p>
                 {{/isPromedio}}
                 {{^isPromedio}}
                   <p>Pagado en el año {{ selectedYear }}</p>
@@ -134,7 +157,7 @@
               {{#noPresentaron}}
                 <h3>NO DECLARARON</h3>
                 {{#isPromedio}}
-                  <p>públicamente sus ganacias de 2012 a 2015</p>
+                  <p>públicamente sus ganacias entre 2012 y 2015</p>
                 {{/isPromedio}}
                 {{^isPromedio}}
                   <p>públicamente sus ganacias en el año {{ selectedYear }}</p>
@@ -149,6 +172,7 @@
     </script>
 
     <script id="tpl-select-industry" type="x-tmpl-mustache">
+      <div class="col-md-6">
       <div class="form-group">
         <label for="category">Seleccioná un sector:</label>
         <hr>
@@ -160,7 +184,9 @@
           {{/categories}}
         </select>
       </div>
+      </div>
       {{#empresasOption}}
+      <div class="col-md-6">
         <div class="form-group">
           <label for="empresa">Seleccioná un empresa:</label>
           <hr>
@@ -172,6 +198,7 @@
             {{/empresas}}
           </select>
         </div>
+      </div>
       {{/empresasOption}}
     </script>
 

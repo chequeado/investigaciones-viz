@@ -21,6 +21,8 @@ d3.selection.prototype.moveToFront = function() {
 
     CHQ.$colChart = $('#col-chart-container');
 
+    CHQ.$colOptions = $('#selectors');
+
     CHQ.circles;
 
     CHQ.year = 'promedio';
@@ -119,7 +121,7 @@ d3.selection.prototype.moveToFront = function() {
 
         CHQ.smallDevice = (w < 990);
 
-        var h = (!CHQ.smallDevice && !CHQ.selectedId)?(w*9)/16:w;
+        var h = (!CHQ.smallDevice && !CHQ.selectedId)?(w*9)/16:(w*3)/4;
 
         var width = w,
             height = h,
@@ -468,7 +470,7 @@ d3.selection.prototype.moveToFront = function() {
         }):false
       };
 
-      data.categories.unshift({val: '', txt: '< Selecciones un sector >', sel: (cat)?false:true});
+      data.categories.unshift({val: '', txt: '< Seleccione un sector >', sel: (cat)?false:true});
 
       var rendered = Mustache.render(template, data);
       $('#select-block').html(rendered);
@@ -498,10 +500,11 @@ d3.selection.prototype.moveToFront = function() {
       CHQ.selectedId = data.id;
 
       if(CHQ.$colChart.hasClass('col-md-12')){
-        CHQ.$colChart.removeClass('col-md-12').addClass('col-md-6');
+        CHQ.$colChart.removeClass('col-md-12').addClass('col-md-7');
         CHQ.render();
         CHQ.$details.fadeIn();
         CHQ.$tips.hide();
+        CHQ.$colOptions.removeClass('col-sm-7').addClass('col-sm-12');
       }
 
       var template = $('#tpl-details').html();
@@ -648,7 +651,8 @@ d3.selection.prototype.moveToFront = function() {
     CHQ.closeDetails = function(){
       $('body').removeClass('detailsOpened');
       CHQ.selectedId = false;
-      CHQ.$colChart.removeClass('col-md-6').addClass('col-md-12');
+      CHQ.$colChart.removeClass('col-md-7').addClass('col-md-12');
+      CHQ.$colOptions.removeClass('col-sm-12').addClass('col-sm-7');
       CHQ.render();
       CHQ.$details.hide();
       CHQ.$tips.show();

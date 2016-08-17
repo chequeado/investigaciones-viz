@@ -28,10 +28,6 @@ body {
 }
 
 #selectors{
-	position:absolute;
-	top:0;
-	left:0;
-	z-index:20;
 }
 
 #selectors hr,
@@ -50,10 +46,10 @@ body {
 }
 
 #tips{
-	position:absolute;
-	top:0;
-	right:0;
-	z-index:20;	
+	color: #890900;
+	font-weight: bold;
+	font-size: 16px;
+	margin-top: 15px;
 }
 
 #details .full-h5{
@@ -148,6 +144,14 @@ text.d3plus-textBox tspan{
 	border: 1px solid #890900;
 	border-radius: 0;
 	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+	overflow: hidden;
+   	
+   	background-image: url('../images/dropdown_arrow.gif');
+   	background-position: 95% center;
+   	background-repeat: no-repeat;
+
 }
 
 #legend {
@@ -181,6 +185,37 @@ text.d3plus-textBox tspan{
 
 .detailsOpened #selectors{
 
+}
+
+#titulares{
+	border: 2px solid #000;
+	margin-bottom:20px;
+	.titulo{
+		background-color: #000;
+		color: #FFF;
+		padding: 20px;
+		h2{
+			font-weight: 300;
+			margin: 0;
+			padding: 0;
+		}
+
+	}
+	.bajada{
+		padding: 20px;
+		p {
+			font-weight: 300;
+			padding: 0;
+			margin: 0;
+		}
+	}
+}
+
+#fuente{
+	background-color: #eee;
+	p{
+		margin: 20px
+	}
 }
 
 /* Responsive: Portrait tablets and up */
