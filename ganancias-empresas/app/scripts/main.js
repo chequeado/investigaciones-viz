@@ -234,7 +234,7 @@ d3.selection.prototype.moveToFront = function() {
                   gap = (qty>5)?max2Radius*4:gap;
                   gap = (qty>10)?max2Radius*5:gap;
                   gap = (qty>15)?max2Radius*5.5:gap;
-                  return d.y - gap; })
+                  return d.y; })
                 .fontSize(12)
                 ();
 
@@ -490,7 +490,9 @@ d3.selection.prototype.moveToFront = function() {
         var id = $(this).val();
         CHQ.openDetails(CHQ.dataById[id]);
         d3.selectAll('circle').classed('selected',false);
-        d3.select('circle#e'+id).classed('selected',true);
+        d3.select('circle#e'+id).classed('selected',true).style('stroke',function(d){
+          return d3.rgb(CHQ.color(d.data.sector)).darker().toString();
+        });
       });
 
 

@@ -59,7 +59,7 @@ body {
 }
 
 #circle-tooltip{
-	background-color:#fff;
+	background-color:#eee;
 	padding: 10px;
 	position: absolute;
 	top:0;
@@ -67,8 +67,8 @@ body {
 	z-index: 10;
 	pointer-events:none;
 	opacity:0;
-	color: #890900;
-	border: 1px solid #890900;
+	color: #000;
+	border: 1px solid #000;
 }
 
 circle{
