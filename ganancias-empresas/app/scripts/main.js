@@ -142,8 +142,8 @@ d3.selection.prototype.moveToFront = function() {
           min: 0,
           minSize:0,
           maxSize:0,
-          classContainer: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-6':'col-sm-12 col-xs-12',
-          classRef: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-4':'col-sm-4 col-xs-12'
+          classContainer: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-7':'col-sm-12 col-xs-12',
+          //classRef: (!CHQ.smallDevice && !CHQ.selectedId && !CHQ.group!='center')?'col-md-4':'col-sm-4 col-xs-12'
         };
 
         switch(CHQ.group){
@@ -226,12 +226,15 @@ d3.selection.prototype.moveToFront = function() {
                 .textAnchor(function(d) { return d.anchor; })
                 .x(function(d) { return d.x-(wCol/2); })
                 .y(function(d) { 
-                  if(d.title == 'Banco'){
-                    return d.y + max2Radius*6;
+                  if(d.title == 'Bancos'){
+                    return d.y - max2Radius*6;
                   }
                   var qty = CHQ.groups[d.title].length; 
-                  var gap = (qty<5)?max2Radius*1.5:(qty/6)*max2Radius*1.5; 
-                  return d.y + gap; })
+                  var gap = max2Radius*3;
+                  gap = (qty>5)?max2Radius*4:gap;
+                  gap = (qty>10)?max2Radius*5:gap;
+                  gap = (qty>15)?max2Radius*5.5:gap;
+                  return d.y - gap; })
                 .fontSize(12)
                 ();
 
@@ -265,7 +268,7 @@ d3.selection.prototype.moveToFront = function() {
             .nodes(nodes)
             .size([width, height])
             .gravity(0)
-            .charge(0.8)
+            .charge(1)
             .on('tick', tick)
             .start();
 
@@ -316,7 +319,7 @@ d3.selection.prototype.moveToFront = function() {
               var html = '<strong>'+d.data.empresa+'</strong> pagó el <strong>'+(d.data.porcentaje+'').replace('.',',')+'%</strong>';
 
               if(d.data.anio=='promedio'){
-                html += ' en promedio en <strong>2012 a 2015</strong>';
+                html += ' en promedio entre <strong>2012 y 2015</strong>';
               } else {
                 html += ' en el año <strong>'+d.data.anio+'</strong>';
               }
@@ -399,7 +402,7 @@ d3.selection.prototype.moveToFront = function() {
                     cluster = {x: cluster.x, y: cluster.y, radius: -cluster.radius};
                     k = .5 * Math.sqrt(d.radius);
                   } else {
-                    cluster = {x: width / 2, y: height / 2, radius: -d.radius};
+                    cluster = {x: width / 2, y: height / 3, radius: -d.radius};
                     k = .1 * Math.sqrt(d.radius);
                   }
                 }
@@ -470,7 +473,7 @@ d3.selection.prototype.moveToFront = function() {
         }):false
       };
 
-      data.categories.unshift({val: '', txt: '< Seleccione un sector >', sel: (cat)?false:true});
+      data.categories.unshift({val: '', txt: '< sector >', sel: (cat)?false:true});
 
       var rendered = Mustache.render(template, data);
       $('#select-block').html(rendered);

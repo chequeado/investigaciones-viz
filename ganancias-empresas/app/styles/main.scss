@@ -46,7 +46,7 @@ body {
 }
 
 #tips{
-	color: #890900;
+	color: #F00000;
 	font-weight: bold;
 	font-size: 16px;
 	margin-top: 15px;
@@ -115,18 +115,18 @@ circle.zero {
 }
 
 .btn-chq{
-	color: #890900;
-	border: 1px solid #890900;
+	color: #000;
+	border: none;
 	border-radius: 0px;
-	text-transform: uppercase;
+	background-color: #eee;
 }
 
 .btn-chq:hover{
-	color: #890900;
+	background-color: #ccc;
 }
 
 .btn-chq.btn-selected{
-	background-color: #890900;
+	background-color: #F00000;
 	color: #fff;
 }
 
@@ -140,8 +140,8 @@ text.d3plus-textBox tspan{
 }
 
 .select-chq{
-	color: #890900;
-	border: 1px solid #890900;
+	color: #000;
+	border: none;
 	border-radius: 0;
 	-webkit-appearance: none;
     -moz-appearance: none;
@@ -152,7 +152,20 @@ text.d3plus-textBox tspan{
    	background-position: 95% center;
    	background-repeat: no-repeat;
 
+   	background-color: #eee;
+   	outline: none;
+
+   	box-shadow: none;
+
+   	&:focus {
+   		outline: none;
+	  outline-color: transparent;
+	  outline-style: none;
+	}
+
 }
+
+
 
 #legend {
 	pointer-events: none;
@@ -224,6 +237,6 @@ text.d3plus-textBox tspan{
 		position:static;
 	}
 	#legend-container{
-		position:static;
+		position:relative;
 	}
 }
