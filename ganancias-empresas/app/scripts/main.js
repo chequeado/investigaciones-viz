@@ -207,13 +207,13 @@ d3.selection.prototype.moveToFront = function() {
                     }
                     
                     var qty = CHQ.groups[d.cluster].length; 
-                    var gap = max2Radius*3;
-                    gap = (qty>5)?max2Radius*2:gap;
-                    gap = (qty>10)?max2Radius*4:gap;
-                    gap = (qty>15)?max2Radius*5.5:gap;
+                    var gap = 0;
+                    gap = (qty>5)?max2Radius*1:gap;
+                    gap = (qty>10)?max2Radius*1.5:gap;
+                    gap = (qty>15)?max2Radius*2:gap;
 
-                    textos.push({x:cols[ixCols],y:rows[ixRows],radius:3,title:i,anchor:'middle'});
-                    clusterPoints[i] = {x:cols[ixCols],y:rows[ixRows]-gap,radius:3,title:i,anchor:'middle'};
+                    textos.push({x:cols[ixCols],y:rows[ixRows]-max2Radius*5,radius:3,title:i,anchor:'middle'});
+                    clusterPoints[i] = {x:cols[ixCols],y:rows[ixRows]-max2Radius*2+gap,radius:3,title:i,anchor:'middle'};
                   }
 
                   if (!clusters[i] || (r > clusters[i].radius)){
