@@ -11,15 +11,6 @@
         <h5 class="text-center full-h5">Pago del impuesto a las ganancias, por año, como porcentaje de la facturación.</h5>
         <div class="col-xs-3">
             {{#selectedValue}}
-              {{^noPresentaron}}
-                <h3>{{ selectedValue }}%</h3>
-                {{#isPromedio}}
-                  <p>Pagado en promedio entre 2012 y 2015</p>
-                {{/isPromedio}}
-                {{^isPromedio}}
-                  <p>Pagado en el año {{ selectedYear }}</p>
-                {{/isPromedio}}
-              {{/noPresentaron}}
               {{#noPresentaron}}
                 <h3>NO DECLARARON</h3>
                 {{#isPromedio}}
@@ -27,6 +18,15 @@
                 {{/isPromedio}}
                 {{^isPromedio}}
                   <p>públicamente sus ganacias en el año {{ selectedYear }}</p>
+                {{/isPromedio}}
+              {{/noPresentaron}}
+              {{^noPresentaron}}
+                <h3>{{ selectedValue }}%</h3>
+                {{#isPromedio}}
+                  <p>Pagado en promedio entre 2012 y 2015</p>
+                {{/isPromedio}}
+                {{^isPromedio}}
+                  <p>Pagado en el año {{ selectedYear }}</p>
                 {{/isPromedio}}
               {{/noPresentaron}}
             {{/selectedValue}}

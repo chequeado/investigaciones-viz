@@ -74,10 +74,12 @@ d3.selection.prototype.moveToFront = function() {
     };
 
     CHQ.filterData = function(){
-        var filtered = CHQ.rawData.map(function(d){
+        var filtered = $.extend(true, [], CHQ.rawData).map(function(d){
           if(isNaN(d['porcentaje_'+CHQ.year])) {
             d.noPresentaron = true;
             d['porcentaje_'+CHQ.year] = 0;            
+          } else {
+            d.noPresentaron = false;
           }
           return d;
         });
@@ -116,6 +118,8 @@ d3.selection.prototype.moveToFront = function() {
 //        console.log(CHQ.maxValue);
 
         CHQ.filterData();
+
+        console.log(CHQ.data);
 
         var w = $('#chart-container').width();
 
@@ -525,6 +529,8 @@ d3.selection.prototype.moveToFront = function() {
       data.selectedYear = CHQ.year;
       data.isPromedio = (CHQ.year == 'promedio');
       data.selectedValue = (data['porcentaje_'+CHQ.year]+'').replace('.',',');
+      data.noPresentaron = (isNaN(data['porcentaje_'+CHQ.year]))?true:false;
+      console.log(data);
       var rendered = Mustache.render(template, data);
       $('#details-block').html(rendered);
 
