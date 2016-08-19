@@ -327,13 +327,18 @@ d3.selection.prototype.moveToFront = function() {
                 .style('opacity',0)
                 .attr('r',Math.round(c.attr('r'))+30);
 
-              var html = '<strong>'+d.data.empresa+'</strong> pagó el <strong>'+(d.data.porcentaje+'').replace('.',',')+'%</strong>';
+                var html = '';
+                if(d.data.noPresentaron){
+                  html += '<strong>No declaró</strong> públicamente sus ganancias ';
+                } else {
+                  html += '<strong>'+d.data.empresa+'</strong> pagó el <strong>'+(d.data.porcentaje+'').replace('.',',')+'%</strong>';
+                }
 
-              if(d.data.anio=='promedio'){
-                html += ' en promedio entre <strong>2012 y 2015</strong>';
-              } else {
-                html += ' en el año <strong>'+d.data.anio+'</strong>';
-              }
+                if(d.data.anio=='promedio'){
+                  html += ' en promedio entre <strong>2012 y 2015</strong>';
+                } else {
+                  html += ' en el año <strong>'+d.data.anio+'</strong>';
+                }
 
               CHQ.tooltip
                 .html(html)

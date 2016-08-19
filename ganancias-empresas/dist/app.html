@@ -12,7 +12,7 @@
         <div class="col-xs-3">
             {{#selectedValue}}
               {{#noPresentaron}}
-                <h3>NO DECLARARON</h3>
+                <h3>NO DECLARÓ</h3>
                 {{#isPromedio}}
                   <p>públicamente sus ganacias entre 2012 y 2015</p>
                 {{/isPromedio}}
@@ -23,10 +23,10 @@
               {{^noPresentaron}}
                 <h3>{{ selectedValue }}%</h3>
                 {{#isPromedio}}
-                  <p>Pagado en promedio entre 2012 y 2015</p>
+                  <p>pagado en promedio entre 2012 y 2015</p>
                 {{/isPromedio}}
                 {{^isPromedio}}
-                  <p>Pagado en el año {{ selectedYear }}</p>
+                  <p>pagado en el año {{ selectedYear }}</p>
                 {{/isPromedio}}
               {{/noPresentaron}}
             {{/selectedValue}}
