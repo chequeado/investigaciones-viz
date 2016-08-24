@@ -1,0 +1,29 @@
+.share-ul-container{
+	list-style: none;
+	li {
+		display: inline-block;
+	}
+}
+.share-btn-container{
+
+}
+.share-btn{
+	width: auto;
+	height: auto;
+	border-radius: 50%;
+	margin-top: 2px;
+	text-indent: 0;
+	&.share-twitter{
+		background-color: #00acee;
+		color:#fff;
+	}
+	&.share-facebook{
+		background-color: #3b5998;
+		color:#fff;
+	}
+	&.share-googleplus{
+		background-color: #dd4b39;
+		color:#fff;
+	}
+
+}
