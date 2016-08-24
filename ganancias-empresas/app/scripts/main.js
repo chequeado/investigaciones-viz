@@ -37,6 +37,14 @@ d3.selection.prototype.moveToFront = function() {
                    simpleSheet: false,
                    parseNumbers: true
                } );
+
+        if(CHQ.inIframe()){
+          $('.iframe-show').show();
+        } else {
+          $('.no-iframe-show').show();
+        }
+
+        console.log('iframe?',CHQ.inIframe());
     };
 
     CHQ.postProcess = function(e,i){
@@ -119,7 +127,7 @@ d3.selection.prototype.moveToFront = function() {
 
         CHQ.filterData();
 
-        console.log(CHQ.data);
+        //console.log(CHQ.data);
 
         var w = $('#chart-container').width();
 
@@ -680,6 +688,14 @@ d3.selection.prototype.moveToFront = function() {
       CHQ.$details.hide();
       CHQ.$tips.show();
       d3.selectAll('circle').classed('selected',false);
+    };
+
+    CHQ.inIframe = function() {
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
     };
 
 

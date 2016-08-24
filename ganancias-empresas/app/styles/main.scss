@@ -231,6 +231,10 @@ text.d3plus-textBox tspan{
 	}
 }
 
+.iframe-show,.no-iframe-show{
+	display:none;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (max-width: 768px) {
 	#selectors{
