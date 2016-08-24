@@ -13,17 +13,45 @@
 	border-radius: 50%;
 	margin-top: 2px;
 	text-indent: 0;
+	padding: 8px;
+	text-decoration: none;
+	font-family:Genericons;
+	font-size:1em;
+	font-style:normal;
+	font-weight:400;
+	cursor: pointer;
+	&:hover{
+		text-decoration: none;
+	}
 	&.share-twitter{
 		background-color: #00acee;
 		color:#fff;
+		&:before{
+			content:'\f202';
+		}
+		&:hover{
+			opacity: .6;
+		}
 	}
 	&.share-facebook{
 		background-color: #3b5998;
 		color:#fff;
+		&:before{
+			content:'\f204';
+		}
+		&:hover{
+			opacity: .6;
+		}
 	}
 	&.share-googleplus{
 		background-color: #dd4b39;
 		color:#fff;
+		&:before{
+			content:'\f218';
+		}
+		&:hover{
+			opacity: .6;
+		}
 	}
 
 }
