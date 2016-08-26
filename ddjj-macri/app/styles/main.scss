@@ -1,0 +1,261 @@
+$icon-font-path: '../fonts/';
+
+// bower:scss
+@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+body.loading{
+	background-image: url('../images/loading.gif');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+body.loading .container-fluid{
+	display: none;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+#chart-container{
+	width: 100%;
+}
+
+#close-details{
+	position: absolute;
+	right: 0px;
+}
+
+#selectors{
+}
+
+#selectors hr,
+#legend-container hr,
+#select-block hr{
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border-top: 2px solid #eeeeee;
+}
+
+#details{
+	display: none;
+	border-left: 1px solid #eeeeee;
+	border: 1px solid #eeeeee;
+	padding-bottom: 20px;
+}
+
+#tips{
+	color: #F00000;
+	font-weight: bold;
+	font-size: 16px;
+	margin-top: 15px;
+}
+
+#details .full-h5{
+	background-color: #eee;
+	padding: 10px;
+	margin: 20px 0px 30px 0px;
+}
+
+#circle-tooltip{
+	background-color:#eee;
+	padding: 10px;
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: 10;
+	pointer-events:none;
+	opacity:0;
+	color: #000;
+	border: 1px solid #000;
+}
+
+circle{
+	stroke-width: 0px;
+}
+
+circle.selected {
+	stroke-width: 3px;
+}
+
+circle:hover{
+	stroke-width: 3px;
+	cursor:pointer; 
+}
+
+circle.zero {
+	stroke-width: 1px;
+}
+
+.c3-axis .domain,
+.c3-axis .tick line{
+	stroke-width: 0;
+}
+
+.c3-axis-x .domain,
+.c3-axis-x .tick line{
+	stroke-width: 1;
+	stroke: #ccc;
+}
+
+#details-block .c3-ygrid-line line{
+	stroke-width: 1px;
+	stroke: #000;
+	stroke-dasharray: 5,5;
+}
+
+.c3-ygrid-line text{
+	fill: #000;
+}
+
+
+.c3-chart-lines path.c3-shape{
+	stroke-width: 5px;
+}
+
+.btn-chq{
+	color: #000;
+	border: none;
+	border-radius: 0px;
+	background-color: #eee;
+}
+
+.btn-chq:hover{
+	background-color: #ccc;
+}
+
+.btn-chq.btn-selected{
+	background-color: #F00000;
+	color: #fff;
+}
+
+#close-details{
+	color: #ccc;
+}
+
+text.d3plus-textBox,
+text.d3plus-textBox tspan{
+	pointer-events: none;
+}
+
+.select-chq{
+	color: #000;
+	border: none;
+	border-radius: 0;
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+	overflow: hidden;
+   	
+   	background-image: url('../images/dropdown_arrow.gif');
+   	background-position: 95% center;
+   	background-repeat: no-repeat;
+
+   	background-color: #eee;
+   	outline: none;
+
+   	box-shadow: none;
+
+   	&:focus {
+   		outline: none;
+	  outline-color: transparent;
+	  outline-style: none;
+	}
+
+}
+
+
+
+#legend {
+	pointer-events: none;
+	padding-bottom: 20px;
+	padding-top: 10px;
+}
+
+#legend-container{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	pointer-events: none;
+}
+
+#legend-container span{
+	float:left;
+	margin-right: 5px;
+}
+
+#legend-container .reference{
+	display:block;
+	border-radius: 50%;
+	background-color: #ddd;
+	text-align: center;
+	margin-top: 4px;
+	height: 20px;
+	width: 20px;
+}
+
+.detailsOpened #selectors{
+
+}
+
+#titulares{
+	border: 2px solid #000;
+	margin-bottom:20px;
+	.titulo{
+		background-color: #000;
+		color: #FFF;
+		padding: 20px;
+		h2{
+			font-weight: 300;
+			margin: 0;
+			padding: 0;
+		}
+
+	}
+	.bajada{
+		padding: 20px;
+		p {
+			font-weight: 300;
+			padding: 0;
+			margin: 0;
+		}
+	}
+}
+
+#fuente{
+	background-color: #eee;
+	p{
+		margin: 20px
+	}
+}
+
+.iframe-show,.no-iframe-show{
+	display:none;
+}
+
+#button-container {
+    position: absolute;
+    z-index: 1000;
+    left: 10px;
+    bottom: 10px;
+}
+
+#credits.modal {
+	bottom: 0;
+	top:auto;
+	.modal-content{
+		border-radius:0px;
+	}
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (max-width: 768px) {
+	#selectors{
+		position:static;
+	}
+	#legend-container{
+		position:relative;
+	}
+}

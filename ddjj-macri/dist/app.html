@@ -1,0 +1,92 @@
+<!doctype html><html class="no-js" lang=""><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Visualización interactiva: Cuánto pagan de impuesto a las ganancias las mayores empresas de la Argentina</title><meta name="description" content=""><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@chequeado"><meta name="twitter:title" content="Visualización interactiva: "><meta name="twitter:description" content=""><meta name="twitter:creator" content="@chequeado"><meta name="twitter:image" content="https://chequeado.github.io/investigaciones-viz/ddjj-macri/dist/images/share.png"><!-- Open Graph data --><meta property="og:title" content=""><meta property="og:type" content="article"><meta property="og:url" content="https://chequeado.github.io/investigaciones-viz/ddjj-macri/dist/app.html"><meta property="og:image" content="https://chequeado.github.io/investigaciones-viz/ddjj-macri/dist/images/share.png"><meta property="og:description" content=""><meta property="og:site_name" content="Chequeado - Verificación del discurso público"><link rel="apple-touch-icon" href="apple-touch-icon.png"><!-- Place favicon.ico in the root directory --><link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet"><link rel="stylesheet" href="styles/vendor.css"><link rel="stylesheet" href="styles/main.css"><script src="scripts/vendor/modernizr.js"></script></head><body class="loading"><!--[if lt IE 10]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]--><div class="container-fluid"><div id="titulares" class="row"><div class="titulo col-md-12"><div class="col-md-10 col-md-offset-1"><h2 class="text-center">Lorem ipsum</h2></div></div><div class="bajada col-md-10 col-md-offset-1"><p class="text-center lead">Lorem ipsum bla bla. <a class="no-iframe-show" href="http://www.chequeado.com/investigacion/mucho-poquito-nada-cuanto-impuesto-a-las-ganancias-pagan-las-grandes-empresas-en-la-argentina/" target="_blank">Ver investigación completa en Chequeado <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a></p></div></div></div><div class="container-fluid"><div class="row">TODO</div></div><div id="fuente" class="container-fluid"><div class="row"><div class="col-md-12"><p class="text-center"><strong>Fuente:</strong> <a class="iframe-show" href="https://chequeado.github.io/investigaciones-viz/ddjj-macri/dist/app.html" target="_blank">Ver en pantalla completa <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a></p><p><ul class="share-ul-container text-center"><li>Compartir visualización <i class="glyphicon glyphicon-chevron-right"></i></li><li class="share-btn-container"><a share-url="https://chequeado.github.io/investigaciones-viz/ddjj-macri/dist/app.html" share-text="" share-hashtags="investigacion #ddj #dataviz" share-via="chequeado" class="share-btn share-twitter"></a></li><li class="share-btn-container"><a class="share-btn share-facebook" share-u="https://chequeado.github.io/investigaciones-viz/ddjj-macri/dist/app.html"></a></li><li class="share-btn-container"><a class="share-btn share-googleplus" share-url="https://chequeado.github.io/investigaciones-viz/ddjj-macri/dist/app.html"></a></li></ul></p></div></div></div><div id="button-container"><button class="btn btn-xs btn-chq" data-toggle="modal" data-target="#credits"><i class="glyphicon glyphicon-info-sign"></i> Créditos</button></div><div id="credits" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><img class="img-responsive" src="images/logo2.png"></div><div class="modal-body"><p class="lead">Visualización interactiva: Cuánto pagan de impuesto a las ganancias las mayores empresas de la Argentina</p><p>Investigación: <strong>xx</strong></p><p>Visualización: <strong>xx</strong></p><p>Coordinación: <strong>xx</strong></p><p>Fuente: <strong>xx</strong></p><p>Datos: <strong><a href="https://docs.google.com/spreadsheets/d/1upUGqPIAWsGpk00BecZbVpoWowPuGHm96pwPv_hppAs/pub?output=xlsx" data-bind="data" target="_blank">en planilla <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a></strong></p><p>Herramientas: <strong>Google Spreadsheet + TableTop.js + D3.js + C3.js + Mustache.js + Twitter Bootstrap + Github Pages + pym.js</strong></p></div><div class="modal-footer"><button type="button" class="btn btn-chq btn-xs btn-selected" data-dismiss="modal">Cerrar</button></div></div></div></div><!-- Google Analytics: change UA-XXXXX-X to be your site's ID. --><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='https://www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');</script><script src="scripts/vendor.js"></script><script src="https://d3plus.org/js/d3plus-text.v0.8.full.min.js"></script><script src="scripts/plugins.js"></script><script src="scripts/main.js"></script><script id="tpl-details" type="x-tmpl-mustache"><h2 class="text-center text-uppercase">{{empresa}}</h2>
+      <h4 class="text-center" style="color:{{ color }};">{{ sector }}</h4>
+      <div class="row">
+        <h5 class="text-center full-h5">Pago del impuesto a las ganancias, por año, como porcentaje de la facturación.</h5>
+        <div class="col-xs-3">
+            {{#selectedValue}}
+              {{#noPresentaron}}
+                <h3>NO DECLARÓ</h3>
+                {{#isPromedio}}
+                  <p>públicamente sus ganacias entre 2012 y 2015</p>
+                {{/isPromedio}}
+                {{^isPromedio}}
+                  <p>públicamente sus ganacias en el año {{ selectedYear }}</p>
+                {{/isPromedio}}
+              {{/noPresentaron}}
+              {{^noPresentaron}}
+                <h3>{{ selectedValue }}%</h3>
+                {{#isPromedio}}
+                  <p>pagado en promedio entre 2012 y 2015</p>
+                {{/isPromedio}}
+                {{^isPromedio}}
+                  <p>pagado en el año {{ selectedYear }}</p>
+                {{/isPromedio}}
+              {{/noPresentaron}}
+            {{/selectedValue}}
+        </div>
+        <div class="col-xs-9">
+          <div id="per-chart"></div>
+        </div>
+      </div></script><script id="tpl-select-industry" type="x-tmpl-mustache"><div class="col-md-6">
+      <div class="form-group">
+        <label for="category">Seleccioná un sector:</label>
+        <hr>
+        <select id="category" class="form-control select-chq">
+          {{#categories}}
+            <option value="{{val}}" {{#sel}}selected{{/sel}}>
+              {{txt}}
+            </option>
+          {{/categories}}
+        </select>
+      </div>
+      </div>
+      {{#empresasOption}}
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="empresa">Seleccioná un empresa:</label>
+          <hr>
+          <select id="empresa" class="form-control select-chq">
+            {{#empresas}}
+              <option value="{{val}}" {{#sel}}selected{{/sel}}>
+                {{txt}}
+              </option>
+            {{/empresas}}
+          </select>
+        </div>
+      </div>
+      {{/empresasOption}}</script><script id="tpl-legend" type="x-tmpl-mustache"><div id="legend" class="{{classContainer}}">
+        <div class="col-xs-12">
+          <div id="arrow" class="text-center hidden-md hidden-lg">
+            <img src="images/arrow.png">
+          </div>
+          <strong>Referencias:</strong>
+          <hr/>
+        </div>
+        <div class="col-md-3 col-xs-12">
+          <p class="text-center">
+            <span class="reference" style=""></span>
+            <span style="padding-top:5px;"><strong>Pagó</strong></span>
+          </p>
+        </div>
+        <div class="col-md-3 col-xs-12">
+          <p class="text-center">
+            <span class="reference" style="background-color:#FFF;border:2px solid #ddd;"></span>
+            <span style="padding-top:5px;"><strong>No pagó nada</strong></span>
+          </p>
+        </div>     
+        <div class="col-md-6 col-xs-12">
+          <p class="text-center">
+            <span class="reference" style="background-color:#000"></span>
+            <span style="padding-top:5px;"><strong>No presentó/difundió balance</strong></span>
+          </p>
+        </div>
+      </div></script><script type="text/javascript">$(document).ready(function(){
+        CHQ.init();
+      });</script></body></html>
