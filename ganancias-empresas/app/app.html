@@ -116,7 +116,7 @@
             <ul class="share-ul-container text-center">
               <li>Compartir visualización <i class="glyphicon glyphicon-chevron-right"></i></li>
               <li class="share-btn-container">
-                <a share-url="https://chequeado.github.io/investigaciones-viz/ganancias-empresas/dist/app.html" share-text="Ver visualización" share-hashtags="investigacion #ddj" share-via="chequeado" class="share-btn share-twitter"></a>
+                <a share-url="https://chequeado.github.io/investigaciones-viz/ganancias-empresas/dist/app.html" share-text="Cuánto pagan de ganancias las mayores empresas de la Argentina" share-hashtags="investigacion #ddj" share-via="chequeado" class="share-btn share-twitter"></a>
               </li>
 
               <li class="share-btn-container">
@@ -132,6 +132,33 @@
         </div>
       </div>
     </div>
+
+    <div id="button-container">
+      <button class="btn btn-xs btn-chq" data-toggle="modal" data-target="#credits"><i class="glyphicon glyphicon-info-sign"></i> Créditos</button>
+    </div>
+
+      <div id="credits" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <img class="img-responsive" src="images/logo2.png">
+            </div>
+            <div class="modal-body">
+              <p class="lead">Visualización interactiva: Cuánto pagan de impuesto a las ganancias las mayores empresas de la Argentina</p>
+              <p>Investigación: <strong data-bind="periodista">xx</strong></p>
+              <p>Visualización: <strong data-bind="developer">xx</strong></p>
+              <p>Coordinación: <strong data-bind="coordinador">xx</strong></p>
+              <p>Fuente: <strong data-bind="fuente">xx</strong></p>
+              <p>Datos: <strong><a href="https://docs.google.com/spreadsheets/d/1lZH4R70Ln3vqZFnDvySuA681kKJJWc49GEoFJwpKLDc/pub?output=xlsx" data-bind="data" target="_blank">en planilla <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a></strong></p>
+              <p>Herramientas: <strong data-bind="herramientas">Google Spreadsheet + TableTop.js + D3.js + C3.js + Mustache.js + Twitter Bootstrap + Github Pages + pym.js</strong></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-chq btn-xs btn-selected" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
       (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -145,7 +172,6 @@
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/SocialShare/socialshare.js"></script>
     <script src="/bower_components/tabletop/src/tabletop.js"></script>
     <script src="/bower_components/pym.js/dist/pym.js"></script>
     <script src="/bower_components/d3/d3.js"></script>
@@ -172,6 +198,7 @@
     <!-- endbuild -->
     
     <!-- build:js scripts/main.js -->
+    <script src="scripts/socialshare.js"></script>
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
 
@@ -241,11 +268,13 @@
 
     <script id="tpl-legend" type="x-tmpl-mustache">
       <div id="legend" class="{{classContainer}}">
-        <div id="arrow" class="text-center hidden-md hidden-lg">
-          <img src="images/arrow.png">
+        <div class="col-xs-12">
+          <div id="arrow" class="text-center hidden-md hidden-lg">
+            <img src="images/arrow.png">
+          </div>
+          <strong>Referencias:</strong>
+          <hr/>
         </div>
-        <strong>Referencias:</strong>
-        <hr/>
         <div class="col-md-3 col-xs-12">
           <p class="text-center">
             <span class="reference" style=""></span>

@@ -8,8 +8,7 @@
     "pym.js": "^0.4.5",
     "d3": "v3.5.17",
     "c3": "^0.4.11",
-    "mustache.js": "mustache#^2.2.1",
-    "SocialShare": "^1.1.1"
+    "mustache.js": "mustache#^2.2.1"
   },
   "overrides": {
     "bootstrap-sass": {
