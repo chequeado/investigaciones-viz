@@ -81,8 +81,6 @@ $(document).ready(function() {
       //get array of query params;
       var queryParams = getQueryStringArray(options, paramProto);
 
-      console.log(queryParams);
-
       //get complete share url
       var shareUrl = concatShareUrl(shareAddress, queryParams);
       return shareUrl;

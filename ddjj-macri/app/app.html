@@ -48,25 +48,81 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-      <div class="container-fluid">
-        <div id="titulares" class="row">
-          <div class="titulo col-md-12">
-            <div class="col-md-10 col-md-offset-1">
-              <h2 class="text-center">Lorem ipsum</h2>
-            </div>
-          </div>
-          <div class="bajada col-md-10 col-md-offset-1">
-            <p class="text-center lead">Lorem ipsum bla bla. <a class="no-iframe-show" href="http://www.chequeado.com/investigacion/mucho-poquito-nada-cuanto-impuesto-a-las-ganancias-pagan-las-grandes-empresas-en-la-argentina/" target="_blank">Ver investigación completa en Chequeado <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a></p>
+    <div class="container-fluid">
+      <div id="titulares" class="row">
+        <div class="titulo col-md-12">
+          <div class="col-md-10 col-md-offset-1">
+            <h2 class="text-center">Lorem ipsum</h2>
           </div>
         </div>
-      </div>
-      <div class="container-fluid">
-        <div class="row">
-          TODO
+        <div class="bajada col-md-10 col-md-offset-1">
+          <p class="text-center lead">Lorem ipsum bla bla. <a class="no-iframe-show" href="http://www.chequeado.com/investigacion/mucho-poquito-nada-cuanto-impuesto-a-las-ganancias-pagan-las-grandes-empresas-en-la-argentina/" target="_blank">Ver investigación completa en Chequeado <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a></p>
         </div>
       </div>
-
     </div>
+    <div class="container-fluid">
+      <div class="row">
+          <div id="profile" class="col-xs-12 col-sm-6 col-md-3">
+              <div class="profile-sidebar">
+                <!-- SIDEBAR USERPIC -->
+                <div class="profile-userpic">
+                  <img src="http://lorempixel.com/400/400/people/7" class="img-responsive" alt="">
+                </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                  <div class="profile-usertitle-name">
+                    Mauricio Macri
+                  </div>
+                  <div class="profile-usertitle-job">
+                    Presidente de la Nación
+                  </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR BUTTONS -->
+                <!--div class="profile-userbuttons">
+                  <button type="button" class="btn btn-success btn-sm">Follow</button>
+                  <button type="button" class="btn btn-danger btn-sm">Message</button>
+                </div-->
+                <!-- END SIDEBAR BUTTONS -->
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                  <ul class="nav">
+                    <li class="active">
+                      <a href="#">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                      8 de febrero de 1959 - 57 años</a>
+                    </li>
+                    <li>
+                      <a href="#">
+                      <i class="glyphicon glyphicon-education"></i>
+                      Ingeniero Civil </a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- END MENU -->
+              </div>
+              <h2>Evolución total</h2>
+              <div id="chart-total-container">
+
+              </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-9">
+          <h2>En Argentina</h2>
+          <div id="chart-container">
+
+          </div>
+          <hr>
+          <h2>En el exterior</h2>
+          <div id="chart-exterior-container">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
     <div id="fuente" class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -89,13 +145,15 @@
 
             </ul>
           </p>
+          <p>
+            <div id="button-container">
+              <button class="btn btn-xs btn-chq" data-toggle="modal" data-target="#credits"><i class="glyphicon glyphicon-info-sign"></i> Créditos</button>
+            </div>
+          </p>
         </div>
       </div>
     </div>
 
-    <div id="button-container">
-      <button class="btn btn-xs btn-chq" data-toggle="modal" data-target="#credits"><i class="glyphicon glyphicon-info-sign"></i> Créditos</button>
-    </div>
 
       <div id="credits" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
