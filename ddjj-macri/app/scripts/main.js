@@ -88,7 +88,7 @@ var d3ES = d3.locale(es_ES);
 
     CHQ.render = function(){
 
-        var vars = ['value_GCBA','value_OA','value_NACION','patrimonio_total'];
+        var vars = ['value_GCBA','value_OA','patrimonio_total'];
 
         CHQ.totals = CHQ.rawData.map(function(e){
                     $.extend(e,{value_GCBA:0,value_OA:0,value_NACION:0});
@@ -107,21 +107,27 @@ var d3ES = d3.locale(es_ES);
                 types: {
                     value_GCBA: 'bar',
                     value_OA: 'bar',
-                    value_NACION: 'bar',
                     patrimonio_total: 'line'
                 },
+                colors: {
+                    value_GCBA: '#FFBD00',
+                    value_OA: '#1A80C2',
+                    patrimonio_total: '#aaa'
+                },
                 groups: [
-                    ['value_GCBA','value_OA','value_NACION']
+                    ['value_GCBA','value_OA']
                 ],
                 names: {
                     value_GCBA: 'GCBA',
                     value_OA: 'OA',
-                    value_NACION: 'NACION',
                     patrimonio_total: 'Patrimonio total'    
                 },
                 onclick: function (d, element) {
                     $('#anios').val(d.index).change();
                 }
+            },
+            point: {
+                show: false
             },
             tooltip: {
                 grouped: false, // Default true,
@@ -175,19 +181,20 @@ var d3ES = d3.locale(es_ES);
             {label:'Ingreso Mensual',value:data.ingreso_mensual_publico,icon:'ingreso_mensual_publico'},
         ];
 
-        console.log(detailData);
-        console.log('create detailChart');
+        //var c10 = d3.scale.category10();
 
-        var c10 = d3.scale.category10();
+        var c10 = d3.scale.ordinal()
+                  .domain(d3.range(0,detailData.length))
+                  .range(['#00557C', '#66B7DD' , '#11998C', '#50D3C7', '#5151B7', '#DD8EDA', '#94408C', '#FCAF70', '#ED5F5F', '#AF1515']);
 
         var w = $('#chart-container').width();
 
         var width = w,
-            barHeight = 50;
+            barHeight = 70;
 
         var x = d3.scale.linear()
             .domain([0, d3.max(detailData,function(d){return parseInt(d.value); })])
-            .range([0, width-100]);
+            .range([0, width-barHeight-100]);
 
         var chart = d3.select('#detail-chart')
             .attr('width', width)
@@ -202,13 +209,22 @@ var d3ES = d3.locale(es_ES);
                 d3.select(this).append('rect');
                 d3.select(this).append('text').classed('value',true);
                 d3.select(this).append('text').classed('label',true);
+
+                d3.select(this)
+                    .append('svg:image')
+                    .attr('xlink:href', function(d){return 'images/icons/'+d.icon+'.svg';})
+                    .attr('x', 0)
+                    .attr('y', 0)
+                    .attr('width', barHeight)
+                    .attr('height', barHeight);
             });
         
         bar.attr('transform', function(d, i) { return 'translate(0,' + i * barHeight + ')'; });
 
         bar.select('rect')
-            .attr('height', barHeight/2)
+            .attr('height', barHeight/3)
             .attr('y', barHeight/2)
+            .attr('x', barHeight)
             .attr('fill',function(d,i){ return c10(i)})
             .transition()
             .attr('width', function(d){ return x(d.value);});
@@ -217,14 +233,14 @@ var d3ES = d3.locale(es_ES);
             .text(function(d) { return  d.label; })
             .attr('y', barHeight/2-5)
             .transition()
-            .attr('x', 0);
+            .attr('x', barHeight);
 
         bar.select('text.value')
-            .text(function(d) { return  d3ES.numberFormat('$,')(d.value); })
-            .attr('y', barHeight-7)
+            .text(function(d) { return (isNaN(d.value))? '':d3ES.numberFormat('$,')(d.value); })
+            .attr('y', barHeight-17)
             .attr('fill',function(d,i){ return c10(i)})
             .transition()
-            .attr('x', function(d) { return x(d.value) + 3; });
+            .attr('x', function(d) { return x(d.value) + barHeight + 5; });
 
     };
 
