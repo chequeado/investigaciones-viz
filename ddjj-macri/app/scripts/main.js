@@ -6,6 +6,24 @@ d3.selection.prototype.moveToFront = function() {
   });
 };
 
+var es_ES = {
+        'decimal': ',',
+        'thousands': '.',
+        'grouping': [3],
+        'currency': ['$', ''],
+        'dateTime': '%a %b %e %X %Y',
+        'date': '%d/%m/%Y',
+        'time': '%H:%M:%S',
+        'periods': ['AM', 'PM'],
+        'days': ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        'shortDays': ['Dom', 'Lun', 'Mar', 'Mi', 'Jue', 'Vie', 'Sab'],
+        'months': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        'shortMonths': ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+};
+
+var d3ES = d3.locale(es_ES);
+
+
 ;(function(global, document, $, Tabletop, Mustache){
 
     'use strict';
@@ -35,12 +53,12 @@ d3.selection.prototype.moveToFront = function() {
 
     CHQ.postProcess = function(e,ix){
         $.each(e,function(i,item){
-            if(i!='anio'){
+            if(i!='anio'&&i!='ente'){
                 e[i] = (e[i]+'').replace(/\./g,'');
                 e[i] = parseInt(e[i]);
-                if(i=='deudas'){
+                /*if(i=='deudas'){
                     e[i] *= -1;
-                }
+                }*/
             }
         });
         e['id'] = ix;
@@ -62,93 +80,151 @@ d3.selection.prototype.moveToFront = function() {
             CHQ.timeoutId = setTimeout(CHQ.render, 500);
             
         });
+        $('#anios').change(function(){
+            CHQ.updateChart($(this).val());
+        });
 
     };
 
     CHQ.render = function(){
 
-        var w = $('#chart-container').width();
-//        console.log('render!');
+        var vars = ['value_GCBA','value_OA','value_NACION','patrimonio_total'];
 
-        var vars = ['bienes','ahorros','acciones', 'deudas', 'bienes_hogar','otros'];
+        CHQ.totals = CHQ.rawData.map(function(e){
+                    $.extend(e,{value_GCBA:0,value_OA:0,value_NACION:0});
+                    e['value_'+e.ente] = e.patrimonio_total;
+                    return e;
+                });
 
         var chart = c3.generate({
             bindto: '#chart-container',
             data: {
-                json: CHQ.rawData,
+                json: CHQ.totals,
                 keys: {
                     x: 'anio',
                     value: vars,
                 },
-                type: 'bar',
+                types: {
+                    value_GCBA: 'bar',
+                    value_OA: 'bar',
+                    value_NACION: 'bar',
+                    patrimonio_total: 'line'
+                },
                 groups: [
-                    vars
-                ]
-            },
-            axis:{
-                x:{
-                    type: 'category'
-                }
-            },
-            grid: {
-                y: {
-                    lines: [{value:0}]
-                }
-            }
-        });
-
-        var vars = ['bienes_exterior','ahorros_exterior'];
-
-        var chart = c3.generate({
-            bindto: '#chart-exterior-container',
-            data: {
-                json: CHQ.rawData,
-                keys: {
-                    x: 'anio',
-                    value: vars,
+                    ['value_GCBA','value_OA','value_NACION']
+                ],
+                names: {
+                    value_GCBA: 'GCBA',
+                    value_OA: 'OA',
+                    value_NACION: 'NACION',
+                    patrimonio_total: 'Patrimonio total'    
                 },
-                type: 'bar',
-                groups: [
-                    vars
-                ]
+                onclick: function (d, element) {
+                    $('#anios').val(d.index).change();
+                }
+            },
+            tooltip: {
+                grouped: false, // Default true,
+                format: {
+                    value: d3ES.numberFormat('$,')
+                    //value: function (value, ratio, id, index) { console.log('value',value); return value; }
+                }
             },
             axis:{
                 x:{
-                    type: 'category'
-                }
-            },
-            grid: {
-                y: {
-                    lines: [{value:0}]
-                }
-            }
-        });
-
-        var vars = ['patrimonio_total'];
-
-        var chart = c3.generate({
-            bindto: '#chart-total-container',
-            data: {
-                json: CHQ.rawData,
-                keys: {
-                    x: 'anio',
-                    value: vars,
+                    type: 'category',
+                    tick: {
+                      rotate: 90
+                    }
                 },
-                type: 'line',
-            },
-            axis:{
-                x:{
-                    type: 'category'
+                y:{
+                    tick: {
+                      format: function (x) { return '$'+x/1000000;  }
+                    }
                 }
+
             },
             grid: {
                 y: {
                     lines: [{value:0}]
                 }
-            }
+            },
+            onrendered: function () { setTimeout(function(){
+                $('#anios').val('9').change();
+                $('#anios option[value="-1"]').remove();
+            },2000); }
         });
 
+    };
+
+    CHQ.updateChart = function(index){
+        d3.selectAll('rect.c3-event-rect').classed('selected-chq',false);
+        d3.select('rect.c3-event-rect-'+index).classed('selected-chq',true);
         
+        var data = CHQ.rawData[index];
+        var detailData = [
+            {label:'Bienes',value:data.bienes,icon:'bienes'},
+            {label:'Acciones',value:data.acciones,icon:'acciones'},
+            {label:'Ahorros',value:data.ahorros,icon:'ahorros'},
+            {label:'Créditos',value:data.creditos,icon:'creditos'},
+            {label:'Bienes del hogar',value:data.bienes_hogar,icon:'bienes_hogar'},
+            {label:'Otros',value:data.otros,icon:'otros'},
+            {label:'Bienes en el exterior',value:data.bienes_exterior,icon:'bienes_exterior'},
+            {label:'Ahorros en el exterior',value:data.ahorros_exterior,icon:'ahorros_exterior'},
+            {label:'Deudas',value:data.deudas,icon:'deudas'},
+            {label:'Ingreso Mensual',value:data.ingreso_mensual_publico,icon:'ingreso_mensual_publico'},
+        ];
+
+        console.log(detailData);
+        console.log('create detailChart');
+
+        var c10 = d3.scale.category10();
+
+        var w = $('#chart-container').width();
+
+        var width = w,
+            barHeight = 50;
+
+        var x = d3.scale.linear()
+            .domain([0, d3.max(detailData,function(d){return parseInt(d.value); })])
+            .range([0, width-100]);
+
+        var chart = d3.select('#detail-chart')
+            .attr('width', width)
+            .attr('height', barHeight * detailData.length);
+
+        var bar = chart.selectAll('g')
+            .data(detailData)
+
+        bar.enter()
+            .append('g')
+            .each(function(){
+                d3.select(this).append('rect');
+                d3.select(this).append('text').classed('value',true);
+                d3.select(this).append('text').classed('label',true);
+            });
+        
+        bar.attr('transform', function(d, i) { return 'translate(0,' + i * barHeight + ')'; });
+
+        bar.select('rect')
+            .attr('height', barHeight/2)
+            .attr('y', barHeight/2)
+            .attr('fill',function(d,i){ return c10(i)})
+            .transition()
+            .attr('width', function(d){ return x(d.value);});
+
+        bar.select('text.label')
+            .text(function(d) { return  d.label; })
+            .attr('y', barHeight/2-5)
+            .transition()
+            .attr('x', 0);
+
+        bar.select('text.value')
+            .text(function(d) { return  d3ES.numberFormat('$,')(d.value); })
+            .attr('y', barHeight-7)
+            .attr('fill',function(d,i){ return c10(i)})
+            .transition()
+            .attr('x', function(d) { return x(d.value) + 3; });
 
     };
 

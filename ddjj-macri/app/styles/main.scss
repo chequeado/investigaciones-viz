@@ -74,10 +74,6 @@ hr {
 	fill: #000;
 }
 
-.c3-chart-lines path.c3-shape{
-	stroke-width: 5px;
-}
-
 .btn-chq{
 	color: #000;
 	border: none;
@@ -124,7 +120,7 @@ hr {
 
 }
 
-#titulares{
+.titulares{
 	border: 2px solid #000;
 	margin-bottom:20px;
 	.titulo{
@@ -260,6 +256,15 @@ hr {
   background-color: #f6f9fb;
   border-left: 2px solid #5b9bd1;
   margin-left: -2px;
+}
+
+rect.selected-chq{
+	fill:#044B94;
+	fill-opacity:0.4;
+}
+
+rect.c3-event-rect{
+	cursor:pointer;
 }
 
 /* Responsive: Portrait tablets and up */

@@ -49,7 +49,7 @@
     <![endif]-->
 
     <div class="container-fluid">
-      <div id="titulares" class="row">
+      <div class="row titulares">
         <div class="titulo col-md-12">
           <div class="col-md-10 col-md-offset-1">
             <h2 class="text-center">Lorem ipsum</h2>
@@ -102,21 +102,51 @@
                 </div>
                 <!-- END MENU -->
               </div>
-              <h2>Evolución total</h2>
-              <div id="chart-total-container">
-
-              </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-9">
-          <h2>En Argentina</h2>
+          
+          <div class="row titulares">
+            <div class="titulo col-md-12">
+              <div class="col-md-10 col-md-offset-1">
+                <h4 class="text-center">Evolución del patrimonio</h4>
+              </div>
+            </div>
+            <div class="bajada col-md-10 col-md-offset-1">
+              <p class="text-center">en millones de pesos</p>
+            </div>
+          </div>
           <div id="chart-container">
 
           </div>
-          <hr>
-          <h2>En el exterior</h2>
-          <div id="chart-exterior-container">
+          
+          <hr/>
 
+          <div class="col-md-6">
+            <div class="form-group">
+              <select id="anios" class="form-control select-chq" name="anio">
+                <option value="-1"></option>
+                <option value="0">2007</option>
+                <option value="1">2008</option>
+                <option value="2">2009</option>
+                <option value="3">2010</option>
+                <option value="4">2011</option>
+                <option value="5">2012</option>
+                <option value="6">2013</option>
+                <option value="7">2014 (1)</option>
+                <option value="8">2014 (2)</option>
+                <option value="9">2015</option>
+              </select>
+            </div>
           </div>
+
+          <hr/>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <svg id="detail-chart"></svg>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
