@@ -243,6 +243,10 @@ text.d3plus-textBox tspan{
 	}
 	p{
 		margin: 14px 0px 5px 0px;
+		text-align: justify;
+	}
+	p.lead{
+		margin: 0px 0px 5px 0px;
 	}
 }
 
