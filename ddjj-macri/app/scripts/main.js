@@ -40,7 +40,7 @@ var d3ES = d3.locale(es_ES);
         Tabletop.init( { key: '1upUGqPIAWsGpk00BecZbVpoWowPuGHm96pwPv_hppAs',
                    callback: CHQ.dataLoaded,
                    simpleSheet: true,
-                   parseNumbers: true
+                   parseNumbers: false
                } );
 
         if(CHQ.inIframe()){
@@ -54,7 +54,7 @@ var d3ES = d3.locale(es_ES);
     CHQ.postProcess = function(e,ix){
         $.each(e,function(i,item){
             if(i!='anio'&&i!='ente'){
-                e[i] = (e[i]+'').replace(/\./g,'');
+                e[i] = (e[i]+'.').replace(/\./g,'');
                 e[i] = parseInt(e[i]);
                 /*if(i=='deudas'){
                     e[i] *= -1;
@@ -70,7 +70,8 @@ var d3ES = d3.locale(es_ES);
     	console.log('data',CHQ.rawData);
         CHQ.$body.removeClass('loading');
         CHQ.render();
-        setTimeout(CHQ.startEvents,2000);
+        //setTimeout(CHQ.startEvents,1000);
+        CHQ.startEvents()
     };
 
     CHQ.startEvents = function(){
@@ -98,6 +99,9 @@ var d3ES = d3.locale(es_ES);
 
         var chart = c3.generate({
             bindto: '#chart-container',
+            size: {
+              height: 480
+            },
             data: {
                 json: CHQ.totals,
                 keys: {
@@ -110,9 +114,9 @@ var d3ES = d3.locale(es_ES);
                     patrimonio_total: 'line'
                 },
                 colors: {
-                    value_GCBA: '#FFBD00',
-                    value_OA: '#1A80C2',
-                    patrimonio_total: '#aaa'
+                    value_GCBA: '#ffad5c',
+                    value_OA: '#ff8080',
+                    patrimonio_total: '#67508a'
                 },
                 groups: [
                     ['value_GCBA','value_OA']
@@ -140,10 +144,16 @@ var d3ES = d3.locale(es_ES);
                 x:{
                     type: 'category',
                     tick: {
-                      rotate: 90
-                    }
+                      rotate: 90,
+                      multiline: false
+                    },
+                    height: 60
                 },
                 y:{
+                    label: {
+                        text: 'Millones de pesos',
+                        position: 'inner-top'
+                    },
                     tick: {
                       format: function (x) { return '$'+x/1000000;  }
                     }
@@ -164,21 +174,23 @@ var d3ES = d3.locale(es_ES);
     };
 
     CHQ.updateChart = function(index){
-        d3.selectAll('rect.c3-event-rect').classed('selected-chq',false);
-        d3.select('rect.c3-event-rect-'+index).classed('selected-chq',true);
+        d3.selectAll('rect.c3-event-rect')
+            .classed('selected-chq',false);
+        d3.select('rect.c3-event-rect-'+index)
+            .classed('selected-chq',true);
         
         var data = CHQ.rawData[index];
         var detailData = [
-            {label:'Bienes',value:data.bienes,icon:'bienes'},
-            {label:'Acciones',value:data.acciones,icon:'acciones'},
-            {label:'Ahorros',value:data.ahorros,icon:'ahorros'},
-            {label:'Créditos',value:data.creditos,icon:'creditos'},
-            {label:'Bienes del hogar',value:data.bienes_hogar,icon:'bienes_hogar'},
-            {label:'Otros',value:data.otros,icon:'otros'},
-            {label:'Bienes en el exterior',value:data.bienes_exterior,icon:'bienes_exterior'},
-            {label:'Ahorros en el exterior',value:data.ahorros_exterior,icon:'ahorros_exterior'},
-            {label:'Deudas',value:data.deudas,icon:'deudas'},
-            {label:'Ingreso Mensual',value:data.ingreso_mensual_publico,icon:'ingreso_mensual_publico'},
+            {anio:data.anio,label:'Bienes',value:data.bienes,icon:'bienes'},
+            {anio:data.anio,label:'Acciones',value:data.acciones,icon:'acciones'},
+            {anio:data.anio,label:'Ahorros',value:data.ahorros,icon:'ahorros'},
+            {anio:data.anio,label:'Créditos',value:data.creditos,icon:'creditos'},
+            {anio:data.anio,label:'Bienes del hogar',value:data.bienes_hogar,icon:'bienes_hogar'},
+            {anio:data.anio,label:'Otros',value:data.otros,icon:'otros'},
+            {anio:data.anio,label:'Bienes en el exterior',value:data.bienes_exterior,icon:'bienes_exterior'},
+            {anio:data.anio,label:'Ahorros en el exterior',value:data.ahorros_exterior,icon:'ahorros_exterior'},
+            {anio:data.anio,label:'Deudas',value:data.deudas,icon:'deudas'},
+            {anio:data.anio,label:'Ingreso Mensual',value:data.ingreso_mensual_publico,icon:'ingreso_mensual_publico'},
         ];
 
         //var c10 = d3.scale.category10();
@@ -190,7 +202,7 @@ var d3ES = d3.locale(es_ES);
         var w = $('#chart-container').width();
 
         var width = w,
-            barHeight = 70;
+            barHeight = 60;
 
         var x = d3.scale.linear()
             .domain([0, d3.max(detailData,function(d){return parseInt(d.value); })])
@@ -222,25 +234,57 @@ var d3ES = d3.locale(es_ES);
         bar.attr('transform', function(d, i) { return 'translate(0,' + i * barHeight + ')'; });
 
         bar.select('rect')
-            .attr('height', barHeight/3)
-            .attr('y', barHeight/2)
+            .attr('height', parseInt(barHeight/2.5))
+            .attr('y', barHeight/3)
             .attr('x', barHeight)
             .attr('fill',function(d,i){ return c10(i)})
             .transition()
-            .attr('width', function(d){ return x(d.value);});
+            .attr('width', function(d){ 
+                var w = '';
+                if(isNaN(d.value)){
+                    w = x(1);
+                } else {
+                    w = x(d.value);
+                }
+                return w;
+            });
 
         bar.select('text.label')
             .text(function(d) { return  d.label; })
-            .attr('y', barHeight/2-5)
+            .attr('y', parseInt(barHeight/3) - 4)
             .transition()
             .attr('x', barHeight);
 
         bar.select('text.value')
-            .text(function(d) { return (isNaN(d.value))? '':d3ES.numberFormat('$,')(d.value); })
-            .attr('y', barHeight-17)
-            .attr('fill',function(d,i){ return c10(i)})
+            .text(function(d) { 
+                var label = '';
+                if(isNaN(d.value)){
+                    label = 'Información no requerida en el año '+d.anio;
+                } else {
+                    label = d3ES.numberFormat('$,')(d.value);
+                }
+                return label;
+            })
+            .attr('y', barHeight/2 + 7)
+            .attr('fill',function(d,i){ 
+                var color = '';
+                if(isNaN(d.value)){
+                    color = '#bbb'
+                } else {
+                    color = c10(i)
+                }
+                return color;
+            })
             .transition()
-            .attr('x', function(d) { return x(d.value) + barHeight + 5; });
+            .attr('x', function(d) {
+                var pos = '';
+                if(isNaN(d.value)){
+                    pos = barHeight;
+                } else {
+                    pos = x(d.value) + barHeight + 5; 
+                }
+                return pos;
+            });
 
     };
 
