@@ -166,7 +166,8 @@ var d3ES = d3.locale(es_ES);
                 }
             },
             onrendered: function () { setTimeout(function(){
-                $('#anios').val('9').change();
+                var last = $('#anios option').last().val();
+                $('#anios').val(last).change();
                 $('#anios option[value="-1"]').remove();
             },2000); }
         });
