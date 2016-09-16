@@ -119,20 +119,8 @@
               <div class="titulo col-md-12">
                   <h3 class="text-center">Detalle por año</h3>
               </div>
-              <div class="bajada">
-                  <select id="anios" class="form-control select-chq" name="anio">
-                    <option value="-1"></option>
-                    <option value="0">Año 2007</option>
-                    <option value="1">Año 2008</option>
-                    <option value="2">Año 2009</option>
-                    <option value="3">Año 2010</option>
-                    <option value="4">Año 2011</option>
-                    <option value="5">Año 2012</option>
-                    <option value="6">Año 2013</option>
-                    <option value="7">Año 2014 (1) GCBA</option>
-                    <option value="8">Año 2014 (2) OA</option>
-                    <option value="9">Año 2015</option>
-                  </select>
+              <div id="select-container" class="bajada">
+
               </div>
           </div>
 
@@ -182,6 +170,15 @@
         </div>
       </div>
     </div>
+
+     <script id="tpl-select" type="x-tmpl-mustache">
+        <select id="anios" class="form-control select-chq" name="anio">
+          <option value="-1"></option>
+          {{#data}}
+            <option value="{{id}}">Año {{anio}}</option>
+          {{/data}}
+        </select>
+      </script>
 
       <div id="credits" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

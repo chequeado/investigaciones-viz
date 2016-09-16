@@ -56,9 +56,6 @@ var d3ES = d3.locale(es_ES);
             if(i!='anio'&&i!='ente'){
                 e[i] = (e[i]+'.').replace(/\./g,'');
                 e[i] = parseInt(e[i]);
-                /*if(i=='deudas'){
-                    e[i] *= -1;
-                }*/
             }
         });
         e['id'] = ix;
@@ -68,6 +65,10 @@ var d3ES = d3.locale(es_ES);
     CHQ.dataLoaded = function(data,tabletop){
         CHQ.rawData = data.map(CHQ.postProcess);
         CHQ.$body.removeClass('loading');
+        var template = $('#tpl-select').html();
+        Mustache.parse(template);
+        var rendered = Mustache.render(template, {data:CHQ.rawData});
+        $('#select-container').html(rendered);
         CHQ.updateChart(); //init with no data
         CHQ.render();
         //setTimeout(CHQ.startEvents,1000);
