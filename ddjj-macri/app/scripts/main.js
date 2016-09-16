@@ -67,11 +67,11 @@ var d3ES = d3.locale(es_ES);
 
     CHQ.dataLoaded = function(data,tabletop){
         CHQ.rawData = data.map(CHQ.postProcess);
-    	console.log('data',CHQ.rawData);
         CHQ.$body.removeClass('loading');
+        CHQ.updateChart(); //init with no data
         CHQ.render();
         //setTimeout(CHQ.startEvents,1000);
-        CHQ.startEvents()
+        CHQ.startEvents();
     };
 
     CHQ.startEvents = function(){
@@ -89,7 +89,7 @@ var d3ES = d3.locale(es_ES);
 
     CHQ.render = function(){
 
-        var vars = ['value_GCBA','value_OA','patrimonio_total'];
+        var vars = ['value_GCBA','value_OA'];
 
         CHQ.totals = CHQ.rawData.map(function(e){
                     $.extend(e,{value_GCBA:0,value_OA:0,value_NACION:0});
@@ -122,9 +122,8 @@ var d3ES = d3.locale(es_ES);
                     ['value_GCBA','value_OA']
                 ],
                 names: {
-                    value_GCBA: 'GCBA',
-                    value_OA: 'OA',
-                    patrimonio_total: 'Patrimonio total'    
+                    value_GCBA: 'Gobierno de la Ciudad de Buenos Aires',
+                    value_OA: 'Oficina Anticorrupción'    
                 },
                 onclick: function (d, element) {
                     $('#anios').val(d.index).change();
@@ -179,19 +178,34 @@ var d3ES = d3.locale(es_ES);
         d3.select('rect.c3-event-rect-'+index)
             .classed('selected-chq',true);
         
-        var data = CHQ.rawData[index];
-        var detailData = [
-            {anio:data.anio,label:'Bienes',value:data.bienes,icon:'bienes'},
-            {anio:data.anio,label:'Acciones',value:data.acciones,icon:'acciones'},
-            {anio:data.anio,label:'Ahorros',value:data.ahorros,icon:'ahorros'},
-            {anio:data.anio,label:'Créditos',value:data.creditos,icon:'creditos'},
-            {anio:data.anio,label:'Bienes del hogar',value:data.bienes_hogar,icon:'bienes_hogar'},
-            {anio:data.anio,label:'Otros',value:data.otros,icon:'otros'},
-            {anio:data.anio,label:'Bienes en el exterior',value:data.bienes_exterior,icon:'bienes_exterior'},
-            {anio:data.anio,label:'Ahorros en el exterior',value:data.ahorros_exterior,icon:'ahorros_exterior'},
-            {anio:data.anio,label:'Deudas',value:data.deudas,icon:'deudas'},
-            {anio:data.anio,label:'Ingreso Mensual',value:data.ingreso_mensual_publico,icon:'ingreso_mensual_publico'},
-        ];
+        if(index){
+            var data = CHQ.rawData[index];
+            var detailData = [
+                {anio:data.anio,label:'Bienes',value:data.bienes,icon:'bienes'},
+                {anio:data.anio,label:'Acciones',value:data.acciones,icon:'acciones'},
+                {anio:data.anio,label:'Ahorros',value:data.ahorros,icon:'ahorros'},
+                {anio:data.anio,label:'Créditos',value:data.creditos,icon:'creditos'},
+                {anio:data.anio,label:'Bienes del hogar',value:data.bienes_hogar,icon:'bienes_hogar'},
+                {anio:data.anio,label:'Otros',value:data.otros,icon:'otros'},
+                {anio:data.anio,label:'Bienes en el exterior',value:data.bienes_exterior,icon:'bienes_exterior'},
+                {anio:data.anio,label:'Ahorros en el exterior',value:data.ahorros_exterior,icon:'ahorros_exterior'},
+                {anio:data.anio,label:'Deudas',value:data.deudas,icon:'deudas'},
+                {anio:data.anio,label:'Ingreso Mensual',value:data.ingreso_mensual_publico,icon:'ingreso_mensual_publico'},
+            ];
+        }else{
+            var detailData = [
+                {anio:'',label:'Bienes',value:0,icon:'bienes'},
+                {anio:'',label:'Acciones',value:0,icon:'acciones'},
+                {anio:'',label:'Ahorros',value:0,icon:'ahorros'},
+                {anio:'',label:'Créditos',value:0,icon:'creditos'},
+                {anio:'',label:'Bienes del hogar',value:0,icon:'bienes_hogar'},
+                {anio:'',label:'Otros',value:0,icon:'otros'},
+                {anio:'',label:'Bienes en el exterior',value:0,icon:'bienes_exterior'},
+                {anio:'',label:'Ahorros en el exterior',value:0,icon:'ahorros_exterior'},
+                {anio:'',label:'Deudas',value:0,icon:'deudas'},
+                {anio:'',label:'Ingreso Mensual',value:0,icon:'ingreso_mensual_publico'},
+            ];
+        }
 
         //var c10 = d3.scale.category10();
 
