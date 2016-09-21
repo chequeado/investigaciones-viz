@@ -101,7 +101,7 @@ var d3ES = d3.locale(es_ES);
         var chart = c3.generate({
             bindto: '#chart-container',
             size: {
-              height: 480
+              height: 600
             },
             data: {
                 json: CHQ.totals,
