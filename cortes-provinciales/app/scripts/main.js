@@ -92,28 +92,20 @@ d3.selection.prototype.moveToFront = function() {
     };
 
     CHQ.render = function(){
-//        console.log(CHQ.data);
-//        console.log(CHQ.groups);
-//        console.log(CHQ.categories);
-//        console.log(CHQ.maxValue);
-
-        //CHQ.filterData();
-
-        //console.log(CHQ.data);
 
         var w = $('#chart-container').width();
 
         CHQ.smallDevice = (w < 990);
 
-        var rowH = 100;
+        var rowH = 75;
         var colW = w/3;
 
         var h = (CHQ.provincias.length+1)*rowH;
 
         var width = w,
             height = h,
-            padding = 2, // separation between same-color circles
-            clusterPadding = 2, // separation between different-color circles
+            padding = 1, // separation between same-color circles
+            clusterPadding = 5, // separation between different-color circles
             maxRadius = w/25,
             minRadius = w/100,
             max2Radius = w/75,
@@ -252,8 +244,8 @@ d3.selection.prototype.moveToFront = function() {
         if(!CHQ.chart) {
             CHQ.chart = {};
             CHQ.chart.svg = d3.select('#chart-container').append('svg').attr('id','main-chart-svg');
-            CHQ.chart.circlesGroup = CHQ.chart.svg.append('g').attr('id','circles-chart-group');
             CHQ.chart.provinciasGroup = CHQ.chart.svg.append('g').attr('id','provincias-chart-group');
+            CHQ.chart.circlesGroup = CHQ.chart.svg.append('g').attr('id','circles-chart-group');
             
             CHQ.tooltip = d3.select('body')
                 .append('div')
@@ -283,7 +275,7 @@ d3.selection.prototype.moveToFront = function() {
             group
               .append('text')
               .datum(d)
-              .attr('y',rowH/2-5)
+              .attr('y',rowH/2+5)
               .classed('text-provincia',true)
               .attr('text-anchor','end')
               .text(function(d){return d});
@@ -292,13 +284,13 @@ d3.selection.prototype.moveToFront = function() {
               .append('rect')
               .datum(d)
               .classed('aliado-col',true)
-              .attr('fill','orange');
+              .attr('fill','#FFF');
 
             group
               .append('rect')
               .datum(d)
               .classed('opositor-col',true)
-              .attr('fill','steelblue');
+              .attr('fill','#FFF');
 
           });
 
@@ -319,12 +311,28 @@ d3.selection.prototype.moveToFront = function() {
           .attr('x',colW);
 
         CHQ.chart.provincias
-          .transition()
           .attr('transform',function(d,i){
-            return 'translate(0,' + ((i+1)*rowH) + ')';
+            return 'translate(0,' + ((i)*rowH) + ')';
           });
 
-        /*CHQ.chart.circles = CHQ.circlesGroup.selectAll('circle.juez')
+        //nodes
+
+        var nodes = prepareNodes();
+
+        var force = d3.layout.force()
+            .nodes(nodes)
+            .size([width, height])
+            .gravity(0)
+            .charge(1)
+            .on('tick', tick)
+            .start();
+
+        console.log(nodes);
+        console.log(CHQ.chart.clusters);
+        console.log('clusterPoints');
+        console.log(CHQ.chart.clusterPoints);
+
+        CHQ.chart.circles = CHQ.chart.circlesGroup.selectAll('circle.juez')
             .data(nodes);
 
         CHQ.chart.circles
@@ -332,11 +340,10 @@ d3.selection.prototype.moveToFront = function() {
             .append('circle')
             .classed('juez',true)
             .on('click',function(d){
-                d3.selectAll('circle').classed('selected',false);
-                d3.select(this).classed('selected',true);
+
             })
             .on('mouseenter',function(d){
-              var c = d3.select(this);
+              /*var c = d3.select(this);
               CHQ.selector
                 .attr('stroke',d3.rgb(CHQ.color(d.data.sector)).darker().toString())
                 .attr('r',Math.round(c.attr('r')))
@@ -354,54 +361,35 @@ d3.selection.prototype.moveToFront = function() {
                 .html(html)
                 .style('opacity',1);
 
-                c.attr('stroke',d3.rgb(CHQ.color(d.data.sector)).darker().toString());
+                c.attr('stroke',d3.rgb(CHQ.color(d.data.sector)).darker().toString());*/
             })
             .on('mousemove', function(){
-                CHQ.tooltip
+                /*CHQ.tooltip
                   .style('top',(d3.event.pageY-20)+'px')
-                  .style('left',(d3.event.pageX+20)+'px');
+                  .style('left',(d3.event.pageX+20)+'px');*/
             })
             .on('mouseout',function(d){
-                CHQ.tooltip.style('opacity',0);
+                //CHQ.tooltip.style('opacity',0);
             });
 
-        CHQ.circles
-            .attr('id',function(d){return 'e'+d.data.id})
-            .attr('stroke',function(d){ 
-              if(d.data.noPresentaron){
-                return 'black';
-              }
-              return CHQ.color(d.data.sector);
-            })
-            .classed('zero',function(d){
-              return (d.data.porcentaje == 0)?true:false;
-            })
+        CHQ.chart.circles
+            .attr('id',function(d){return 'e'+d.data.nombre})
             .attr('r', function(d) {
-              if(d.data.noPresentaron){
-                return rScale(0);
-              }
               return d.radius; 
             })
             .style('fill', function(d) { 
-              if(d.data.noPresentaron){
-                return 'black';
-              }
-              if(d.data.porcentaje == 0){
-                return 'white';
-              }
-              return CHQ.color(d.cluster); 
+              return (d.data.relacion_gobernador=='opositor')?'orange':'steelblue';
             })
             .call(force.drag);
 
-        CHQ.circles.exit().remove();
-        */
+        CHQ.chart.circles.exit().remove();
 
         //CHQ.startEvents();
 
         //CHQ.selector.moveToFront();
 
         function tick(e) {
-          CHQ.circles
+          CHQ.chart.circles
               .each(cluster(10 * e.alpha * e.alpha))
               .each(collide(.5))
               .attr('cx', function(d) { return d.x; })
@@ -412,14 +400,14 @@ d3.selection.prototype.moveToFront = function() {
         function cluster(alpha) {
           return function(d) {
 
-            var cluster = clusters[d.cluster];
+            var cluster = CHQ.chart.clusters[d.cluster];
             var k = 1;
 
             if(cluster){
                 // For cluster nodes, apply custom gravity.
                 if (cluster === d) {
-                  if(clusterPoints){
-                    cluster = clusterPoints[d.cluster];
+                  if(CHQ.chart.clusterPoints){
+                    cluster = CHQ.chart.clusterPoints[d.cluster];
                     cluster = {x: cluster.x, y: cluster.y, radius: -cluster.radius};
                     k = .5 * Math.sqrt(d.radius);
                   } else {
@@ -471,221 +459,49 @@ d3.selection.prototype.moveToFront = function() {
             });
           };
         }
-    };
 
-    CHQ.renderSelect = function(cat){
-      if(CHQ.selectedId){
-        var selected = CHQ.dataById[CHQ.selectedId];
-  //      cat = selected.sector;
-        cat = (cat)?cat:selected.sector;
-      }
-      var template = $('#tpl-select-industry').html();
-      Mustache.parse(template);
+        function prepareNodes() {
 
-      var data = {
-        categories: CHQ.categories.map(function(c){
-          var sel = (cat)?c==cat:false;
-          return {val: c, txt: c, sel: sel};
-        }),
-        empresasOption: (cat)?true:false,
-        empresas: (cat)?CHQ.groups[cat].map(function(e){
-          var sel = e.id==CHQ.selectedId;
-          return {val: e.id, txt: e.empresa, sel: sel}
-        }):false
-      };
+          CHQ.chart.clusters = {};
+          CHQ.chart.clusterPoints = {};
 
-      data.categories.unshift({val: '', txt: '< sector >', sel: (cat)?false:true});
+          d3.selectAll('g.provincia-group').each(function(d){
+            var g = d3.select(this);
+            var aliado = g.select('rect.aliado-col');
+            var opositor = g.select('rect.opositor-col');
 
-      var rendered = Mustache.render(template, data);
-      $('#select-block').html(rendered);
+            CHQ.chart.clusterPoints[d+'-compatible'] = {
+              x: d3.transform(g.attr('transform')).translate[0]+aliado.attr('width')/2+colW,
+              y: d3.transform(g.attr('transform')).translate[1]+aliado.attr('height')/2,
+              radius:10
+            };
 
-      $('#category').on('change',function(){
-        var cat = $(this).val();
-        if(cat != '' ){
-          CHQ.renderSelect(cat);
-          $('#empresa').change();          
-        }
-      });
+            CHQ.chart.clusterPoints[d+'-opositor'] = {
+              x: d3.transform(g.attr('transform')).translate[0]+opositor.attr('width')/2+colW*2,
+              y: d3.transform(g.attr('transform')).translate[1]+opositor.attr('height')/2,
+              radius:10
+            };
+          });
 
-      $('#empresa').on('change',function(){
-        var id = $(this).val();
-        CHQ.openDetails(CHQ.dataById[id]);
-        d3.selectAll('circle').classed('selected',false);
-        d3.select('circle#e'+id).classed('selected',true).style('stroke',function(d){
-          return d3.rgb(CHQ.color(d.data.sector)).darker().toString();
-        });
-      });
+          return CHQ.rawData
+              .map(function(d) {
+                var i = d.provincia+'-'+d.relacion_gobernador,
+                  r = 10,
+                  c = {cluster: i, radius:10, data:d};
 
+                  if (!CHQ.chart.clusters[i] || (r > CHQ.chart.clusters[i].radius)){
+                    CHQ.chart.clusters[i] = c;
+                  }
 
-    };
-
-    CHQ.openDetails = function(data){
-
-      $('body').addClass('detailsOpened');
-
-      CHQ.selectedId = data.id;
-
-      if(CHQ.$colChart.hasClass('col-md-12')){
-        CHQ.$colChart.removeClass('col-md-12').addClass('col-md-7');
-        CHQ.render();
-        CHQ.$details.fadeIn();
-        CHQ.$tips.hide();
-        CHQ.$colOptions.removeClass('col-sm-7').addClass('col-sm-12');
-      }
-
-      var template = $('#tpl-details').html();
-      Mustache.parse(template);   // optional, speeds up future uses
-      data.color = CHQ.color(data.sector);
-      data.selectedYear = CHQ.year;
-      data.isPromedio = (CHQ.year == 'promedio');
-      data.selectedValue = (data['porcentaje_'+CHQ.year]+'').replace('.',',');
-      data.noPresentaron = (isNaN(data['porcentaje_'+CHQ.year]))?true:false;
-      console.log(data);
-      var rendered = Mustache.render(template, data);
-      $('#details-block').html(rendered);
-
-      var years = {};
-
-      $.each(data,function(i,item){
-        if(i.indexOf('_') !== -1){
-          i = i.split('_');
-          years[i[1]] = true;
-        }
-      });
-
-      years = d3.keys(years).sort();
-      
-      var json = [];
-
-      $.each(years,function(ix,year){
-        var obj = {anio:year};
-        $.each(data,function(i,item){
-          if(i.indexOf('_') !== -1){
-            i = i.split('_');
-            if(i[1]==year){
-              obj[i[0]] = item;
-            }
-          }
-        });
-        json.push(obj);
-      });
-
-      var promedio = json.filter(function(a){
-                return a.anio == 'promedio'
-              })[0];
-
-      var lines = [
-                  {value: promedio.porcentaje, text: promedio.porcentaje + '% promedio'},
-                ];
-
-      json = json.filter(function(e){
-                return e.anio != 'promedio';
+                return c;
               });
 
-      var pconfig = {
-              json: json,
-              keys: {
-                x: 'anio',
-                value: ['porcentaje'],
-              },
-              type: 'bar',
-              colors: {
-                porcentaje: data.color
-              }
-          };
+        };
 
-      CHQ.pchart = c3.generate({
-        bindto: '#per-chart',
-        data: pconfig,
-        bar: {
-          width: {
-            ratio: 0.5
-          }
-        },
-        size: {
-            height: 100
-        },
-        axis: {
-            y:{
-              label: 'Porcentaje',
-              min: 0,
-              show:false,
-              padding: {bottom: 0,top:10}
-            },
-            x: {
-              type: 'category'
-            }
-        },
-        grid: {
-              y: {
-                lines: lines
-              }
-            },
-        legend: {
-          show: false
-        },
-        tooltip: {
-          format: {
-            value: function (value, ratio, id, index) { return (value+'%').replace('.',','); }
-          }
-        }
-      });
-
-      var config = {
-              json: json,
-              keys: {
-                x: 'anio',
-                value: ['ganancias', 'ventas'],
-              },
-              type: 'line',
-              names: {
-                ventas: 'Ventas',
-                ganancias: 'Pago de ganancias',
-              },
-              colors: {
-                ganancias: data.color,
-                ventas: d3.rgb(data.color).darker()
-              }
-          };
-
-      if(!CHQ.chart){
-        CHQ.chart = c3.generate({
-          bindto: '#line-chart',
-          data: config,
-          axis: {
-              y:{
-                min: 0,
-                tick: {
-                  //format: d3.format('$,'),
-                  format: function (d) { return d3.format('$,')(d).replace(/,/g,'.'); }
-                },
-                padding: {bottom: 0}
-              },
-              x: {
-                type: 'category',
-                tick:{
-                  outer:false
-                }
-              }
-          }
-        });
-      } else {
-        CHQ.chart.load(config);
-      }
-      //Render select
-      CHQ.renderSelect();
     };
 
-    CHQ.closeDetails = function(){
-      $('body').removeClass('detailsOpened');
-      CHQ.selectedId = false;
-      CHQ.$colChart.removeClass('col-md-7').addClass('col-md-12');
-      CHQ.$colOptions.removeClass('col-sm-12').addClass('col-sm-7');
-      CHQ.render();
-      CHQ.$details.hide();
-      CHQ.$tips.show();
-      d3.selectAll('circle').classed('selected',false);
-    };
+
+
 
     CHQ.inIframe = function() {
         try {
