@@ -43,25 +43,13 @@ d3.selection.prototype.moveToFront = function() {
 
     CHQ.dataLoaded = function(data,tabletop){
         CHQ.rawData = data['DATASET-VIZ'].elements.map(CHQ.postProcess);
-        console.log(CHQ.rawData);
+
         CHQ.provinciasGroup = d3.nest()
             .key(function(d) { return d.provincia; })
             .map(CHQ.rawData);
         CHQ.provincias = d3.keys(CHQ.provinciasGroup);
-
-        console.log(CHQ.provincias);
-        /*CHQ.dataById = d3.nest()
-            .key(function(d) { return d.id; })
-            .rollup(function(leaves) {
-                return leaves[0];
-            })
-            .map(CHQ.rawData);
-        CHQ.maxValue = d3.max(CHQ.rawData,function(d){
-            return d.max;
-        });*/
         CHQ.$body.removeClass('loading');
         CHQ.render();
-        //CHQ.renderSelect();
         setTimeout(CHQ.startEvents,2000);
     };
 
@@ -110,136 +98,6 @@ d3.selection.prototype.moveToFront = function() {
             minRadius = w/100,
             max2Radius = w/75,
             min2Radius = w/150;
-
-        /*CHQ.color = d3.scale.category20()
-            .domain(CHQ.categories);
-
-        var clusters,nodes,rScale;
-
-        switch(CHQ.group){
-          case 'center':
-            rScale = d3.scale.linear()
-              .domain([0,CHQ.maxValue])
-              .range([minRadius,maxRadius]);
-
-            dataLegend.minSize = (minRadius<5)?20:minRadius*2;
-            dataLegend.maxSize = maxRadius*2;
-
-            // The largest node for each cluster.
-            clusters = new Array(CHQ.categories.length);
-
-            nodes = CHQ.data.map(function(d) {
-              var i = d.sector,
-                  r = rScale(d.porcentaje),
-                  d = {cluster: i, radius: r,data:d};
-                  
-                  if (!clusters[i] || (r > clusters[i].radius)){
-                    clusters[i] = d;
-                  }
-
-              return d;
-            });
-
-            if(CHQ.textGroup){
-              CHQ.textGroup.selectAll('text').style('opacity',0);
-            }
-          break;
-          case 'sector':
-            rScale = d3.scale.linear()
-              .domain([0,CHQ.maxValue])
-              .range([min2Radius,max2Radius]);
-
-            dataLegend.minSize = (min2Radius<5)?20:min2Radius*2;
-            dataLegend.maxSize = max2Radius*2;
-
-            clusters = new Array(CHQ.categories.length);
-            var clusterPoints = new Array(CHQ.categories.length);
-            var textos = [];
-
-            var wCol = Math.floor(width/11),
-                hRow = Math.floor(height/4),
-                cols = d3.range(0,width,wCol),
-                rows = d3.range(0,height,hRow),
-                ixCols = 0,
-                ixRows = 1;
-
-            nodes = CHQ.data.map(function(d) {
-              var i = d.sector,
-                  r = rScale(d.porcentaje),
-                  d = {cluster: i, radius: r,data:d};
-                  
-                  if (!clusterPoints[i]){
-                    if(cols[ixCols+2]){
-                      ixCols += 1;
-                    }else{
-                      ixCols = 1;
-                      ixRows += 1;
-                    }
-                    
-                    var qty = CHQ.groups[d.cluster].length; 
-                    var gap = 0;
-                    gap = (qty>5)?max2Radius*1:gap;
-                    gap = (qty>10)?max2Radius*1.5:gap;
-                    gap = (qty>15)?max2Radius*2:gap;
-
-                    textos.push({x:cols[ixCols],y:rows[ixRows]-max2Radius*5,radius:3,title:i,anchor:'middle'});
-                    clusterPoints[i] = {x:cols[ixCols],y:rows[ixRows]-max2Radius*2+gap,radius:3,title:i,anchor:'middle'};
-                  }
-
-                  if (!clusters[i] || (r > clusters[i].radius)){
-                    clusters[i] = d;
-                  }
-
-              return d;
-            });
-
-            if(!CHQ.smallDevice){
-              //titles
-              d3plus.textBox()
-                .select('g#text-chart-group')
-                .data(textos)
-                .width(wCol)
-                .text(function(d) { return d.title; })
-                .textAnchor(function(d) { return d.anchor; })
-                .x(function(d) { return d.x-(wCol/2); })
-                .y(function(d) { 
-                  return d.y; })
-                .fontSize(12)
-                ();
-
-              CHQ.textGroup.selectAll('text').style('opacity',1);
-            } else {
-              CHQ.textGroup.selectAll('text').style('opacity',0);
-            }
-
-            //Render select
-            //CHQ.renderSelect();
-
-          break;
-        }*/
-
-        //RenderLegend
-       /* var template = $('#tpl-legend').html();
-        Mustache.parse(template);
-        
-        dataLegend.midSize = (dataLegend.minSize + dataLegend.maxSize)/2;
-        dataLegend.midPadding = (dataLegend.maxSize - dataLegend.midSize)/2;
-        dataLegend.minPadding = (dataLegend.maxSize - dataLegend.minSize)/2;
-        dataLegend.txtPadding = (dataLegend.maxSize - 20)/2;
-
-        var rendered = Mustache.render(template, dataLegend);
-        $('#legend-container').html(rendered);*/
-
-        //console.log(nodes);
-        //console.log(clusters);
-
-        /*var force = d3.layout.force()
-            .nodes(nodes)
-            .size([width, height])
-            .gravity(0)
-            .charge(1)
-            .on('tick', tick)
-            .start();*/
 
         if(!CHQ.chart) {
             CHQ.chart = {};
@@ -327,11 +185,6 @@ d3.selection.prototype.moveToFront = function() {
             .on('tick', tick)
             .start();
 
-        console.log(nodes);
-        console.log(CHQ.chart.clusters);
-        console.log('clusterPoints');
-        console.log(CHQ.chart.clusterPoints);
-
         CHQ.chart.circles = CHQ.chart.circlesGroup.selectAll('circle.juez')
             .data(nodes);
 
@@ -343,9 +196,8 @@ d3.selection.prototype.moveToFront = function() {
 
             })
             .on('mouseenter',function(d){
-              /*var c = d3.select(this);
+              var c = d3.select(this);
               CHQ.selector
-                .attr('stroke',d3.rgb(CHQ.color(d.data.sector)).darker().toString())
                 .attr('r',Math.round(c.attr('r')))
                 .attr('cx',c.attr('cx'))
                 .attr('cy',c.attr('cy'))
@@ -355,21 +207,21 @@ d3.selection.prototype.moveToFront = function() {
                 .style('opacity',0)
                 .attr('r',Math.round(c.attr('r'))+30);
 
-                var html = 'tooltip';
+                var html = '<strong>'+d.data.nombre + '</strong> fue designado por ' + '<strong>'+d.data.gobernador+'</strong>';
 
               CHQ.tooltip
                 .html(html)
                 .style('opacity',1);
 
-                c.attr('stroke',d3.rgb(CHQ.color(d.data.sector)).darker().toString());*/
+                c.attr('fill','red');
             })
             .on('mousemove', function(){
-                /*CHQ.tooltip
+                CHQ.tooltip
                   .style('top',(d3.event.pageY-20)+'px')
-                  .style('left',(d3.event.pageX+20)+'px');*/
+                  .style('left',(d3.event.pageX+20)+'px');
             })
             .on('mouseout',function(d){
-                //CHQ.tooltip.style('opacity',0);
+                CHQ.tooltip.style('opacity',0);
             });
 
         CHQ.chart.circles
@@ -386,7 +238,7 @@ d3.selection.prototype.moveToFront = function() {
 
         //CHQ.startEvents();
 
-        //CHQ.selector.moveToFront();
+        CHQ.selector.moveToFront();
 
         function tick(e) {
           CHQ.chart.circles

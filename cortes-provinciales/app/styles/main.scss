@@ -53,32 +53,6 @@ hr {
   margin: 20px 0px 30px 0px;
 }
 
-.c3-line{
-  stroke-dasharray: 8,8;
-  stroke-width: 2;
-}
-
-.c3-axis .domain,
-.c3-axis .tick line{
-  stroke-width: 0;
-}
-
-.c3-axis-x .domain,
-.c3-axis-x .tick line{
-  stroke-width: 1;
-  stroke: #ccc;
-}
-
-#details-block .c3-ygrid-line line{
-  stroke-width: 1px;
-  stroke: #000;
-  stroke-dasharray: 5,5;
-}
-
-.c3-ygrid-line text{
-  fill: #000;
-}
-
 .btn-chq{
   color: #000;
   border: none;
@@ -93,10 +67,6 @@ hr {
 .btn-chq.btn-selected{
   background-color: #F00000;
   color: #fff;
-}
-
-#close-details{
-  color: #ccc;
 }
 
 .select-chq{
@@ -162,19 +132,6 @@ hr {
   display:none;
 }
 
-#profile{
-  h4{
-    font-weight: bold;
-    border-bottom: solid 1px #000;
-    padding-bottom: 3px;
-    margin-top: 15px;
-    margin-bottom: 3px;
-  }
-  img{
-    width: 100%;
-  }
-}
-
 #credits.modal {
   bottom: 0;
   top:auto;
@@ -183,13 +140,22 @@ hr {
   }
 }
 
-rect.selected-chq{
-  fill:#eee;
-  fill-opacity:1;
+#circle-tooltip{
+  background-color:#eee;
+  padding: 10px;
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: 10;
+  pointer-events:none;
+  opacity:0;
+  color: #000;
+  border: 1px solid #000;
 }
 
-rect.c3-event-rect{
-  cursor:pointer;
+circle.juez:hover{
+  fill: red;
+  cursor: pointer;
 }
 
 /* Responsive: Portrait tablets and up */
