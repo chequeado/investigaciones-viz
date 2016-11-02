@@ -54,29 +54,41 @@ d3.selection.prototype.moveToFront = function() {
     };
 
 
+    CHQ.filters = {
+      genero:'',
+      car:''
+    };
+
     CHQ.startEvents = function(){
 
-//        CHQ.circles
+      $(window).resize(function() {
+          clearTimeout(CHQ.timeoutId);
+          CHQ.timeoutId = setTimeout(CHQ.render, 500);
+          
+      });
+      $('.btn-filter-genero').on('click',function(){
+          $('.btn-filter-genero').removeClass('btn-selected');
+          $(this).addClass('btn-selected');
+          CHQ.filters.genero = ($(this).data('value')!='')?'.genero-'+$(this).data('value'):'';
+          CHQ.udpdateFilters();
+      });
 
+      $('.btn-filter-car').on('click',function(){
+          $('.btn-filter-car').removeClass('btn-selected');
+          $(this).addClass('btn-selected');
+          CHQ.filters.car = ($(this).data('value')!='')?'.car-'+$(this).data('value'):'';
+          CHQ.udpdateFilters();
+      });
 
-        $(window).resize(function() {
-            clearTimeout(CHQ.timeoutId);
-            CHQ.timeoutId = setTimeout(CHQ.render, 500);
-            
-        });
-        $('.btn-year').on('click',function(){
-            $('.btn-year').removeClass('btn-selected');
-            $(this).addClass('btn-selected');
-            CHQ.year = $(this).data('value');
-            CHQ.render();
-        });
-        $('.btn-order').on('click',function(){
-            $('.btn-order').removeClass('btn-selected');
-            $(this).addClass('btn-selected');
-            CHQ.group = $(this).data('value');
-            CHQ.render();
-        });
-        $('#close-details').on('click',CHQ.closeDetails);
+    };
+
+    CHQ.udpdateFilters = function(){
+      CHQ.chart.circles
+        .style('opacity',0.3);
+
+      CHQ.chart.circlesGroup.selectAll('circle'+CHQ.filters.genero+CHQ.filters.car)
+        .transition()
+        .style('opacity',1);
     };
 
     CHQ.render = function(){
@@ -191,11 +203,23 @@ d3.selection.prototype.moveToFront = function() {
         CHQ.chart.circles
             .enter()
             .append('circle')
+            .attr('class',function(d){
+              var clases = [];
+              clases.push('genero-'+d.data.genero);
+              if(d.data.familiares=='SI'){
+                clases.push('car-familiares' );
+              }
+              if(d.data.cargos_publicos=='SI'){
+                clases.push('car-cargos' );
+              }
+              return clases.join(' ');
+            })
             .classed('juez',true)
             .on('click',function(d){
 
             })
             .on('mouseenter',function(d){
+              console.log(d);
               var c = d3.select(this);
               CHQ.selector
                 .attr('r',Math.round(c.attr('r')))
@@ -235,8 +259,6 @@ d3.selection.prototype.moveToFront = function() {
             .call(force.drag);
 
         CHQ.chart.circles.exit().remove();
-
-        //CHQ.startEvents();
 
         CHQ.selector.moveToFront();
 
@@ -325,13 +347,13 @@ d3.selection.prototype.moveToFront = function() {
             CHQ.chart.clusterPoints[d+'-compatible'] = {
               x: d3.transform(g.attr('transform')).translate[0]+aliado.attr('width')/2+colW,
               y: d3.transform(g.attr('transform')).translate[1]+aliado.attr('height')/2,
-              radius:10
+              radius:7
             };
 
             CHQ.chart.clusterPoints[d+'-opositor'] = {
               x: d3.transform(g.attr('transform')).translate[0]+opositor.attr('width')/2+colW*2,
               y: d3.transform(g.attr('transform')).translate[1]+opositor.attr('height')/2,
-              radius:10
+              radius:7
             };
           });
 
@@ -339,7 +361,7 @@ d3.selection.prototype.moveToFront = function() {
               .map(function(d) {
                 var i = d.provincia+'-'+d.relacion_gobernador,
                   r = 10,
-                  c = {cluster: i, radius:10, data:d};
+                  c = {cluster: i, radius:7, data:d};
 
                   if (!CHQ.chart.clusters[i] || (r > CHQ.chart.clusters[i].radius)){
                     CHQ.chart.clusters[i] = c;
