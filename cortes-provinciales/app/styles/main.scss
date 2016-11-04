@@ -175,6 +175,20 @@ circle.juez:hover{
   margin-bottom: 20px; 
 }
 
+rect.opositor-col,
+rect.aliado-col{
+  stroke-width: 1;
+  stroke:#fff;
+}
+
+rect.opositor-col{
+  fill: #dedede;
+}
+
+rect.aliado-col{
+  fill: #d5d5d5;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (max-width: 768px) {
 

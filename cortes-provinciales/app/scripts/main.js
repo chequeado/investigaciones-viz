@@ -97,7 +97,7 @@ d3.selection.prototype.moveToFront = function() {
 
         CHQ.smallDevice = (w < 700);
 
-        var rowH = 75;
+        var rowH = 60;
         var colW = w/3;
 
         var h = (CHQ.provincias.length+1)*rowH;
@@ -120,6 +120,7 @@ d3.selection.prototype.moveToFront = function() {
             CHQ.tooltip = d3.select('body')
                 .append('div')
                 .attr('id','circle-tooltip');
+            
             CHQ.selector = CHQ.chart.svg.append('circle')
                 .attr('id','selector')
                 .style('stroke-width',3)
@@ -153,14 +154,12 @@ d3.selection.prototype.moveToFront = function() {
             group
               .append('rect')
               .datum(d)
-              .classed('aliado-col',true)
-              .attr('fill','#FFF');
+              .classed('aliado-col',true);
 
             group
               .append('rect')
               .datum(d)
-              .classed('opositor-col',true)
-              .attr('fill','#FFF');
+              .classed('opositor-col',true);
 
           });
 
@@ -178,7 +177,7 @@ d3.selection.prototype.moveToFront = function() {
 
         CHQ.chart.provincias
           .selectAll('text.text-provincia')
-          .attr('x',colW);
+          .attr('x',colW-20);
 
         CHQ.chart.provincias
           .attr('transform',function(d,i){
@@ -219,8 +218,20 @@ d3.selection.prototype.moveToFront = function() {
               if(CHQ.smallDevice){
                 closeTooltip();
                 var c = d3.select(this).classed('selected',true);
+                
+                CHQ.selector
+                  .attr('r',parseInt(c.attr('r'))+10)
+                  .style('stroke', function() { 
+                    return (d.data.relacion_gobernador=='opositor')?'#7873C0':'#21B087';
+                  })
+                  .transition()
+                  .style('opacity',1)
+                  .attr('cx',c.attr('cx'))
+                  .attr('cy',c.attr('cy'));
+
                 var html = '<strong>'+d.data.nombre + '</strong> fue designado por ' + '<strong>'+d.data.gobernador+'</strong>.<br/>';
                   html += d.data.detalle;
+
                 CHQ.tooltip
                   .html(html)
                   .classed('mobile',true)
@@ -234,14 +245,14 @@ d3.selection.prototype.moveToFront = function() {
               if(!CHQ.smallDevice){
                 var c = d3.select(this).classed('selected',true);
                 CHQ.selector
-                  .attr('r',Math.round(c.attr('r')))
-                  .attr('cx',c.attr('cx'))
-                  .attr('cy',c.attr('cy'))
-                  .style('opacity',1)
+                  .attr('r',parseInt(c.attr('r'))+10)
+                  .style('stroke', function() { 
+                    return (d.data.relacion_gobernador=='opositor')?'#7873C0':'#21B087';
+                  })
                   .transition()
-                  .delay(200)
-                  .style('opacity',0)
-                  .attr('r',Math.round(c.attr('r'))+30);
+                  .style('opacity',1)
+                  .attr('cx',c.attr('cx'))
+                  .attr('cy',c.attr('cy'));
 
                   var html = '<strong>'+d.data.nombre + '</strong> fue designado por ' + '<strong>'+d.data.gobernador+'</strong>.<br/>';
 
@@ -260,7 +271,6 @@ d3.selection.prototype.moveToFront = function() {
                   .style('top',(d3.event.pageY-20)+'px')
                   .style('left', function(){
                     var x = d3.event.pageX + 20;
-                    console.log(d.data.relacion_gobernador);
                     if(d.data.relacion_gobernador=='opositor'){
                       x -= 340; 
                     }
@@ -290,6 +300,7 @@ d3.selection.prototype.moveToFront = function() {
         CHQ.selector.moveToFront();
 
         function closeTooltip(){
+          CHQ.selector.style('opacity',0);
           CHQ.chart.circles.classed('selected',false);
           CHQ.tooltip.style('opacity',0)
                 .style('top','-300px')
