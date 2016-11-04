@@ -52,34 +52,46 @@
 
     <div class="container-fluid">
       <div class="row titulares">
-          <div class="titulo col-md-12">
-              <h3 class="text-center">El quién es quién de las Cortes provinciales</h3>
+          <div class="titulo">
+              <h3 class="text-center">¿Quién nombró a los jueces de las Cortes provinciales?</h3>
           </div>
           <div class="bajada">
-            <p class="text-center"><strong>¿Quién nombró a los jueces de las Cortes provinciales? ¿Es posible encontrar tendencias en las formas de nombramiento? Este gráfico muestra si los magistrados fueron designados por un gobernador opositor o por uno de un partido político en el que los candidatos se reconocieron públicamente o desde el que ejercieron cargos públicos anteriores. En este escenario, también permite filtrar por género y a aquellos jueces supremos que tienen o tuvieron familiares dentro de la función pública.</strong></p>
+            <p class="text-center"><strong>Este gráfico muestra que la mayoría de los jueces y juezas supremos fueron nombrados por un gobernador de su mismo signo político, y muy pocos por uno del signo contrario. Usá los filtros para conocer cuántos ya tenían vínculo con la política porque ellos o sus familiares ejercieron cargos públicos. Además, podés ver que las juezas mujeres son minoría.</strong></p>
           </div>
       </div>
     
     </div> <!-- fluid -->
 
+    <hr/>
+
     <div class="container-fluid">
+      <div class="row margin-bottom-1">
+        <div class="col-md-12">
+          <span>Género <i class="glyphicon glyphicon-chevron-right"></i> </span><a class="btn btn-chq btn-filter-genero btn-selected" data-value="">TODOS</a><a class="btn btn-chq btn-filter-genero" data-value="F">Mujeres</a><a class="btn btn-chq btn-filter-genero" data-value="M">Hombres</a>
+        </div>
+      </div>
+      <div class="row margin-bottom-2">
+        <div class="col-md-12">
+          <span>Características <i class="glyphicon glyphicon-chevron-right"></i> </span><a class="btn btn-chq btn-filter-car btn-selected" data-value="">TODOS</a><a class="btn btn-chq btn-filter-car" data-value="familiares">Tiene familiares en política</a><a class="btn btn-chq btn-filter-car" data-value="cargos">Ocupó otros cargos públicos</a>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-md-12">
-          <span>Género: </span><a class="btn btn-chq btn-filter-genero btn-selected" data-value="">TODOS</a><a class="btn btn-chq btn-filter-genero" data-value="F">Femenino</a><a class="btn btn-chq btn-filter-genero" data-value="M">Masculino</a>
-        </div>
-        <div class="col-md-12">
-          <span>Características: </span><a class="btn btn-chq btn-filter-car btn-selected" data-value="">TODOS</a><a class="btn btn-chq btn-filter-car" data-value="familiares">Familiares</a><a class="btn btn-chq btn-filter-car" data-value="cargos">Cargos públicos</a>
-        </div>
-        <div class="col-xs-4">
-          <p class="text-center">Provincias</p>
-        </div>
-        <div class="col-xs-4">
-          <p class="text-center">Gobernador con compatibilidad político partidaria</p>
-        </div>
-        <div class="col-xs-4">
-          <p class="text-center">Gobernador opositor</p>
-        </div>
-        <div class="col-md-12">
+        <div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+          <div class="row">
+            <div class="col-xs-4">
+              <p class="text-right"><strong>Provincias</strong></p>
+            </div>
+            <div class="col-xs-4">
+              <p class="text-center"><strong>Gobernador con compatibilidad político partidaria</strong></p>
+            </div>
+            <div class="col-xs-4">
+              <p class="text-center"><strong>Gobernador opositor</strong></p>
+            </div>
+          </div>
+        </div> 
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
           <div id="chart-container"></div>
         </div>
       </div>

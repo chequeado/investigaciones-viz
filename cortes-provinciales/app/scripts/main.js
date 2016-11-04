@@ -95,7 +95,7 @@ d3.selection.prototype.moveToFront = function() {
 
         var w = $('#chart-container').width();
 
-        CHQ.smallDevice = (w < 990);
+        CHQ.smallDevice = (w < 700);
 
         var rowH = 75;
         var colW = w/3;
@@ -216,36 +216,63 @@ d3.selection.prototype.moveToFront = function() {
             })
             .classed('juez',true)
             .on('click',function(d){
+              if(CHQ.smallDevice){
+                closeTooltip();
+                var c = d3.select(this).classed('selected',true);
+                var html = '<strong>'+d.data.nombre + '</strong> fue designado por ' + '<strong>'+d.data.gobernador+'</strong>.<br/>';
+                  html += d.data.detalle;
+                CHQ.tooltip
+                  .html(html)
+                  .classed('mobile',true)
+                  .style('top',(d3.event.pageY+10)+'px')
+                  .style('left','0px')
+                  .style('opacity',1);
 
+              }
             })
             .on('mouseenter',function(d){
-              console.log(d);
-              var c = d3.select(this);
-              CHQ.selector
-                .attr('r',Math.round(c.attr('r')))
-                .attr('cx',c.attr('cx'))
-                .attr('cy',c.attr('cy'))
-                .style('opacity',1)
-                .transition()
-                .delay(200)
-                .style('opacity',0)
-                .attr('r',Math.round(c.attr('r'))+30);
+              if(!CHQ.smallDevice){
+                var c = d3.select(this).classed('selected',true);
+                CHQ.selector
+                  .attr('r',Math.round(c.attr('r')))
+                  .attr('cx',c.attr('cx'))
+                  .attr('cy',c.attr('cy'))
+                  .style('opacity',1)
+                  .transition()
+                  .delay(200)
+                  .style('opacity',0)
+                  .attr('r',Math.round(c.attr('r'))+30);
 
-                var html = '<strong>'+d.data.nombre + '</strong> fue designado por ' + '<strong>'+d.data.gobernador+'</strong>';
+                  var html = '<strong>'+d.data.nombre + '</strong> fue designado por ' + '<strong>'+d.data.gobernador+'</strong>.<br/>';
 
-              CHQ.tooltip
-                .html(html)
-                .style('opacity',1);
+                  html += d.data.detalle;
 
-                c.attr('fill','red');
+                CHQ.tooltip
+                  .html(html)
+                  .classed('mobile',false)
+                  .style('opacity',1);
+
+              }
             })
-            .on('mousemove', function(){
+            .on('mousemove', function(d){
+              if(!CHQ.smallDevice){
                 CHQ.tooltip
                   .style('top',(d3.event.pageY-20)+'px')
-                  .style('left',(d3.event.pageX+20)+'px');
+                  .style('left', function(){
+                    var x = d3.event.pageX + 20;
+                    console.log(d.data.relacion_gobernador);
+                    if(d.data.relacion_gobernador=='opositor'){
+                      x -= 340; 
+                    }
+                    return x+'px';
+                  });
+              }
             })
             .on('mouseout',function(d){
-                CHQ.tooltip.style('opacity',0);
+              if(!CHQ.smallDevice){
+                var c = d3.select(this).classed('selected',false);
+                closeTooltip();
+              }
             });
 
         CHQ.chart.circles
@@ -254,13 +281,20 @@ d3.selection.prototype.moveToFront = function() {
               return d.radius; 
             })
             .style('fill', function(d) { 
-              return (d.data.relacion_gobernador=='opositor')?'orange':'steelblue';
+              return (d.data.relacion_gobernador=='opositor')?'#7873C0':'#21B087';
             })
-            .call(force.drag);
+            //.call(force.drag);
 
         CHQ.chart.circles.exit().remove();
 
         CHQ.selector.moveToFront();
+
+        function closeTooltip(){
+          CHQ.chart.circles.classed('selected',false);
+          CHQ.tooltip.style('opacity',0)
+                .style('top','-300px')
+                .style('left','-300px');
+        }
 
         function tick(e) {
           CHQ.chart.circles
