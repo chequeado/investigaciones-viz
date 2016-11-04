@@ -191,6 +191,10 @@ rect.full-bg{
   fill: #dedede;
 }
 
+#selector{
+  pointer-events: none;  
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (max-width: 768px) {
 

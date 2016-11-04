@@ -97,7 +97,8 @@ d3.selection.prototype.moveToFront = function() {
 
         CHQ.smallDevice = (w < 700);
 
-        var rowH = 60;
+        var rowH = (CHQ.smallDevice)?100:60;
+        var radio = (CHQ.smallDevice)?15:7;
         var colW = w/3;
 
         var h = (CHQ.provincias.length+1)*rowH;
@@ -153,7 +154,6 @@ d3.selection.prototype.moveToFront = function() {
             group
               .append('text')
               .datum(d)
-              .attr('y',rowH/2+5)
               .classed('text-provincia',true)
               .attr('text-anchor','end')
               .text(function(d){return d});
@@ -190,6 +190,7 @@ d3.selection.prototype.moveToFront = function() {
 
         CHQ.chart.provincias
           .selectAll('text.text-provincia')
+          .attr('y',rowH/2+5)
           .attr('x',colW-20);
 
         CHQ.chart.provincias
@@ -248,7 +249,7 @@ d3.selection.prototype.moveToFront = function() {
                 CHQ.tooltip
                   .html(html)
                   .classed('mobile',true)
-                  .style('top',(d3.event.pageY+10)+'px')
+                  .style('top',(d3.event.pageY+radio*2)+'px')
                   .style('left','0px')
                   .style('opacity',1);
 
@@ -405,13 +406,13 @@ d3.selection.prototype.moveToFront = function() {
             CHQ.chart.clusterPoints[d+'-compatible'] = {
               x: d3.transform(g.attr('transform')).translate[0]+aliado.attr('width')/2+colW,
               y: d3.transform(g.attr('transform')).translate[1]+aliado.attr('height')/2,
-              radius:7
+              radius:radio
             };
 
             CHQ.chart.clusterPoints[d+'-opositor'] = {
               x: d3.transform(g.attr('transform')).translate[0]+opositor.attr('width')/2+colW*2,
               y: d3.transform(g.attr('transform')).translate[1]+opositor.attr('height')/2,
-              radius:7
+              radius:radio
             };
           });
 
@@ -419,7 +420,7 @@ d3.selection.prototype.moveToFront = function() {
               .map(function(d) {
                 var i = d.provincia+'-'+d.relacion_gobernador,
                   r = 10,
-                  c = {cluster: i, radius:7, data:d};
+                  c = {cluster: i, radius:radio, data:d};
 
                   if (!CHQ.chart.clusters[i] || (r > CHQ.chart.clusters[i].radius)){
                     CHQ.chart.clusters[i] = c;
