@@ -177,16 +177,18 @@ circle.juez:hover{
 
 rect.opositor-col,
 rect.aliado-col{
-  stroke-width: 1;
-  stroke:#fff;
 }
 
 rect.opositor-col{
-  fill: #dedede;
+  fill: none;
 }
 
 rect.aliado-col{
-  fill: #d5d5d5;
+  fill: none;
+}
+
+rect.full-bg{
+  fill: #dedede;
 }
 
 /* Responsive: Portrait tablets and up */

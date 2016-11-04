@@ -139,9 +139,16 @@ d3.selection.prototype.moveToFront = function() {
           .enter()
           .append('g')
           .classed('provincia-group',true)
-          .each(function(d){
+          .each(function(d,i){
             
             var group = d3.select(this)
+
+            if(i%2==0){
+              group
+                .append('rect')
+                .datum(d)
+                .classed('full-bg',true);              
+            }
             
             group
               .append('text')
@@ -150,6 +157,7 @@ d3.selection.prototype.moveToFront = function() {
               .classed('text-provincia',true)
               .attr('text-anchor','end')
               .text(function(d){return d});
+
 
             group
               .append('rect')
@@ -162,6 +170,11 @@ d3.selection.prototype.moveToFront = function() {
               .classed('opositor-col',true);
 
           });
+
+        CHQ.chart.provincias
+          .selectAll('rect.full-bg')
+          .attr('width',w)
+          .attr('height',rowH);
 
         CHQ.chart.provincias
           .selectAll('rect.aliado-col')
