@@ -23,7 +23,7 @@ var CHQ;
           $('.no-iframe-show').show();
         }
 
-  		cartodb.createVis('map', 'http://documentation.carto.com/api/v2/viz/2b13c956-e7c1-11e2-806b-5404a6a683d5/viz.json');
+  		cartodb.createVis('map', 'https://documentation.carto.com/api/v2/viz/2b13c956-e7c1-11e2-806b-5404a6a683d5/viz.json');
 
   		CHQ.$body.removeClass('loading');
 
