@@ -5,7 +5,8 @@
     "bootstrap-sass": "~3.3.5",
     "modernizr": "~2.8.1",
     "tabletop": "^1.4.3",
-    "pym.js": "^1.1.2"
+    "pym.js": "^1.1.2",
+    "cartodb.js": "^3.15.9"
   },
   "overrides": {
     "bootstrap-sass": {
