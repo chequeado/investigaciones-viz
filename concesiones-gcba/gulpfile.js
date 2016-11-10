@@ -73,6 +73,16 @@ gulp.task('images', () => {
     .pipe(gulp.dest('dist/images'));
 });
 
+gulp.task('carto-css', () => {
+  return gulp.src('bower_components/cartodb.js/themes/css/images/*')
+    .pipe(gulp.dest('dist/styles/images'));
+});
+
+gulp.task('carto-img', () => {
+  return gulp.src('bower_components/cartodb.js/themes/img/*')
+    .pipe(gulp.dest('dist/img'));
+});
+
 gulp.task('fonts', () => {
   return gulp.src(require('main-bower-files')('**/*.{eot,svg,ttf,woff,woff2}', function (err) {})
     .concat('app/fonts/**/*'))
@@ -162,7 +172,7 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
+gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras','carto-css','carto-img'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
