@@ -13,7 +13,7 @@ var CHQ;
 
     CHQ.$body =  $('body');
 
-    CHQ.init = function(key){
+    CHQ.init = function(zona){
         var w = CHQ.$body.width();
         CHQ.$body.css('min-height',(w*9)/16);
 
@@ -23,7 +23,10 @@ var CHQ;
           $('.no-iframe-show').show();
         }
 
-  		cartodb.createVis('map', 'https://chequeado.carto.com/api/v2/viz/'+key+'/viz.json');
+  		cartodb.createVis('map', 'https://chequeado.carto.com/api/v2/viz/79775fb4-a789-11e6-80d8-0e3ebc282e83/viz.json')
+        .done(function(vis, layers) {
+            layers[1].getSubLayer(0).setSQL('SELECT * FROM concesiones_full WHERE zona = '+zona); 
+        });
 
   		CHQ.$body.removeClass('loading');
 
