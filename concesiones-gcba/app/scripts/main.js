@@ -1,7 +1,3 @@
-console.log('\'Allo \'Allo!');
-window.onload = function() {
-}
-
 var CHQ;
 
 ;(function(global, document, $, Tabletop){
