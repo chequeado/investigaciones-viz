@@ -1,0 +1,30 @@
+{
+  "name": "inundaciones-lp",
+  "private": true,
+  "dependencies": {
+    "bootstrap-sass": "~3.3.5",
+    "modernizr": "~2.8.1",
+    "tabletop": "^1.4.3",
+    "pym.js": "^1.1.2",
+    "vue": "^2.0.8",
+    "leaflet": "^1.0.1"
+  },
+  "overrides": {
+    "bootstrap-sass": {
+      "main": [
+        "assets/stylesheets/_bootstrap.scss",
+        "assets/fonts/bootstrap/*",
+        "assets/javascripts/bootstrap.js"
+      ]
+    },
+    "vue": {
+      "main": [
+        "dist/vue.min.js"
+      ]
+    }
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
+}

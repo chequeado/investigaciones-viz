@@ -1,0 +1,76 @@
+$icon-font-path: '../fonts/';
+
+// bower:scss
+@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+
+header{
+  background-image: url('http://placehold.it/1000x200');
+  background-size: cover;
+  background-position: center center;
+}
+
+.container-fluid{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.row-full{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.row-margin{
+  margin-bottom: 30px;  
+}
+
+.col-left{
+  padding-left: 0px;
+}
+
+.col-right{
+  padding-right: 0px;
+}
+
+#mapa{
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+  .col-sm-6{
+    width: 50%;
+    float: left;
+  }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+  .col-sm-6{
+    float: none;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .col-left{
+    padding-right: 0px;
+  }
+
+  .col-right{
+    padding-left: 0px;
+  }
+
+  .row-margin{
+    margin-bottom: 0px;  
+  }
+  .row-margin-xs{
+    margin-bottom: 15px;
+  }
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+  .col-sm-6{
+
+  } 
+}
