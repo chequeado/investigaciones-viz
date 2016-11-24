@@ -52,11 +52,22 @@
     <![endif]-->
 
     <div class="container-fluid">
+      <div class="row titulares">
+          <div class="titulo">
+              <h3 class="text-center">Crímenes de odio por región</h3>
+          </div>
+          <!--div class="bajada">
+            <p class="text-center"><strong></strong></p>
+          </div-->
+      </div>
+    
+    </div> <!-- fluid -->
+
+    <div class="container">
       
       <div class="row row-full">
-        <h2 class="text-center">Crímenes de odio por región</h2>
 
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="10000">
           <!-- Indicators -->
           <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -101,7 +112,10 @@
     <div id="fuente" class="container-fluid">
       <div class="row row-full">
         <div class="col-md-12">
-          <p class="text-center"><strong>Fuente:</strong>  <a class="iframe-show" href="https://chequeado.github.io/investigaciones-viz/crimenes-odio/dist/app.html" target="_blank">Ver en pantalla completa <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a>
+          <p class="text-center"><strong>Fuentes:</strong>  
+          <a href="https://docs.google.com/document/d/1FBWWP4CmKG2Ee0Cs977MpZFWJFjKcPv6xy9Rgj7QvDc/edit?usp=sharing" data-bind="data" target="_blank">Descargar documento <i class="glyphicon glyphicon-download-alt" aria-hidden="true"></i></a>
+          -
+          <a class="iframe-show" href="https://chequeado.github.io/investigaciones-viz/crimenes-odio/dist/app.html" target="_blank">Ver en pantalla completa <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a>
           <a class="no-iframe-show" href="" target="_blank">Ver investigación completa en Chequeado <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a>
           </p>
         </div>
@@ -147,8 +161,7 @@
                 <li>Diseño: <strong>Marcelo Morán</strong></li>
                 <li>Desarrollo: <strong>Pablo H. Paladino</strong></li>
               </ul>
-              <p>Fuente: <strong></strong></p>
-              <p>Datos: <strong><a href="" data-bind="data" target="_blank">Descargar planilla <i class="glyphicon glyphicon-download-alt" aria-hidden="true"></i></a></strong></p>
+              <p>Datos + Fuentes: <strong><a href="https://docs.google.com/document/d/1FBWWP4CmKG2Ee0Cs977MpZFWJFjKcPv6xy9Rgj7QvDc/edit?usp=sharing" data-bind="data" target="_blank">Descargar documento <i class="glyphicon glyphicon-download-alt" aria-hidden="true"></i></a></strong></p>
               <p>Herramientas: <strong data-bind="herramientas">Twitter Bootstrap + Github Pages + pym.js</strong></p>
             </div>
             <div class="modal-footer">
