@@ -19,15 +19,18 @@ var CHQ;
           $('.no-iframe-show').show();
         }
 
-  		cartodb.createVis('map', 'https://chequeado.carto.com/api/v2/viz/79775fb4-a789-11e6-80d8-0e3ebc282e83/viz.json')
-        .done(function(vis, layers) {
-            var query = 'SELECT * FROM concesiones_full WHERE zona = '+zona;
-            layers[1].getSubLayer(0).setSQL(query);
-            var sql = new cartodb.SQL({ user: 'chequeado' });
-            sql.getBounds(query).done(function(bounds) {
-                vis.getNativeMap().fitBounds(bounds);
+        if(zona){        
+      		cartodb.createVis('map', 'https://chequeado.carto.com/api/v2/viz/79775fb4-a789-11e6-80d8-0e3ebc282e83/viz.json')
+            .done(function(vis, layers) {
+                var query = 'SELECT * FROM concesiones_full WHERE zona = '+zona;
+                layers[1].getSubLayer(0).setSQL(query);
+                var sql = new cartodb.SQL({ user: 'chequeado' });
+                sql.getBounds(query).done(function(bounds) {
+                    vis.getNativeMap().fitBounds(bounds);
+                });
             });
-        });
+        }
+
 
   		CHQ.$body.removeClass('loading');
 
