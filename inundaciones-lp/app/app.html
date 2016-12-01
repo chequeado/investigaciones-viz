@@ -66,12 +66,11 @@
         <div class="row row-full row-margin" v-show="!loading">
           <div class="col-md-12">
             <select id="obras" class="form-control" v-model="selected">
-              <option>Seleccionar obra</option>
+              <option value=""> - Seleccionar obra - </option>
               <option v-for="o in obras" v-bind:value="o">{{ o.nombre }}</option>
             </select>
           </div>
         </div>
-
 
         <div class="row row-full row-margin" v-if="selected">
           <div class="col-sm-4 col-left">
@@ -109,13 +108,65 @@
           </div>
           <div class="col-sm-8 col-right">
 
-            <div class="row">
+            <div class="row row-full">
+              
               <div class="col-sm-7">
-                Nombre: {{ selected.nombre }}
+                
+                <div class="row">
+                  <div class="col-md-7 with-icon bg-color">
+                    <div class="icon">
+                      <i class="glyphicon glyphicon-cog"></i>
+                    </div>
+                    <div class="content">
+                      <span class="title">Obra</span>
+                      <span class="data">{{ selected.nombre }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-5 with-icon bg-light">
+                    <div class="icon">
+                      <i class="glyphicon glyphicon-usd"></i>
+                    </div>
+                    <div class="content">
+                      <span class="title">Monto de contrato inicial</span>
+                      <span class="data">${{ selected.monto_del_contrato_inicial }}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-7 with-icon bg-light">
+                    <div class="icon">
+                      <i class="glyphicon glyphicon-wrench"></i>
+                    </div>
+                    <div class="content">
+                      <span class="title">Empresa</span>
+                      <span class="data">{{ selected.empresa_contratista }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-5 with-icon bg-color">
+                    <div class="icon">
+                      <i class="glyphicon glyphicon-info-sign"></i>
+                    </div>
+                    <div class="content">
+                      <span class="title">Estado</span>
+                      <span class="data">{{ selected.estado }}</span>
+                    </div>
+                  </div>
+                </div>
+              
               </div>
-              <div class="col-sm-5">
-                Estado: {{ selected.estado }}
+
+              <div class="col-sm-5 bg-grey">
+                <div class="row">
+                  <div class="col-sm-12">
+                     [chart] avance: 
+                  </div>
+                  <div class="col-sm-12">
+                     [chart] Plazo proyectado: {{ selected.plazo_de_obras_en_dias }}
+                  </div>
+                </div>
               </div>
+
             </div>
 
 
@@ -144,6 +195,7 @@
     <script src="/bower_components/pym.js/dist/pym.v1.js"></script>
     <script src="/bower_components/vue/dist/vue.min.js"></script>
     <script src="/bower_components/leaflet/dist/leaflet-src.js"></script>
+    <script src="/bower_components/matchHeight/dist/jquery.matchHeight.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     

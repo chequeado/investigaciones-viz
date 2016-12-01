@@ -2,7 +2,7 @@ var InundacionesLp = Vue.extend({
   data: function(){
   	return	{
   		obras: [],
-  		selected: undefined,
+  		selected: '',
   		loading: false
   	}
   },
@@ -21,30 +21,30 @@ var InundacionesLp = Vue.extend({
   	createMap: function(){
   		var self = this;
   		this.map = L.map('mapa').setView([-34.9314,  -57.9489], 11);
-		L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-			subdomains: 'abcd',
-			maxZoom: 19
-		}).addTo(this.map);
+      this.map.scrollWheelZoom.disable();
+  		L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+  			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+  			subdomains: 'abcd',
+  			maxZoom: 19
+  		}).addTo(this.map);
 
-		var customCircleMarker = L.CircleMarker.extend({
-		   options: { 
-		      obraID: ''
-		   }
-		});
+  		var customCircleMarker = L.CircleMarker.extend({
+  		   options: { 
+  		      id: 'pala'
+  		   }
+  		});
 
-		this.obras.forEach(function(e){
-			if(e.lat && e.lng){
-				self.markers.push(new customCircleMarker([e.lat, e.lng],{
-						obraID:e.id
-					})
-					.bindPopup(e.nombre)
-					.on('click', function(e) {
-					    console.log(e);
-					})
-					.addTo(self.map));
-			}
-		});
+  		this.obras.forEach(function(e){
+  			if(e.lat && e.lng){
+  				self.markers.push(new customCircleMarker([e.lat, e.lng],e)
+  					.bindPopup(e.nombre)
+  					.on('click', function(e,a) {
+              var el = $(e.srcElement || e.target);
+              self.selected = el[0].options;
+  					})
+  					.addTo(self.map));
+  			}
+  		});
   	}
   },
   created: function(){

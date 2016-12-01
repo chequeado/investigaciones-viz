@@ -4,6 +4,11 @@ $icon-font-path: '../fonts/';
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+$color: #B852DE;
+$color-dark: #5702A7;
+$color-light: #DBADEE;
+$grey: #ccc;
+
 
 header{
   background-image: url('http://placehold.it/1000x200');
@@ -22,7 +27,7 @@ header{
 }
 
 .row-margin{
-  margin-bottom: 30px;  
+  margin-bottom: 15px;  
 }
 
 .col-left{
@@ -37,40 +42,88 @@ header{
 
 }
 
+.bg-light{
+  background-color: $color-light;
+}
+
+.bg-color{
+  background-color: $color;
+}
+
+.bg-dark{
+  background-color: $color-dark;
+}
+
+.bg-grey{
+  background-color: $grey;
+}
+
+.with-icon{
+  min-height: 70px;
+  div.icon{
+    display: block;
+    float: left;
+    width: 50px;
+    text-align: center;
+    padding: 10px 0px 10px 0px;
+    i{
+      font-size: 3em;
+    }
+  }
+  div.content{
+    padding: 15px 10px;
+    margin-left: 50px;
+    span.title{
+      display: block;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    span.data{
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+    }
+  }
+}
+
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
-  .col-sm-6{
+  /*.col-sm-6{
     width: 50%;
     float: left;
+  }*/
+  .col-sm-6{
+    margin-bottom: 15px;
   }
+
+  .col-left{
+    padding-right: 0;
+  }
+
+  .col-right{
+    padding-left: 0;
+  }
+
 }
 
 /* Extra Small Devices, Phones */ 
 @media only screen and (max-width : 480px) {
-  .col-sm-6{
-    float: none;
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  .col-left{
-    padding-right: 0px;
-  }
-
-  .col-right{
-    padding-left: 0px;
-  }
-
   .row-margin{
-    margin-bottom: 0px;  
+    margin-bottom: 5px;  
   }
   .row-margin-xs{
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 }
 
 /* Custom, iPhone Retina */ 
 @media only screen and (max-width : 320px) {
-  .col-sm-6{
+  /*.col-sm-6{
 
-  } 
+  } */
+}
+
+@media (min-width: 768px) {
+
 }

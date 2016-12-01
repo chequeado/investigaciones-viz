@@ -7,7 +7,8 @@
     "tabletop": "^1.4.3",
     "pym.js": "^1.1.2",
     "vue": "^2.0.8",
-    "leaflet": "^1.0.1"
+    "leaflet": "^1.0.1",
+    "matchHeight": "matchheight#^0.7.0"
   },
   "overrides": {
     "bootstrap-sass": {
