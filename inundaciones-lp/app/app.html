@@ -12,6 +12,7 @@
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="/bower_components/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/bower_components/c3/c3.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -85,13 +86,13 @@
               <!-- Wrapper for slides -->
               <div class="carousel-inner" role="listbox">
                 <div class="item active">
-                  <img src="http://placehold.it/500x350" alt="">
+                  <img src="http://lorempixel.com/500/250/nature/1" alt="">
                 </div>
                 <div class="item">
-                  <img src="http://placehold.it/500x350" alt="">
+                  <img src="http://lorempixel.com/500/250/nature/2" alt="">
                 </div>
                 <div class="item">
-                  <img src="http://placehold.it/500x350" alt="">
+                  <img src="http://lorempixel.com/500/250/nature/3" alt="">
                 </div>
               </div>
 
@@ -159,10 +160,8 @@
               <div class="col-sm-5 bg-grey">
                 <div class="row">
                   <div class="col-sm-12">
-                     [chart] avance: 
-                  </div>
-                  <div class="col-sm-12">
-                     [chart] Plazo proyectado: {{ selected.plazo_de_obras_en_dias }}
+                    test {{ selected.plazo_de_obras_en_dias }}
+                    <div id='avance-chart'></div>
                   </div>
                 </div>
               </div>
@@ -195,7 +194,10 @@
     <script src="/bower_components/pym.js/dist/pym.v1.js"></script>
     <script src="/bower_components/vue/dist/vue.min.js"></script>
     <script src="/bower_components/leaflet/dist/leaflet-src.js"></script>
-    <script src="/bower_components/matchHeight/dist/jquery.matchHeight.js"></script>
+    <script src="/bower_components/lodash/lodash.js"></script>
+    <script src="/bower_components/d3/d3.js"></script>
+    <script src="/bower_components/c3/c3.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     
