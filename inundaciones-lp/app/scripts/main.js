@@ -26,7 +26,6 @@ function onPlayerReady(event) {
 };
 
 function loadVideoByID(id){
-  console.log(id);
   player.loadVideoById(id);
 };
 
@@ -61,10 +60,17 @@ var InundacionesLp = Vue.extend({
       this.updateChart();
       this.updateCarousel();
       this.updateVideo();
+      this.updateBlocks();
 
     }
   },
   methods:{
+    updateBlocks:function(){
+      setTimeout(function(){
+        $('.grupo1').matchHeight();
+        $('.grupo2').matchHeight();
+      },500);
+    },
     updateVideo:function(){
       loadVideoByID(this.selected.video);
     },

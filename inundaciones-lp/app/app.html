@@ -109,7 +109,7 @@
               <div class="col-sm-7">
                 
                 <div class="row">
-                  <div class="col-md-7 with-icon bg-color">
+                  <div class="col-md-7 with-icon bg-color grupo1">
                     <div class="icon">
                       <i class="glyphicon glyphicon-cog"></i>
                     </div>
@@ -118,7 +118,7 @@
                       <span class="data">{{ selected.nombre }}</span>
                     </div>
                   </div>
-                  <div class="col-md-5 with-icon bg-light">
+                  <div class="col-md-5 with-icon bg-light grupo1">
                     <div class="icon">
                       <i class="glyphicon glyphicon-usd"></i>
                     </div>
@@ -130,16 +130,7 @@
                 </div>
                 
                 <div class="row">
-                  <div class="col-md-7 with-icon bg-light">
-                    <div class="icon">
-                      <i class="glyphicon glyphicon-wrench"></i>
-                    </div>
-                    <div class="content">
-                      <span class="title">Empresa</span>
-                      <span class="data">{{ selected.empresa_contratista }}</span>
-                    </div>
-                  </div>
-                  <div class="col-md-5 with-icon bg-color">
+                  <div class="col-md-push-7 col-md-5 with-icon bg-color grupo2">
                     <div class="icon">
                       <i class="glyphicon glyphicon-info-sign"></i>
                     </div>
@@ -148,11 +139,20 @@
                       <span class="data">{{ selected.estado }}</span>
                     </div>
                   </div>
+                  <div class="col-md-pull-5 col-md-7 with-icon bg-light grupo2">
+                    <div class="icon">
+                      <i class="glyphicon glyphicon-wrench"></i>
+                    </div>
+                    <div class="content">
+                      <span class="title">Empresa</span>
+                      <span class="data">{{ selected.empresa_contratista }}</span>
+                    </div>
+                  </div>
                 </div>
               
               </div>
 
-              <div class="col-sm-5 bg-grey">
+              <div class="col-sm-5">
                 <div class="row">
                   <div class="col-sm-12">
                     <h4 class="text-center">Avance de la obra</h4>
@@ -193,6 +193,7 @@
     <script src="/bower_components/d3/d3.js"></script>
     <script src="/bower_components/c3/c3.js"></script>
     <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/matchHeight/dist/jquery.matchHeight.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     

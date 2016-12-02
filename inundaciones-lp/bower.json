@@ -11,7 +11,8 @@
     "lodash": "^4.17.2",
     "d3": "v3.5.17",
     "c3": "^0.4.11",
-    "moment": "^2.17.0"
+    "moment": "^2.17.0",
+    "matchHeight": "matchheight#^0.7.0"
   },
   "overrides": {
     "bootstrap-sass": {
