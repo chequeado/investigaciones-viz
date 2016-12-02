@@ -1,7 +1,7 @@
 var InundacionesLp = Vue.extend({
   data: function(){
   	return	{
-  		selected: '',
+      selected: '',
   		loading: false,
       via:false
   	}
@@ -35,48 +35,95 @@ var InundacionesLp = Vue.extend({
 
       var self = this;  
 
-      if(!self.avance_chart){
+      setTimeout(function(){
+          if(!self.avance_chart){
+      
+               self.avance_chart = c3.generate({
+                  bindto:'#avance-chart',
+                  size: {
+                    height: 300
+                  },
+                  data: {
+                      json: self.selected.chart_data,
+                      keys: {
+                          x: 'fecha',
+                          value: ['cumplimiento', 'meta']
+                      },
+                      type: 'line',
+                      colors: {
+                        cumplimiento: '#B852DE',
+                        meta: '#5702A7'
+                      },
+                      names: {
+                        cumplimiento: 'Cumplimiento',
+                        meta: 'Meta'
+                      }
+                  },
+                  line: {
+                      connectNull: true
+                  },
+                  /*grid: {
+                    x: {
+                      lines: self.selected.chart_data_grid
+                    }
+                  },*/
+                  padding: {
+                    left: 50,
+                    right: 30,
+                    top: 20,
+                    bottom: 10,
+                  },
+                  axis: {
+                      x: {
+                          type: 'timeseries',
+                          tick: {
+                              format: function (x) {
+                                  return self.months[x.getMonth()] + '-' + x.getFullYear();
+                              },
+                              count: 3
+                          },
+                          padding: {
+                            left: 50,
+                            right: 50
+                          }
+                      },
+                      y: {
+                        min:0,
+                        max:100,
+                        tick: {
+                          format: function (y) {
+                              return y+ '%';
+                          },
+                          values: [0, 50, 100]
+                        },
+                        padding: {
+                          top: 10,
+                          bottom: 0
+                        }
+                      }
+                  }
 
-        setTimeout(function(){
-           self.avance_chart = c3.generate({
-              bindto:'#avance-chart',
-              size: {
-                height: 300
-              },
-              data: {
+              });
+
+          } else {
+            self.avance_chart.load({
                   json: self.selected.chart_data,
                   keys: {
                       x: 'fecha',
                       value: ['cumplimiento', 'meta']
-                  },
-                  type: 'spline'
-              },
-              line: {
-                  connectNull: true
-              },
-              axis: {
-                  x: {
-                      type: 'timeseries',
-                      tick: {
-                          format: function (x) {
-                              return x.getFullYear()+ '-' +x.getMonth();
-                          }
-                      }
-                  },
-                  y: {
-                    min:0
                   }
-              }
+              });
+            /*if(self.selected.chart_data_grid.length>0){
+              console.log(self.selected.chart_data_grid[0].value,self.selected.fecha_fin_moment.format('YYYY-MM-DD'));
+              self.avance_chart.ygrids(self.selected.chart_data_grid);
+            } else {
+              console.log('elimino!');
+              self.avance_chart.ygrids.remove();
+            }*/
 
-          });
-        },1000);
-
-      } else {
-        console.log('update!',self.selected.chart_data);
-        self.avance_chart.load({
-          json: self.selected.chart_data,
-        });
-      }
+          }
+      
+      },500);
 
     },
   	dataLoaded:function(data){
@@ -94,27 +141,26 @@ var InundacionesLp = Vue.extend({
         }
 
         o.chart_data = [];
+        o.chart_data_grid = [];
         if(o.fecha_inicio && o.plazo_de_obra_en_dias){
-          o.fecha_inicio = moment(o.fecha_inicio, 'DD/MM/YYYY');
-          o.fecha_fin = moment(o.fecha_inicio, 'DD/MM/YYYY').add(o.plazo_de_obra_en_dias,'days').format('YYYY-MM-DD');
-
-          console.log(o.plazo_de_obra_en_dias);
-          console.log(o.fecha_inicio);
-          console.log(o.fecha_fin);
-
-          o.chart_data.push({fecha:o.fecha_inicio.format('YYYY-MM-DD'),meta:0,cumplimiento:0})
-          o.chart_data.push({fecha:o.fecha_fin,meta:100,cumplimiento:null})
+          o.fecha_inicio_moment = moment(o.fecha_inicio.trim(), 'DD/MM/YYYY');
+          o.fecha_fin_moment = moment(o.fecha_inicio.trim(), 'DD/MM/YYYY').add(o.plazo_de_obra_en_dias,'days');
+          
+          o.chart_data.push({fecha:o.fecha_inicio_moment.format('YYYY-MM-DD'),meta:0,cumplimiento:0})
+          o.chart_data.push({fecha:o.fecha_fin_moment.format('YYYY-MM-DD'),meta:100,cumplimiento:null})
+        
+          o.chart_data_grid.push({value: o.fecha_fin_moment.format('YYYY-MM-DD'), text: 'Fecha límite', position: 'middle'});
         }
 
-        if(o.p_2014_12){
+        if(o.p_2014_12 && ( !o.fecha_inicio_moment || o.fecha_inicio_moment.format('YYYY-MM-DD')<'2014-12-01' ) ){
           o.chart_data.push({fecha:'2014-12-01',meta:null,cumplimiento:o.p_2014_12})
         }
 
-        if(o.p_2015_07){
+        if(o.p_2015_07 && ( !o.fecha_inicio_moment || o.fecha_inicio_moment.format('YYYY-MM-DD')<'2015-07-01' ) ){
           o.chart_data.push({fecha:'2015-07-01',meta:null,cumplimiento:o.p_2015_07})
         }
 
-        if(o.p_2015_12){
+        if(o.p_2015_12 && ( !o.fecha_inicio_moment || o.fecha_inicio_moment.format('YYYY-MM-DD')<'2015-12-01' ) ){
           o.chart_data.push({fecha:'2015-12-01',meta:null,cumplimiento:o.p_2015_12})
         }
 
@@ -123,7 +169,8 @@ var InundacionesLp = Vue.extend({
         }
 
         if(o.p_2016_09){
-          o.chart_data.push({fecha:'2016-09-01',meta:(o.fecha_fin>'2016-09-01')?100:null,cumplimiento:o.p_2016_09})
+          var meta = (o.fecha_fin_moment && o.fecha_fin_moment.format('YYYY-MM-DD')<'2016-09-01')?100:null;
+          o.chart_data.push({fecha:'2016-09-01',meta:meta,cumplimiento:o.p_2016_09})
         }
 
         return o;
@@ -165,8 +212,17 @@ var InundacionesLp = Vue.extend({
   },
   created: function(){
   	console.log('created component!');
+    this.selected = '';
   	this.loading = true;
   	this.markers = [];
+
+    this.months = [
+      'ENE','FEB','MAR',
+      'ABR','MAY','JUN',
+      'JUL','AGO','SEP',
+      'OCT','NOV','DIC'
+     ];
+
     Tabletop.init( { key: '1PuXOuYNb0z6btfCx6ANYxHxTWjgQyPKUCVR7et2zs1o',
        callback: this.dataLoaded,
        simpleSheet: true,

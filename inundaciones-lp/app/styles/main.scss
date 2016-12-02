@@ -7,7 +7,7 @@ $icon-font-path: '../fonts/';
 $color: #B852DE;
 $color-dark: #5702A7;
 $color-light: #DBADEE;
-$grey: #ccc;
+$grey: #ddd;
 
 
 header{
@@ -85,6 +85,19 @@ header{
       font-size: 14px;
     }
   }
+}
+
+/*CHART*/
+.c3-axis-y .domain{
+  stroke:none;
+}
+
+.c3-chart-line .c3-circle{
+  fill:none;
+}
+
+.c3-chart-line .c3-lines .c3-line{
+  stroke-width: 3px;
 }
 
 /* Small Devices, Tablets */
