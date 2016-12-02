@@ -1,3 +1,35 @@
+var tag = document.createElement('script');
+
+tag.src = 'https://www.youtube.com/iframe_api';
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var player;
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    videoId: 'EItgWZf2qIY',
+    playerVars:{
+      disablekb:1,
+      modestbranding:1,
+      rel:0,
+      showinfo:0
+    },
+    events: {
+      'onReady': onPlayerReady
+    }
+  });
+};
+
+function onPlayerReady(event) {
+  event.target.playVideo();
+};
+
+function loadVideoByID(id){
+  console.log(id);
+  player.loadVideoById(id);
+};
+
 var InundacionesLp = Vue.extend({
   data: function(){
   	return	{
@@ -28,10 +60,14 @@ var InundacionesLp = Vue.extend({
       }
       this.updateChart();
       this.updateCarousel();
+      this.updateVideo();
 
     }
   },
   methods:{
+    updateVideo:function(){
+      loadVideoByID(this.selected.video);
+    },
     updateCarousel:function(){
 
       var self = this;  
