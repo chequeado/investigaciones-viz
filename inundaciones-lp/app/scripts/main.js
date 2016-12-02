@@ -1,7 +1,6 @@
 var InundacionesLp = Vue.extend({
   data: function(){
   	return	{
-  		obras: [],
   		selected: '',
   		loading: false,
       via:false
@@ -34,19 +33,7 @@ var InundacionesLp = Vue.extend({
   methods:{
     updateChart:function(){
 
-      var self = this;
-
-      //AVANCE
-      var data1 = {
-                columns: [
-                    ['data1', 70],
-                    ['data2', 30],
-                ],
-                type: 'bar',
-                groups: [
-                    ['data1','data2']
-                ]
-            };
+      var self = this;  
 
       if(!self.avance_chart){
 
@@ -54,43 +41,30 @@ var InundacionesLp = Vue.extend({
            self.avance_chart = c3.generate({
               bindto:'#avance-chart',
               size: {
-                height: 100
+                height: 300
               },
               data: {
-                  json: [{
-                      date: '2014-01-01',
-                      upload: 200,
-                      download: 200,
-                      total: 400
-                  }, {
-                      date: '2014-01-02',
-                      upload: 100,
-                      download: 300,
-                      total: 400
-                  }, {
-                      date: '2014-01-03',
-                      upload: 300,
-                      download: 200,
-                      total: 500
-                  }, {
-                      date: '2014-01-04',
-                      upload: 400,
-                      download: 100,
-                      total: 500
-                  }],
+                  json: self.selected.chart_data,
                   keys: {
-                      x: 'date',
-                      value: ['upload', 'download']
-                  }
+                      x: 'fecha',
+                      value: ['cumplimiento', 'meta']
+                  },
+                  type: 'spline'
+              },
+              line: {
+                  connectNull: true
               },
               axis: {
                   x: {
                       type: 'timeseries',
                       tick: {
                           format: function (x) {
-                              return x.getFullYear();
+                              return x.getFullYear()+ '-' +x.getMonth();
                           }
                       }
+                  },
+                  y: {
+                    min:0
                   }
               }
 
@@ -98,8 +72,10 @@ var InundacionesLp = Vue.extend({
         },1000);
 
       } else {
-        console.log('update!',data1);
-        //self.avance_chart.load(data1);
+        console.log('update!',self.selected.chart_data);
+        self.avance_chart.load({
+          json: self.selected.chart_data,
+        });
       }
 
     },
@@ -116,6 +92,40 @@ var InundacionesLp = Vue.extend({
         if(o.imagen_3){
           o.images.push(o.imagen_3);
         }
+
+        o.chart_data = [];
+        if(o.fecha_inicio && o.plazo_de_obra_en_dias){
+          o.fecha_inicio = moment(o.fecha_inicio, 'DD/MM/YYYY');
+          o.fecha_fin = moment(o.fecha_inicio, 'DD/MM/YYYY').add(o.plazo_de_obra_en_dias,'days').format('YYYY-MM-DD');
+
+          console.log(o.plazo_de_obra_en_dias);
+          console.log(o.fecha_inicio);
+          console.log(o.fecha_fin);
+
+          o.chart_data.push({fecha:o.fecha_inicio.format('YYYY-MM-DD'),meta:0,cumplimiento:0})
+          o.chart_data.push({fecha:o.fecha_fin,meta:100,cumplimiento:null})
+        }
+
+        if(o.p_2014_12){
+          o.chart_data.push({fecha:'2014-12-01',meta:null,cumplimiento:o.p_2014_12})
+        }
+
+        if(o.p_2015_07){
+          o.chart_data.push({fecha:'2015-07-01',meta:null,cumplimiento:o.p_2015_07})
+        }
+
+        if(o.p_2015_12){
+          o.chart_data.push({fecha:'2015-12-01',meta:null,cumplimiento:o.p_2015_12})
+        }
+
+        if(o.p_2016_07){
+          o.chart_data.push({fecha:'2016-07-01',meta:null,cumplimiento:o.p_2016_07})
+        }
+
+        if(o.p_2016_09){
+          o.chart_data.push({fecha:'2016-09-01',meta:(o.fecha_fin>'2016-09-01')?100:null,cumplimiento:o.p_2016_09})
+        }
+
         return o;
       }).sort(function(a,b){
   			return (a.nombre.trim().toLowerCase()>=b.nombre.trim().toLowerCase())?1:-1;
