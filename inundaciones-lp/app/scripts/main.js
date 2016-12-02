@@ -27,10 +27,21 @@ var InundacionesLp = Vue.extend({
 
       }
       this.updateChart();
+      this.updateCarousel();
 
     }
   },
   methods:{
+    updateCarousel:function(){
+
+      var self = this;  
+
+      setTimeout(function(){
+        $('.carousel-inner .item').removeClass('active').first().addClass('active');
+        $('.carousel-indicators li').removeClass('active').first().addClass('active');
+
+      },1000);
+    },
     updateChart:function(){
 
       var self = this;  
@@ -191,13 +202,14 @@ var InundacionesLp = Vue.extend({
   		}).addTo(this.map);
 
   		var customCircleMarker = L.CircleMarker.extend({
-  		   options: { 
-  		      id: 'pala'
-  		   }
+        options: { 
+          id: 'pala'
+        }
   		});
 
   		this.obras.forEach(function(e){
   			if(e.lat && e.lng){
+          e.color = '#B852DE';
   				self.markers.push(new customCircleMarker([e.lat, e.lng],e)
   					.bindPopup(e.nombre)
   					.on('click', function(e,a) {

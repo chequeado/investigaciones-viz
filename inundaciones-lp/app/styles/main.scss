@@ -58,6 +58,29 @@ header{
   background-color: $grey;
 }
 
+.btn-link{
+  color: $color;
+  &:hover{
+    color:$color-dark;
+  }
+}
+
+.carousel-indicators{
+  & li{
+      border-color: $color-light;
+    &.active{
+      background: $color;
+    }
+  }
+}
+
+.carousel-control{
+  color: $color-light;
+  &:hover{
+    color: $color;
+  }
+}
+
 .with-icon{
   min-height: 70px;
   div.icon{
