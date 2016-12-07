@@ -134,10 +134,6 @@ var InundacionesLp = Vue.extend({
                                   return self.months[x.getMonth()] + '-' + x.getFullYear();
                               },
                               count: 3
-                          },
-                          padding: {
-                            left: 50,
-                            right: 50
                           }
                       },
                       y: {
@@ -148,10 +144,6 @@ var InundacionesLp = Vue.extend({
                               return y+ '%';
                           },
                           values: [0, 50, 100]
-                        },
-                        padding: {
-                          top: 10,
-                          bottom: 0
                         }
                       }
                   }

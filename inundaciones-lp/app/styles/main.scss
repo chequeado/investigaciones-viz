@@ -65,6 +65,10 @@ header{
   }
 }
 
+.carousel-inner > .item > img, .carousel-inner > .item > a > img{
+  width: 100%;
+}
+
 .carousel-indicators{
   & li{
       border-color: $color-light;
@@ -110,8 +114,9 @@ header{
 }
 
 /*CHART*/
-.c3-axis-y .domain{
-  stroke:none;
+.c3-axis-y .domain,
+.c3-axis-x .domain{
+  stroke:#ccc;
 }
 
 .c3-chart-line .c3-circle{
