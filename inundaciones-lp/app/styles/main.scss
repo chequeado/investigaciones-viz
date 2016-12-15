@@ -11,9 +11,15 @@ $grey: #ddd;
 
 
 header{
-  background-image: url('http://placehold.it/1000x200');
+  background-image: url('../images/cabezal-desk.jpg');
   background-size: cover;
-  background-position: center center;
+  background-position: right bottom;
+  min-height: 250px;
+  h1{
+    margin: 10px;
+    text-transform: uppercase;
+    font-size: 50px;
+  }
 }
 
 .container-fluid{
@@ -86,20 +92,17 @@ header{
 }
 
 .with-icon{
-  min-height: 70px;
+  min-height: 90px;
   div.icon{
     display: block;
     float: left;
-    width: 50px;
+    width: 70px;
     text-align: center;
     padding: 10px 0px 10px 0px;
-    i{
-      font-size: 3em;
-    }
   }
   div.content{
     padding: 15px 10px;
-    margin-left: 50px;
+    margin-left: 70px;
     span.title{
       display: block;
       font-size: 12px;
