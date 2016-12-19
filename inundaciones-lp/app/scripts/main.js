@@ -67,8 +67,9 @@ var InundacionesLp = Vue.extend({
   methods:{
     updateBlocks:function(){
       setTimeout(function(){
-        $('.grupo1').matchHeight();
-        $('.grupo2').matchHeight();
+        //$('.grupo1').matchHeight();
+        //$('.grupo2').matchHeight();
+        $('.grupo3').matchHeight();
       },500);
     },
     updateVideo:function(){
@@ -94,7 +95,7 @@ var InundacionesLp = Vue.extend({
                self.avance_chart = c3.generate({
                   bindto:'#avance-chart',
                   size: {
-                    height: 300
+                    height: 250
                   },
                   data: {
                       json: self.selected.chart_data,

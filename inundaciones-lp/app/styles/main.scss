@@ -4,11 +4,16 @@ $icon-font-path: '../fonts/';
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
+
 $color: #B852DE;
 $color-dark: #5702A7;
 $color-light: #DBADEE;
 $grey: #ddd;
 
+html,body{
+  font-family: 'Roboto', sans-serif;
+}
 
 header{
   background-image: url('../images/cabezal-desk.jpg');
@@ -64,10 +69,26 @@ header{
   background-color: $grey;
 }
 
+.grupo1,.grupo2{
+  height: 100%;
+}
+
+.row-half{
+  height: 50%;
+}
+
 .btn-link{
   color: $color;
   &:hover{
     color:$color-dark;
+  }
+}
+
+.image-container{
+  overflow: hidden;
+  height: 250px;
+  img{
+    width: 100%;
   }
 }
 
@@ -116,6 +137,28 @@ header{
   }
 }
 
+.select-chq{
+  color: #000;
+  border: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  overflow: hidden;
+    
+  background-color: #eee;
+  outline: none;
+
+  box-shadow: none;
+
+    &:focus {
+      outline: none;
+    outline-color: transparent;
+    outline-style: none;
+  }
+
+}
+
 /*CHART*/
 .c3-axis-y .domain,
 .c3-axis-x .domain{
@@ -129,6 +172,8 @@ header{
 .c3-chart-line .c3-lines .c3-line{
   stroke-width: 3px;
 }
+
+
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
@@ -146,6 +191,15 @@ header{
 
   .col-right{
     padding-left: 0;
+  }
+
+  header{
+    background-position: center bottom;
+    text-align: center;
+  }
+
+  .image-container{
+    height: auto;
   }
 
 }

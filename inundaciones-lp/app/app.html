@@ -34,14 +34,14 @@
       <div class="container-fluid">
         
         <header class="row row-full row-margin">
-            <div class="col-md-4 col-sm-6 col-xs-8">
+            <div class="col-md-4 col-sm-6 col-xs-12">
               <h1>El agua que arrasa</h1>
+              <p class="lead">Qué pasó con las obras públicas para evitar inundaciones en La Plata</p>
             </div>
         </header>
       
         <div class="row row-full">
           <div class="col-md-12">
-            <p class="lead">Qué pasó con las obras públicas para evitar inundaciones en La Plata</p>
             <p>La noche del 3 de abril de 2013, la Ciudad de La Plata se inundó por completo. La desesperación y el desamparo alcanzaron a la mayoría de los vecinos y al menos 89 personas murieron según cifras oficiales. Frente a esta tragedia, el gobierno de la Provincia de Buenos Aires presentó un plan de obras. Esta visualización muestra cuáles son y en qué estado está cada una, acompañadas por los testimonios de las víctimas.</p>
           </div>
         </div>
@@ -62,7 +62,7 @@
 
         <div class="row row-full row-margin" v-show="!loading">
           <div class="col-md-12">
-            <select id="obras" class="form-control" v-model="selected">
+            <select id="obras" class="form-control select-chq" v-model="selected">
               <option value=""> - Seleccionar obra - </option>
               <option v-for="o in obras" v-bind:value="o">{{ o.nombre }}</option>
             </select>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="row row-full row-margin" v-if="selected">
-          <div class="col-sm-3 col-left">
+          <div class="col-sm-3 col-left grupo3">
             <div id="obras-slider" class="carousel slide" data-ride="carousel">
               <!-- Indicators -->
               <ol class="carousel-indicators">
@@ -80,7 +80,9 @@
               <!-- Wrapper for slides -->
               <div class="carousel-inner" role="listbox">
                 <div v-for="(image, index) in selected.images" class="item">
-                  <img :src="image" alt="">
+                  <div class="image-container">
+                    <img :src="image" alt="">
+                  </div>
                 </div>
               </div>
 
@@ -102,9 +104,9 @@
 
             <div class="row row-full">
               
-              <div class="col-sm-7">
+              <div class="col-sm-7 grupo3">
                 
-                <div class="row">
+                <div class="row row-half">
                   <div class="col-md-7 with-icon bg-color grupo1">
                     <div class="icon">
                       <img class="img-responsive" src="images/icono-obra.png">
@@ -125,7 +127,7 @@
                   </div>
                 </div>
                 
-                <div class="row">
+                <div class="row row-half">
                   <div class="col-md-push-7 col-md-5 with-icon bg-color grupo2">
                     <div class="icon">
                       <img class="img-responsive" src="images/icono-estado.png">
@@ -148,7 +150,7 @@
               
               </div>
 
-              <div class="col-sm-5">
+              <div class="col-sm-5 grupo3">
                 <div class="row">
                   <div class="col-sm-12">
                     <h4 class="text-center">Avance de la obra</h4>
@@ -166,16 +168,6 @@
       </inundaciones-lp>
 
     </div>
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='https://www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
