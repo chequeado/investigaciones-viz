@@ -173,6 +173,8 @@ var InundacionesLp = Vue.extend({
 
     },
   	dataLoaded:function(data){
+      data = data.OBRAS.elements;
+      console.log(data);
   		this.loading = false;
   		this.obras = data.map(function(o){
         o.images = [];
@@ -272,7 +274,7 @@ var InundacionesLp = Vue.extend({
 
     Tabletop.init( { key: '1PuXOuYNb0z6btfCx6ANYxHxTWjgQyPKUCVR7et2zs1o',
        callback: this.dataLoaded,
-       simpleSheet: true,
+       simpleSheet: false,
        parseNumbers: true
    	});
   },
