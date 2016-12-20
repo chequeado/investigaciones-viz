@@ -77,8 +77,9 @@ header{
   height: 50%;
 }
 
-.btn-link{
+.btn-chq{
   color: $color;
+  border-radius: 0px;
   &:hover{
     color:$color-dark;
   }
@@ -107,6 +108,12 @@ header{
 
 .carousel-control{
   color: $color-light;
+  &.right{
+    background-image: none;
+  }
+  &.left{
+    background-image: none;
+  }
   &:hover{
     color: $color;
   }
@@ -128,13 +135,19 @@ header{
       display: block;
       font-size: 12px;
       overflow: hidden;
+      text-align: center;
     }
     span.data{
+      text-align: center;
       display: block;
       font-weight: bold;
       font-size: 14px;
     }
   }
+}
+
+.btn-chq{
+
 }
 
 .select-chq{

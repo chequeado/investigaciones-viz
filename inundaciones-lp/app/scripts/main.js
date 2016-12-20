@@ -6,6 +6,8 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
 
+var streetview_key = 'AIzaSyCeSxDOvim56tGJFPPx4pVZOry12AnDc-I';
+
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     videoId: 'EItgWZf2qIY',
@@ -188,6 +190,14 @@ var InundacionesLp = Vue.extend({
           o.images.push(o.imagen_3);
         }
 
+        if(o.images.length==0){
+          var url = 'https://maps.googleapis.com/maps/api/streetview?size=400x400&location='+o.lat+','+o.lng+'&key='+streetview_key+'&heading=';
+          o.images.push(url+'0');
+          o.images.push(url+'90');
+          o.images.push(url+'180');
+          o.images.push(url+'270');
+        }
+
         o.chart_data = [];
         o.chart_data_grid = [];
         if(o.fecha_inicio && o.plazo_de_obra_en_dias){
@@ -222,9 +232,9 @@ var InundacionesLp = Vue.extend({
         }
 
         return o;
-      }).sort(function(a,b){
+      })/*.sort(function(a,b){
   			return (a.nombre.trim().toLowerCase()>=b.nombre.trim().toLowerCase())?1:-1;
-  		});
+  		})*/;
   		this.createMap();
   		console.log(data);
   	},

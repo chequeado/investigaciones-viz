@@ -71,7 +71,7 @@
 
         <div class="row row-full row-margin" v-if="selected">
           <div class="col-sm-3 col-left grupo3">
-            <div id="obras-slider" class="carousel slide" data-ride="carousel">
+            <div v-show="selected.images.length>0" id="obras-slider" class="carousel slide" data-ride="carousel">
               <!-- Indicators -->
               <ol class="carousel-indicators">
                 <li v-for="(image, index) in selected.images" data-target="#obras-slider" data-slide-to="{{index}}"></li>
@@ -96,8 +96,8 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
-            <p class="text-center">
-              <a class="btn btn-link" :href="selected.facebook" target="_blank">Ver galería de imágenes en Facebook</a>
+            <p v-show="selected.facebook!=''" class="text-center">
+              <a class="btn btn-default btn-chq" :href="selected.facebook" target="_blank">Ver galería de imágenes en Facebook</a>
             </p>
           </div>
           <div class="col-sm-9 col-right">
