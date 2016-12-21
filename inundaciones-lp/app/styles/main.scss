@@ -61,6 +61,10 @@ header{
   background-color: $color;
 }
 
+.main-color{
+  color: $color;
+}
+
 .bg-dark{
   background-color: $color-dark;
 }
@@ -120,6 +124,7 @@ header{
 }
 
 .with-icon{
+  padding-top: 5%;
   min-height: 90px;
   div.icon{
     display: block;
@@ -213,6 +218,10 @@ header{
 
   .image-container{
     height: auto;
+  }
+
+  .with-icon{
+    padding-top: 0px;
   }
 
 }
