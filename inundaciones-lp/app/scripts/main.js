@@ -1,16 +1,23 @@
-var tag = document.createElement('script');
-
-tag.src = 'https://www.youtube.com/iframe_api';
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var default_obra_id = 10;
+var default_obra;
 
 var player;
+var api_flag = false,
+    data_flag = false;
 
 var streetview_key = 'AIzaSyCeSxDOvim56tGJFPPx4pVZOry12AnDc-I';
 
+function embedYTApi(){
+  var tag = document.createElement('script');
+
+  tag.src = 'https://www.youtube.com/iframe_api';
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
+
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
-    videoId: 'EItgWZf2qIY',
+    videoId: default_obra.video,
     playerVars:{
       disablekb:1,
       modestbranding:1,
@@ -61,8 +68,8 @@ var InundacionesLp = Vue.extend({
       }
       this.updateChart();
       this.updateCarousel();
-      this.updateVideo();
       this.updateBlocks();
+      this.updateVideo();
 
     }
   },
@@ -75,7 +82,9 @@ var InundacionesLp = Vue.extend({
       },500);
     },
     updateVideo:function(){
-      loadVideoByID(this.selected.video);
+      if(player){
+        loadVideoByID(this.selected.video);
+      }
     },
     updateCarousel:function(){
 
@@ -176,7 +185,7 @@ var InundacionesLp = Vue.extend({
     },
   	dataLoaded:function(data){
       data = data.OBRAS.elements;
-      console.log(data);
+      data_flag = true;
   		this.loading = false;
   		this.obras = data.map(function(o){
         o.images = [];
@@ -222,21 +231,29 @@ var InundacionesLp = Vue.extend({
           o.chart_data.push({fecha:'2015-12-01',meta:null,cumplimiento:o.p_2015_12})
         }
 
-        if(o.p_2016_07){
+        if(o.p_2016_07 && ( !o.fecha_inicio_moment || o.fecha_inicio_moment.format('YYYY-MM-DD')<'2016-07-01' ) ){
           o.chart_data.push({fecha:'2016-07-01',meta:null,cumplimiento:o.p_2016_07})
         }
 
-        if(o.p_2016_09){
-          var meta = (o.fecha_fin_moment && o.fecha_fin_moment.format('YYYY-MM-DD')<'2016-09-01')?100:null;
-          o.chart_data.push({fecha:'2016-09-01',meta:meta,cumplimiento:o.p_2016_09})
+        if(o.p_2016_09 && ( !o.fecha_inicio_moment || o.fecha_inicio_moment.format('YYYY-MM-DD')<'2016-09-01' ) ){
+          o.chart_data.push({fecha:'2016-09-01',meta:null,cumplimiento:o.p_2016_09})
+        }
+
+        if(o.p_2016_11){
+          var meta = (o.fecha_fin_moment && o.fecha_fin_moment.format('YYYY-MM-DD')<'2016-11-01')?100:null;
+          o.chart_data.push({fecha:'2016-11-01',meta:meta,cumplimiento:o.p_2016_11})
         }
 
         return o;
       })/*.sort(function(a,b){
   			return (a.nombre.trim().toLowerCase()>=b.nombre.trim().toLowerCase())?1:-1;
   		})*/;
+      default_obra = _.first(this.obras.filter(function(d){
+        return d.id == default_obra_id;
+      }));
+      this.selected = default_obra;
   		this.createMap();
-  		console.log(data);
+      embedYTApi();
   	},
   	createMap: function(){
   		var self = this;
@@ -270,7 +287,6 @@ var InundacionesLp = Vue.extend({
   	}
   },
   created: function(){
-  	console.log('created component!');
     this.selected = '';
   	this.loading = true;
   	this.markers = [];
@@ -289,7 +305,7 @@ var InundacionesLp = Vue.extend({
    	});
   },
   ready: function(){
-  	console.log('ready component!');
+
   }
 });
 
@@ -302,10 +318,10 @@ new Vue({
     'inundaciones-lp': InundacionesLp
   },
   created: function(){
-  	console.log('created app!');
+
   	this.pymChild = pym.Child({ polling: 500 });
   },
   ready: function(){
-  	console.log('ready app!');
+
   }
 });
