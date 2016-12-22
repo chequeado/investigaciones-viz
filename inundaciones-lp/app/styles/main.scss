@@ -81,6 +81,10 @@ header{
   height: 50%;
 }
 
+.lead-minor{
+  font-size: 16px;
+}
+
 .btn-chq{
   color: $color;
   border-radius: 0px;
@@ -164,7 +168,7 @@ header{
           appearance: none;
   overflow: hidden;
     
-  background-color: #eee;
+  background-color: $color-light;
   outline: none;
 
   box-shadow: none;

@@ -257,7 +257,7 @@ var InundacionesLp = Vue.extend({
   	},
   	createMap: function(){
   		var self = this;
-  		this.map = L.map('mapa').setView([-34.9314,  -57.9489], 11);
+  		this.map = L.map('mapa').setView([-34.9314,  -57.9489], 15);
       this.map.scrollWheelZoom.disable();
   		L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
   			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
