@@ -6,6 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>inundaciones lp</title>
 
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@chequeado">
+    <meta name="twitter:title" content="Visualización interactiva: Inundaciones La Plata">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:creator" content="@chequeado">
+    <meta name="twitter:image" content="https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/images/share.png">
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="Visualización interactiva: Inundaciones La Plata" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/app.html" />
+    <meta property="og:image" content="https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/images/share.png" />
+    <meta property="og:image:width" content="480" />
+    <meta property="og:image:height" content="253" />
+
+    <meta property="og:description" content="" />
+    <meta property="og:site_name" content="Chequeado - Verificación del discurso público" />
+
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
 
@@ -17,7 +35,10 @@
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/genericons.css">
+    <link rel="stylesheet" href="styles/social.css">
     <link rel="stylesheet" href="styles/main.css">
+
     <!-- endbuild -->
     
     <!-- build:js scripts/vendor/modernizr.js -->
@@ -58,7 +79,7 @@
         </div>
 
         <div class="row row-full row-margin" v-show="!loading">
-          <div class="col-md-12">
+          <div class="col-md-12 col-left col-right">
             <select id="obras" class="form-control select-chq" v-model="selected">
               <option value=""> - Seleccionar obra - </option>
               <option v-for="o in obras" v-bind:value="o">{{ o.nombre }}</option>
@@ -164,7 +185,68 @@
 
       </inundaciones-lp>
 
+      <div id="fuente" class="container-fluid">
+        <div class="row row-full">
+          <div class="col-md-12">
+            <p class="text-center"><strong>Fuente:</strong>  Datos elaborados en el hackaton de Chequeado en la Facultad de Informática de la Universidad Nacional de la Plata y Subsecretaría de Recursos Hídricos del Gobierno de la provincia de Buenos Aires <a class="iframe-show" href="https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/app.html" target="_blank">Ver en pantalla completa <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a>
+            <a class="no-iframe-show" href="http://www.chequeado.com/investigacion/los-laberintos-patrimoniales-del-presidente-macri/" target="_blank">Ver investigación completa en Chequeado <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a>
+            </p>
+          </div>
+          <div class="col-md-8 col-md-offset-2">
+            <p>
+              <ul class="share-ul-container text-center">
+                <li>Compartir visualización <i class="glyphicon glyphicon-chevron-right"></i></li>
+                <li class="share-btn-container">
+                  <a share-url="https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/app.html" share-text="Inundaciones La Plata" share-hashtags="investigacion #ddj #dataviz" share-via="chequeado" class="share-btn share-twitter"></a>
+                </li>
+
+                <li class="share-btn-container">
+                  <a class="share-btn share-facebook" share-u="https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/app.html"></a>
+                </li>
+
+                <li class="share-btn-container">
+                  <a class="share-btn share-googleplus" share-url="https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/app.html"></a>
+                </li>
+
+              </ul>
+            </p>
+          </div>
+          <div class="col-md-2">
+            <p class="text-center">
+              <button class="btn btn-xs btn-chq" data-toggle="modal" data-target="#credits"><i class="glyphicon glyphicon-info-sign"></i> Créditos</button>
+            </p>
+          </div>
+        </div>
+      </div>
+
+        <div id="credits" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <img class="img-responsive" src="images/logo2.png">
+              </div>
+              <div class="modal-body">
+                <p class="lead">Visualización interactiva: Inundaciones La Plata</p>
+                <p>Investigación: <strong>Maia Jastreblansky</strong></p>
+                <p>Visualización: <strong><a href="http://sociopublico.com/" target="_blank">Sociopúblico <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a></strong></p>
+                <ul>
+                  <li>Coordinación: <strong>Ana Soffietto</strong></li>
+                  <li>Diseño: <strong>Marcelo Morán</strong></li>
+                  <li>Desarrollo: <strong>Pablo H. Paladino</strong></li>
+                </ul>
+                <p>Fuente: <strong>Datos elaborados en el hackaton de Chequeado en la Facultad de Informática de la Universidad Nacional de la Plata y Subsecretaría de Recursos Hídricos del Gobierno de la provincia de Buenos Aires</strong></p>
+                <p>Datos: <strong><a href="https://chequeado.carto.com/tables/concesiones_full/public" data-bind="data" target="_blank">Descargar planilla <i class="glyphicon glyphicon-download-alt" aria-hidden="true"></i></a></strong></p>
+                <p>Herramientas: <strong data-bind="herramientas">Leaflet + Google Spreadsheet + TableTop.js + c3.js + D3.js + Twitter Bootstrap + Github Pages + pym.js</strong></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-chq btn-xs btn-selected" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
+
+
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
