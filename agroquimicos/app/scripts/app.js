@@ -10,7 +10,8 @@
  */
 angular
   .module('agroquimicosApp', [
-    'ngRoute'
+    'ngRoute',
+    'ngAnimate'
   ])
   .config(function ($routeProvider,$locationProvider) {
     $routeProvider

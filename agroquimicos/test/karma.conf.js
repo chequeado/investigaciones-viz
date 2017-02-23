@@ -27,6 +27,7 @@ module.exports = function(config) {
       'bower_components/tabletop/src/tabletop.js',
       'bower_components/pym.js/dist/pym.v1.js',
       'bower_components/angular-route/angular-route.js',
+      'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

@@ -1,3 +1,48 @@
 // bower:scss
 // endbower
 
+$transition_delay: 0.5s;
+
+#game-container{
+	background-image: url('../images/bg/fondo1.jpg');
+	background-size: cover;
+	background-position: center center;
+	min-height: 600px;
+}
+
+
+/*Animate*/
+
+.no-animate {
+   -webkit-transition: none !important;
+   transition: none !important;
+}
+
+.animate.ng-enter,
+.animate.ng-hide-remove,
+{
+	-webkit-transition: $transition_delay linear opacity;
+	-moz-transition: $transition_delay linear opacity;
+	-ms-transition: $transition_delay linear opacity;
+	-o-transition: $transition_delay linear opacity;
+	transition: $transition_delay linear opacity;
+}
+
+.animate.ng-leave,
+.animate.ng-hide-add {
+	opacity: 1;
+}
+
+.animate.ng-leave.ng-leave-active,
+.animate.ng-hide-add.ng-hide-add-active{
+	opacity: 0;
+}
+
+.animate.ng-enter,
+.animate.ng-hide-remove{
+	opacity: 0;
+}
+.animate.ng-enter.ng-enter-active,
+.animate.ng-hide-remove.ng-hide-remove-active{
+	opacity: 1;
+}
