@@ -48,12 +48,12 @@ angular.module('agroquimicosApp')
             id: o.id,
             text:'vos y x mas están '+o.opcion
         }
+        $scope.myAnswers['pregunta_'+$scope.currentId] = $scope.current.answer.id;
+        $scope.updateMyCoordinates();
     };
 
     $scope.next = function(){
         $scope.state = 'transition';
-        $scope.myAnswers['pregunta_'+$scope.currentId] = $scope.current.answer.id;
-        $scope.updateMyCoordinates();
         $scope.current.answer = false;
         $scope.currentId++;
         if($scope.preguntas['pregunta_'+$scope.currentId]){
