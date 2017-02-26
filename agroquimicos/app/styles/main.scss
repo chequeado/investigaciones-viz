@@ -10,7 +10,16 @@ $transition_delay: 0.5s;
 	min-height: 600px;
 }
 
-
+/*COLORES*/
+.color-SI{
+	color: #1aa5ad;
+}
+.color-NOSE{
+	color: #d78031;
+}
+.color-NO{
+	color: #f3452f;
+}
 /*Animate*/
 
 .no-animate {
@@ -45,4 +54,16 @@ $transition_delay: 0.5s;
 .animate.ng-enter.ng-enter-active,
 .animate.ng-hide-remove.ng-hide-remove-active{
 	opacity: 1;
+}
+
+/*CHART*/
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
