@@ -10,16 +10,32 @@ $transition_delay: 0.5s;
 	min-height: 600px;
 }
 
+$colorSI: #1aa5ad;
+$colorNOSE: #d78031;
+$colorNO: #f3452f;
+
 /*COLORES*/
 .color-SI{
-	color: #1aa5ad;
+	color: $colorSI;
 }
 .color-NOSE{
-	color: #d78031;
+	color: $colorNOSE;
 }
 .color-NO{
-	color: #f3452f;
+	color: $colorNO;
 }
+
+/*COLORES*/
+.fill-SI{
+	fill: $colorSI;
+}
+.fill-NOSE{
+	fill: $colorNOSE;
+}
+.fill-NO{
+	fill: $colorNO;
+}
+
 /*Animate*/
 
 .no-animate {
@@ -66,4 +82,22 @@ $transition_delay: 0.5s;
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+
+.scatter-image{
+	cursor: pointer;
+}
+
+.my-dot{
+	fill: #fff;
+}
+
+.hover-dot{
+	fill: #fff;	
+}
+
+#row-title{
+	h3{
+		min-height: 2em;
+	}
 }

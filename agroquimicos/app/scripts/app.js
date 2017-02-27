@@ -52,6 +52,20 @@ angular
       });
     }
   })
-  .run(function(){
+  .run(function($rootScope){
     var pymChild = pym.Child({ polling: 500 });
+
+    $rootScope.selected = false; 
+
+    $('#modal').modal({show:false})
+      .on('hide.bs.modal', function (e) {
+        $rootScope.selected = false;
+      });
+
+    $rootScope.openModal = function(d){
+      $rootScope.selected = d;
+      $rootScope.$apply();
+      $('#modal').modal('show');
+    }
+
   });

@@ -25,17 +25,17 @@
 		</div>
 	</div>
 	<div class="col-md-8">
-		<div class="row">
+		<div id="row-title" class="row">
 			<div class="col-md-2">
-				<img class="img-responsive" ng-src="images/caritas/carita{{myConclusion.id}}_fem_color.png"/>
+				<img class="img-responsive" ng-src="images/caritas/carita{{myCoordinates.conclusion.id}}_fem_color.png"/>
 			</div>
 			<div class="col-md-8">
-				<h3 class="text-center color-{{myConclusion.id}}">{{myConclusion.texto}}</h3>
-				<h4 class="text-center">{{myConclusion.detalle}}</h4>
+				<h3 class="text-center color-{{myCoordinates.conclusion.id}}">{{myCoordinates.conclusion.texto}}</h3>
+				<h4 class="text-center">{{myCoordinates.conclusion.detalle}}</h4>
 
 			</div>
 			<div class="col-md-2">
-				<img class="img-responsive" ng-src="images/caritas/carita{{myConclusion.id}}_mas_color.png"/>
+				<img class="img-responsive" ng-src="images/caritas/carita{{myCoordinates.conclusion.id}}_mas_color.png"/>
 			</div>
 		</div>
 		<div class="row">
@@ -55,3 +55,36 @@
 		<p ng-repeat="e in entrevistas">{{e.entrevistado}} - ({{e.x}},{{e.y}}) - Values = {{e.values}} </p>
 	</div>
 </div>
+
+<div id="modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="media">
+          <div class="media-left">
+            <img class="media-object" width="75" ng-src="{{selected.cara_color}}">
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{selected.entrevistado}}</h4>
+            <p>{{selected.organizacion}}</p>
+          </div>
+        </div>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <blockquote>
+          <p>"{{selected.cita}}"</p>
+           <footer>Textual de entrevista</footer>
+        </blockquote>
+        <p>Las respuestas de {{selected.entrevistado}}:</p>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="p in preguntasKeys">{{$index+1}}. {{preguntas[p].pregunta}} <strong ng-show="selected[p]!=''">{{opcionesMap[selected[p]].opcion}}</strong> <strong ng-show="selected[p]==''">No contesta</strong></li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
