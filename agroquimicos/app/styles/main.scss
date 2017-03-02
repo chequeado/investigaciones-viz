@@ -4,7 +4,7 @@
 $transition_delay: 0.5s;
 
 #game-container{
-	background-image: url('../images/bg/fondo1.jpg');
+	//background-image: url('../images/bg/fondo1.jpg');
 	background-size: cover;
 	background-position: center center;
 	min-height: 600px;
@@ -13,6 +13,8 @@ $transition_delay: 0.5s;
 $colorSI: #1aa5ad;
 $colorNOSE: #d78031;
 $colorNO: #f3452f;
+
+$colorMain: #55c08f;
 
 /*COLORES*/
 .color-SI{
@@ -34,6 +36,14 @@ $colorNO: #f3452f;
 }
 .fill-NO{
 	fill: $colorNO;
+}
+
+.well{
+	background: #b0b0b0;
+	padding: 5px 15px;
+	border-radius: 0px;
+	border: none;
+	text-align: center;
 }
 
 /*Animate*/
@@ -77,6 +87,14 @@ $colorNO: #f3452f;
   font: 10px sans-serif;
 }
 
+.axis-label{
+	font: 14px sans-serif;
+}
+
+.my-text{
+	font: 8px sans-serif;
+}
+
 .axis path,
 .axis line {
   fill: none;
@@ -100,4 +118,72 @@ $colorNO: #f3452f;
 	h3{
 		min-height: 2em;
 	}
+	img{
+		margin: 0 auto;
+	}
+}
+
+#chart-col{
+	border: 1px solid #ccc;
+}
+
+#game-col{
+	h1{
+		background: $colorMain;
+		color: #fff;
+		margin: 0;
+		font-size: 25px;
+		padding: 10px;
+	}
+	h2{
+		border: 1px solid $colorMain;
+		color: $colorMain;
+		margin: 0;
+		margin-bottom: 15px;
+		font-size: 25px;
+		padding: 10px;
+	}
+}
+
+.pregunta-text{
+	font-weight: bold;
+}
+
+.btn{
+	border-radius: 0px;
+}
+
+.padding-top{
+	padding-top: 100px;
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+	.axis-label{
+		font: 14px sans-serif;
+	}
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+	.axis-label{
+		font: 12px sans-serif;
+	}
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+	.axis-label{
+		font: 10px sans-serif;
+	}
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+    
 }
