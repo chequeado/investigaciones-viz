@@ -235,10 +235,10 @@ angular.module('agroquimicosApp')
 
         layoutGroup.selectAll('bg-rect')
             .data([
-                {x:-10,y:10,color:'NOSE'},
-                {x:0,y:0,color:'NOSE'},
-                {x:0,y:10,color:'NO'},
-                {x:-10,y:0,color:'SI'}
+                {x:-10,y:10,color:'white'},
+                {x:0,y:0,color:'white'},
+                {x:0,y:10,color:'white'},
+                {x:-10,y:0,color:'white'}
                 ])
             .enter()
             .append("svg:rect")
