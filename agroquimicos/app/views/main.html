@@ -2,7 +2,7 @@
 	<div id="game-col" class="col-md-5">
 		<h1 class="text-center">AGROQUÍMICOS</h1>
 		<h2 class="text-center">¿de qué lado estás?</h2>
-		<p class="text-center">¿Es posible un campo sin agroquímicos? ¿Existen riesgos para nuestra salud? La discusión tiene cada vez más detractores y defensores, cada uno con sus argumentos. Conocelos todos acá y respondé nuestro quiz para saber de quiénes estás más cerca.</p>
+		<p class="text-center">¿Es posible un campo sin agroquímicos? ¿Existen riesgos para la salud? La discusión tiene cada vez más detractores y defensores, cada uno con argumentos que se presentan como irreconciliables. Conocelos acá y respondé el quiz para saber dónde te ubicás vos.</p>
 		<div id="game-container" class="row">
 			<div ng-show="state=='loading'" class="col-md-12 text-center animate padding-top">
 				Cargando información...
@@ -12,7 +12,7 @@
 			</div>
 			<div ng-show="state=='game'" class="animate">
 				<div class="col-md-10 col-md-offset-1 text-center">
-					<p><img ng-src="images/gifs/{{current.icono}}.gif"</p>
+					<p class="pregunta-icon"><img ng-src="images/gifs/{{current.icono}}.gif"</p>
 					<p class="pregunta-text">{{current.pregunta}}</p>
 				</div>
 				<div class="col-md-8 col-md-offset-2 text-center">
@@ -25,7 +25,12 @@
 		</div>
 	</div>
 	<div id="chart-col" class="col-md-7">
-		<div id="row-title" class="row">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div id="chart-container"></div>
+			</div>
+		</div>
+		<div id="row-title" class="row" ng-show="state!='start'">
 			<div class="col-sm-2 col-xs-6 text-center">
 				<img class="img-responsive" ng-src="images/caritas/carita{{myCoordinates.conclusion.id}}_fem_negro.png"/>
 			</div>
@@ -33,26 +38,21 @@
 				<img class="img-responsive" ng-src="images/caritas/carita{{myCoordinates.conclusion.id}}_mas_negro.png"/>
 			</div>
 			<div class="col-sm-8 col-xs-12 col-sm-pull-2">
-				<h3 class="text-center">{{myCoordinates.conclusion.texto}}</h3>
+				<h4 class="text-center"><strong>{{myCoordinates.conclusion.texto}}</strong></h4>
 				<h4 class="text-center">{{myCoordinates.conclusion.detalle}}</h4>
 
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<div id="chart-container"></div>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-md-12">
-			 <div class="well"><p>Hacé click en los puntos para conocer quiénes de los entrevistados piensan como vos. Deslizate hacia la derecha o la izquierda para ver más.</p></div>
+			 <div class="well"><p>Hacé click en los puntos para conocer quiénes de los entrevistados piensan parecido a vos. Deslizate para leer más.</p></div>
 			</div>
 		</div>
 	</div>
 </div>
 
 <div id="modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -124,7 +124,11 @@ $colorMain: #000;
 }
 
 #chart-col{
-	border: 1px solid #ccc;
+	
+}
+
+#chart-container{
+	margin-top: -25px;
 }
 
 #game-col{
@@ -145,16 +149,26 @@ $colorMain: #000;
 	}
 }
 
+.pregunta-icon{
+	margin: 20px auto 0px auto;
+}
+
 .pregunta-text{
 	font-weight: bold;
+	margin: 10px auto 20px auto;
 }
 
 .btn{
 	border-radius: 0px;
+	margin-bottom: 20px;
 }
 
 .padding-top{
 	padding-top: 100px;
+}
+
+.modal-content{
+	border-radius: 0px;
 }
 
 /* Large Devices, Wide Screens */
@@ -166,6 +180,9 @@ $colorMain: #000;
 @media only screen and (max-width : 992px) {
 	.axis-label{
 		font: 14px sans-serif;
+	}
+	#game-container{
+		min-height: auto;
 	}
 }
 

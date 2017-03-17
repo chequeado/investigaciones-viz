@@ -315,7 +315,7 @@ angular.module('agroquimicosApp')
             .attr("class","axis-label")
             .attr("x", -height/2)
             .attr("y", -5)
-            .text("El Estado debe intervenir nada o mucho")
+            .text("← El Estado debe intervenir nada o mucho →")
             .attr("text-anchor", "middle")
             .attr("transform", "rotate(270)");
 
@@ -324,7 +324,7 @@ angular.module('agroquimicosApp')
             .attr("class","axis-label")
             .attr("x", height/2)
             .attr("y", height+14)
-            .text("Los agroquímicos afectan el medioambiente nada o mucho")
+            .text("← Los agroquímicos afectan el medioambiente nada o mucho →")
             .attr("text-anchor", "middle");
 
     }
