@@ -213,3 +213,22 @@ $colorMain: #000;
 @media only screen and (max-width : 320px) {
     
 }
+
+#fuente{
+  background-color: #eee;
+  p{
+    margin: 20px
+  }
+}
+
+.iframe-show,.no-iframe-show{
+  display:none;
+}
+
+#credits.modal {
+  bottom: 0;
+  top:auto;
+  .modal-content{
+    border-radius:0px;
+  }
+}

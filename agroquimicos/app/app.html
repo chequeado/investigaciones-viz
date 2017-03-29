@@ -12,6 +12,8 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/genericons.css">
+    <link rel="stylesheet" href="styles/social.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
@@ -23,6 +25,64 @@
     <div class="container-fluid">
       <div ng-view=""></div>
     </div>
+
+    <div id="fuente" class="container-fluid">
+        <div class="row row-full">
+          <div class="col-md-12">
+            <p class="text-center"><a class="iframe-show" href="https://chequeado.github.io/investigaciones-viz/agroquimicos/dist/app.html" target="_blank">Ver en pantalla completa <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a>
+            <a class="no-iframe-show" href="http://www.chequeado.com/investigacion/malvinas-argentinas-el-pueblo-cordobes-que-vencio-a-monsanto/" target="_blank">Ver investigación completa en Chequeado <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a>
+            </p>
+          </div>
+          <div class="col-md-8 col-md-offset-2">
+            <p>
+              <ul class="share-ul-container text-center">
+                <li>Compartir visualización <i class="glyphicon glyphicon-chevron-right"></i></li>
+                <li class="share-btn-container">
+                  <a share-url="https://chequeado.github.io/investigaciones-viz/agroquimicos/dist/app.html" share-text="Agroquímicos, ¿de qué lado estás?" share-hashtags="investigacion #ddj #dataviz" share-via="chequeado" class="share-btn share-twitter"></a>
+                </li>
+
+                <li class="share-btn-container">
+                  <a class="share-btn share-facebook" share-u="https://chequeado.github.io/investigaciones-viz/agroquimicos/dist/app.html"></a>
+                </li>
+
+                <li class="share-btn-container">
+                  <a class="share-btn share-googleplus" share-url="https://chequeado.github.io/investigaciones-viz/agroquimicos/dist/app.html"></a>
+                </li>
+
+              </ul>
+            </p>
+          </div>
+          <div class="col-md-2">
+            <p class="text-center">
+              <button class="btn btn-xs btn-chq" data-toggle="modal" data-target="#credits"><i class="glyphicon glyphicon-info-sign"></i> Créditos</button>
+            </p>
+          </div>
+        </div>
+      </div>
+
+        <div id="credits" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <img class="img-responsive" src="images/logo2.png">
+              </div>
+              <div class="modal-body">
+                <p class="lead">Visualización interactiva: Agroquímicos, ¿de qué lado estás?</p>
+                <p>Investigación: <strong>María Eugenia Ludueña</strong></p>
+                <p>Visualización: <strong><a href="http://sociopublico.com/" target="_blank">Sociopúblico <i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></a></strong></p>
+                <ul>
+                  <li>Coordinación: <strong>Ana Soffietto</strong></li>
+                  <li>Desarrollo: <strong>Pablo H. Paladino</strong></li>
+                  <li>Diseño: <strong>Valeria Sánchez Gaudina</strong></li>
+                </ul>
+                <p>Herramientas: <strong data-bind="herramientas">Google Spreadsheet + TableTop.js + D3.js + AngularJS + Twitter Bootstrap + Github Pages + pym.js</strong></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-chq btn-xs btn-selected" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -38,6 +98,7 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/socialshare.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <!-- endbuild -->
