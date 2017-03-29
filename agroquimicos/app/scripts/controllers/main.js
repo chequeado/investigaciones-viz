@@ -46,14 +46,13 @@ angular.module('agroquimicosApp')
 
         $scope.state = 'start';
 
-        $scope.renderChart();
+        $scope.renderChart(false);
     });
 
     var id;
     $(window).resize(function() {
         clearTimeout(id);
-        id = setTimeout($scope.renderChart, 500);
-        
+        id = setTimeout(function(){$scope.renderChart(true)}, 500);
     });
 
     //Questions
@@ -109,13 +108,21 @@ angular.module('agroquimicosApp')
     	});
     };
 
-    $scope.updateMyCoordinates = function(){
+    $scope.updateMyCoordinates = function(resize){
         $scope.myCoordinates = $scope.getCoordinates($scope.myAnswers);
-        $scope.myGroup
-            .transition()
-            .duration(1000)
-            .ease("elastic")
-            .attr('transform', 'translate(' + ($scope.x($scope.myCoordinates.x)-6) + ',' + ($scope.y($scope.myCoordinates.y)-6) + ')');
+        if(resize){
+            $scope.myGroup
+                .style('opacity',1)
+                .attr('transform', 'translate(' + ($scope.x($scope.myCoordinates.x)-6) + ',' + ($scope.y($scope.myCoordinates.y)-6) + ')');
+        } else {
+            $scope.myGroup
+                .transition()
+                .duration(1000)
+                .ease("elastic")
+                .style('opacity',1)
+                .attr('transform', 'translate(' + ($scope.x($scope.myCoordinates.x)-6) + ',' + ($scope.y($scope.myCoordinates.y)-6) + ')');
+        }
+        
     };
 
     $scope.getCoordinates = function(e){
@@ -156,176 +163,190 @@ angular.module('agroquimicosApp')
     $scope.y;
 
     //Chart
-    $scope.renderChart = function(){
+    $scope.renderChart = function(resize){
         var data = $scope.entrevistas;
 
-        var w = $('#chart-container').html("").width();
+        if(data){
 
-        var margin = {top: 25, right: 25, bottom: 25, left: 25}
-        console.log($scope.isMobile());
-        if($scope.isMobile()){
-            margin = {top: 0, right: 0, bottom: 20, left: 20}
-        }
+            var w = $('#chart-container').html("").width();
 
-        var width = w - margin.left - margin.right
-            , height = w - margin.top - margin.bottom;
-    
-        $scope.x = d3.scale.linear()
-            .domain([-10,10])
-            .range([ 0, width ]);
-    
-        $scope.y = d3.scale.linear()
-            .domain([-10, 10])
-            .range([ height, 0 ]);
- 
-        var chart = d3.select('#chart-container')
-            .append('svg:svg')
-            .attr('width', width + margin.right + margin.left)
-            .attr('height', height + margin.top + margin.bottom)
-            .attr('class', 'chart')
-            .attr('id', 'chart');
+            var margin = {top: 25, right: 25, bottom: 25, left: 25}
 
-        var main = chart.append('g')
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-            .attr('width', width)
-            .attr('height', height)
-            .attr('class', 'main');
+            if($scope.isMobile()){
+                margin = {top: 0, right: 0, bottom: 20, left: 20}
+            }
 
-        var layoutGroup = main.append("svg:g").classed("layoutGroup",true);
-        var axisGroup = main.append("svg:g").classed("axisGroup",true);
-        var dataGroup = main.append("svg:g").classed("dataGroup",true);
-        $scope.myGroup = main.append("svg:g").classed("myGroup",true).attr("opacity",0);
-
-                
-        // draw the x axis
-        var xAxis = d3.svg.axis()
-            .scale($scope.x)
-            .orient('bottom')
-            .ticks(20)
-            .tickSize(2,2)
-            .tickFormat("");
-
-        axisGroup.append('g')
-            .attr("transform", "translate(0," + $scope.y(0) + ")")
-            .attr('class', 'main axis axis-x')
-            .call(xAxis);
-
-        // draw the y axis
-        var yAxis = d3.svg.axis()
-            .scale($scope.y)
-            .orient('left')
-            .ticks(20)
-            .tickSize(2,2)
-            .tickFormat("");
-
-        axisGroup.append('g')
-            .attr("transform", "translate(" + $scope.x(0) + ",0)")
-            .attr('class', 'main axis axis-y')
-            .call(yAxis);
-
-        d3.selectAll(".axis-y g.tick line")
-            .attr("x2", 2)
-            .attr("x1", -2);
-
-        d3.selectAll(".axis-x g.tick line")
-            .attr("y2", 2)
-            .attr("y1", -2);
+            var width = w - margin.left - margin.right
+                , height = w - margin.top - margin.bottom;
         
-        var side = $scope.x(0);
+            $scope.x = d3.scale.linear()
+                .domain([-10,10])
+                .range([ 0, width ]);
+        
+            $scope.y = d3.scale.linear()
+                .domain([-10, 10])
+                .range([ height, 0 ]);
+     
+            var chart = d3.select('#chart-container')
+                .append('svg:svg')
+                .attr('width', width + margin.right + margin.left)
+                .attr('height', height + margin.top + margin.bottom)
+                .attr('class', 'chart')
+                .attr('id', 'chart');
 
-        layoutGroup.selectAll('bg-rect')
-            .data([
-                {x:-10,y:10,color:'white'},
-                {x:0,y:0,color:'white'},
-                {x:0,y:10,color:'white'},
-                {x:-10,y:0,color:'white'}
-                ])
-            .enter()
-            .append("svg:rect")
-            .attr('class', function(d){
-                return 'bg-rect '+'fill-'+d.color;
+            var main = chart.append('g')
+                .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+                .attr('width', width)
+                .attr('height', height)
+                .attr('class', 'main');
+
+            var layoutGroup = main.append("svg:g").classed("layoutGroup",true);
+            var axisGroup = main.append("svg:g").classed("axisGroup",true);
+            var dataGroup = main.append("svg:g").classed("dataGroup",true);
+            $scope.myGroup = main.append("svg:g").classed("myGroup",true).attr("opacity",0);
+
+                    
+            // draw the x axis
+            var xAxis = d3.svg.axis()
+                .scale($scope.x)
+                .orient('bottom')
+                .ticks(20)
+                .tickSize(2,2)
+                .tickFormat("");
+
+            axisGroup.append('g')
+                .attr("transform", "translate(0," + $scope.y(0) + ")")
+                .attr('class', 'main axis axis-x')
+                .call(xAxis);
+
+            // draw the y axis
+            var yAxis = d3.svg.axis()
+                .scale($scope.y)
+                .orient('left')
+                .ticks(20)
+                .tickSize(2,2)
+                .tickFormat("");
+
+            axisGroup.append('g')
+                .attr("transform", "translate(" + $scope.x(0) + ",0)")
+                .attr('class', 'main axis axis-y')
+                .call(yAxis);
+
+            d3.selectAll(".axis-y g.tick line")
+                .attr("x2", 2)
+                .attr("x1", -2);
+
+            d3.selectAll(".axis-x g.tick line")
+                .attr("y2", 2)
+                .attr("y1", -2);
+            
+            var side = $scope.x(0);
+
+            layoutGroup.selectAll('bg-rect')
+                .data([
+                    {x:-10,y:10,color:'white'},
+                    {x:0,y:0,color:'white'},
+                    {x:0,y:10,color:'white'},
+                    {x:-10,y:0,color:'white'}
+                    ])
+                .enter()
+                .append("svg:rect")
+                .attr('class', function(d){
+                    return 'bg-rect '+'fill-'+d.color;
+                })
+                .attr('width', side)
+                .attr('height', side)
+                .attr("x", function (d) { return $scope.x(d.x); } )
+                .attr("y", function (d) { return $scope.y(d.y); } )
+
+            $scope.dots = dataGroup.selectAll("scatter-image")
+              .data(data);
+
+            $scope.hoverCircle = dataGroup.append("svg:circle")
+                .attr('class', 'hover-dot')
+                .style("opacity",0)
+                .attr("cx", function (d,i) { return $scope.x(0); } )
+                .attr("cy", function (d) { return $scope.y(0); } )
+                .attr("r", 15);
+
+            $scope.dots
+                .enter()
+                .append("svg:image")
+                .attr('class', 'scatter-image')
+                .attr('width', 26)
+                .attr('height', 26)
+                .style("opacity",0)
+                .attr("x", function (d,i) { return $scope.x(0)-13; } )
+                .attr("y", function (d) { return $scope.y(0)-13; } )
+                .attr("xlink:href",function(d){
+                    return d.cara
+                });
+            
+            if(resize){        
+                $scope.dots
+                    .style("opacity",1)
+                    .attr("x", function (d,i) { return $scope.x(d.x)-13; } )
+                    .attr("y", function (d) { return $scope.y(d.y)-13; } );
+            } else {
+                $scope.dots.transition()
+                    .delay(function(d,i){return i*200;})
+                    .duration(1000)
+                    .ease("elastic")
+                    .style("opacity",1)
+                    .attr("x", function (d,i) { return $scope.x(d.x)-13; } )
+                    .attr("y", function (d) { return $scope.y(d.y)-13; } );
+            }
+
+            $scope.dots.on('click',function(d){
+                $rootScope.openModal(d);
             })
-            .attr('width', side)
-            .attr('height', side)
-            .attr("x", function (d) { return $scope.x(d.x); } )
-            .attr("y", function (d) { return $scope.y(d.y); } )
-
-        $scope.dots = dataGroup.selectAll("scatter-image")
-          .data(data);
-
-        $scope.hoverCircle = dataGroup.append("svg:circle")
-            .attr('class', 'hover-dot')
-            .style("opacity",0)
-            .attr("cx", function (d,i) { return $scope.x(0); } )
-            .attr("cy", function (d) { return $scope.y(0); } )
-            .attr("r", 15);
-
-        $scope.dots
-            .enter()
-            .append("svg:image")
-            .attr('class', 'scatter-image')
-            .attr('width', 26)
-            .attr('height', 26)
-            .style("opacity",0)
-            .attr("x", function (d,i) { return $scope.x(0)-13; } )
-            .attr("y", function (d) { return $scope.y(0)-13; } )
-            .attr("xlink:href",function(d){
-                return d.cara
+            .on('mouseenter',function(){
+                var x = parseInt(d3.select(this).attr('x'));
+                var y = parseInt(d3.select(this).attr('y'));
+                $scope.hoverCircle
+                    .transition()
+                    .style("opacity",1)
+                    .attr("cx", function (d) { return x+13; } )
+                    .attr("cy", function (d) { return y+13; } )
+            })
+            .on('mouseleave',function(){
+                $scope.hoverCircle.style("opacity",0);
             });
-        
-        $scope.dots.transition()
-            .delay(function(d,i){return i*200;})
-            .duration(1000)
-            .ease("elastic")
-            .style("opacity",1)
-            .attr("x", function (d,i) { return $scope.x(d.x)-13; } )
-            .attr("y", function (d) { return $scope.y(d.y)-13; } );
 
-        $scope.dots.on('click',function(d){
-            $rootScope.openModal(d);
-        })
-        .on('mouseenter',function(){
-            var x = parseInt(d3.select(this).attr('x'));
-            var y = parseInt(d3.select(this).attr('y'));
-            $scope.hoverCircle
-                .transition()
-                .style("opacity",1)
-                .attr("cx", function (d) { return x+13; } )
-                .attr("cy", function (d) { return y+13; } )
-        })
-        .on('mouseleave',function(){
-            $scope.hoverCircle.style("opacity",0);
-        });
+            $scope.myGroup.append("svg:circle")
+                .attr('class', 'scatter-dots my-dot')
+                .attr("cx", 6)
+                .attr("cy", 6 )
+                .attr("r", 12);
 
-        $scope.myGroup.append("svg:circle")
-            .attr('class', 'scatter-dots my-dot')
-            .attr("cx", 6)
-            .attr("cy", 6 )
-            .attr("r", 12);
+            $scope.myGroup.append("svg:text")
+                .attr('class', 'my-text')
+                .text("VOS")
+                .attr("x", 6)
+                .attr("y", 9)
+                .attr("text-anchor", "middle");
 
-        $scope.myGroup.append("svg:text")
-            .attr('class', 'my-text')
-            .text("VOS")
-            .attr("x", 6)
-            .attr("y", 9)
-            .attr("text-anchor", "middle");
+            if($scope.state!='start'){
+                $scope.updateMyCoordinates(resize);
+            }
 
-        axisGroup
-            .append("text")
-            .attr("class","axis-label")
-            .attr("x", -height/2)
-            .attr("y", -5)
-            .text("← El Estado debe intervenir nada o mucho →")
-            .attr("text-anchor", "middle")
-            .attr("transform", "rotate(270)");
+            axisGroup
+                .append("text")
+                .attr("class","axis-label")
+                .attr("x", -height/2)
+                .attr("y", -5)
+                .text("← El Estado debe intervenir nada o mucho →")
+                .attr("text-anchor", "middle")
+                .attr("transform", "rotate(270)");
 
-        axisGroup
-            .append("text")
-            .attr("class","axis-label")
-            .attr("x", height/2)
-            .attr("y", height+14)
-            .text("← Los agroquímicos afectan el medioambiente nada o mucho →")
-            .attr("text-anchor", "middle");
+            axisGroup
+                .append("text")
+                .attr("class","axis-label")
+                .attr("x", height/2)
+                .attr("y", height+14)
+                .text("← Los agroquímicos afectan el medioambiente nada o mucho →")
+                .attr("text-anchor", "middle");
+        }
 
     }
 
