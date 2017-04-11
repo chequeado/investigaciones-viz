@@ -25,9 +25,9 @@ Conjunto de visualizaciones ad-hoc creadas por el equipo de [Sociopúblico](http
 
 ## 4. Concesiones GCBA
 
-![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/concesiones-gcba/dist/images/share.gif)
+![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/concesiones-gcba/dist/images/c1/02_alcancia_500px.gif)
 
-* El interactivo: [Aquí](https://chequeado.github.io/investigaciones-viz/concesiones-gcba/dist/app.html)
+* El interactivo: [Aquí](https://chequeado.github.io/investigaciones-viz/concesiones-gcba/dist)
 * La investigación: [Lugares icónicos, alquileres irrisorios: la situación de las concesiones porteñas](http://www.chequeado.com/investigacion/lugares-iconicos-alquileres-irrisorios-la-situacion-de-las-concesiones-portenas/)
 
 ## 5. Gas en Rosario
