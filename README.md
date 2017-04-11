@@ -32,7 +32,7 @@ Conjunto de visualizaciones ad-hoc creadas por el equipo de [Sociopúblico](http
 
 ## 5. Gas en Rosario
 
-![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/rosario-gas/dist/images/share.gif)
+![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/rosario-gas/dist/images/04_inflexible.gif)
 
 * El interactivo: [Aquí](https://chequeado.github.io/investigaciones-viz/rosario-gas/dist/app.html)
 * La investigación: [Rosario: la empresa todavía no pagó la multa ni hubo condenas por la explosión de gas que dejó 22 muertos](http://www.chequeado.com/investigacion/rosario-una-ciudad-sin-gas-ni-paz/)
@@ -47,7 +47,7 @@ Conjunto de visualizaciones ad-hoc creadas por el equipo de [Sociopúblico](http
 
 ## 7. Crímenes de odio
 
-![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/crimenes-odio/dist/images/share.gif)
+![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/crimenes-odio/dist/images/mapa_01.png)
 
 * El interactivo: [Aquí](https://chequeado.github.io/investigaciones-viz/crimenes-odio/dist/app.html)
 * La investigación: [Un crimen de odio en la ciudad del poder](http://www.chequeado.com/investigacion/un-crimen-de-odio-en-la-ciudad-del-poder/)
