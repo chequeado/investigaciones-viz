@@ -18,7 +18,7 @@ Conjunto de visualizaciones ad-hoc creadas por el equipo de [Sociopúblico](http
 
 ## 3. Inundaciones en La Plata
 
-![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/images/share.gi)
+![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/images/share.gif)
 
 * El interactivo: [Aquí](https://chequeado.github.io/investigaciones-viz/inundaciones-lp/dist/app.html)
 * La investigación: [Inundaciones en La Plata: a más de tres años de la tragedia, sólo un tercio de las obras están terminadas](http://www.chequeado.com/investigacion/inundaciones-en-la-plata-a-mas-de-tres-anos-de-la-tragedia-solo-un-tercio-de-las-obras-estan-terminadas/)
@@ -40,8 +40,8 @@ Conjunto de visualizaciones ad-hoc creadas por el equipo de [Sociopúblico](http
 
 ## 6. Agroquímicos en Córdoba
 
-![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/agroquimicos/dist/images/chq-quiz.gi)
-![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/agroquimicos/dist/images/chq-chart.gi)
+![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/agroquimicos/dist/images/chq-quiz.gif)
+![Imagen de la viz](https://chequeado.github.io/investigaciones-viz/agroquimicos/dist/images/chq-chart.gif)
 
 * El interactivo: [Aquí](https://chequeado.github.io/investigaciones-viz/agroquimicos/dist/app.html)
 * La investigación: [Malvinas Argentinas, el pueblo cordobés que venció a Monsanto](http://www.chequeado.com/investigacion/malvinas-argentinas-el-pueblo-cordobes-que-vencio-a-monsanto/)
