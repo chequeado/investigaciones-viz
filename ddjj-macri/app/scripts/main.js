@@ -231,7 +231,7 @@ function getQueryVariable(variable) {
                 },
                 {
                     anio: data.anio,
-                    label: 'Acciones',
+                    label: 'Acciones y títulos',
                     value: data.acciones,
                     icon: 'acciones'
                 },
@@ -287,7 +287,12 @@ function getQueryVariable(variable) {
         } else {
             var detailData = [
                 { anio: '', label: 'Bienes', value: 0, icon: 'bienes' },
-                { anio: '', label: 'Acciones', value: 0, icon: 'acciones' },
+                {
+                    anio: '',
+                    label: 'Acciones y títulos',
+                    value: 0,
+                    icon: 'acciones'
+                },
                 { anio: '', label: 'Ahorros', value: 0, icon: 'ahorros' },
                 { anio: '', label: 'Créditos', value: 0, icon: 'creditos' },
                 {
