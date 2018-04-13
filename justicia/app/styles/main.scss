@@ -1,0 +1,21 @@
+#video-container {
+	min-height: 400px;
+}
+
+.video-item {
+	position: relative;
+	background: white;
+	display: none;
+	margin: 0 auto;
+}
+
+.video-item.selected {
+	display: block;
+}
+
+#fuente {
+	background-color: #eee;
+	p {
+		margin: 20px;
+	}
+}
