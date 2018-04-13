@@ -10,20 +10,20 @@
 angular.module("justiciaApp").controller("MainCtrl", function($scope) {
   $scope.data = [
     {
+      id: 1,
       title: "video1",
       text: "Lorem ipsum 1",
-      video: "1I6NZVy5O-ZOIg2jpwe88yiY7nx82Butb"
+      video: "video-test-small-1.mp4"
     },
     {
+      id: 2,
       title: "video 2",
       text: "Lorem ipsum 2",
-      video: "13yn44wh8Dv_30fUtqzukq57pzoM9lppK"
+      video: "video-test-small-2.mp4"
     }
   ];
 
   $scope.selectedVideo = $scope.data[0];
-
-  $scope.baseDriveUrl = "https://drive.google.com/uc?export=download&id=";
 
   $scope.media = false;
   $scope.playing = false;
@@ -32,9 +32,7 @@ angular.module("justiciaApp").controller("MainCtrl", function($scope) {
     $scope.selectedVideo =
       $scope.data[Math.floor(Math.random() * $scope.data.length)];
 
-    $scope.media = document.querySelector(
-      "#video-" + $scope.selectedVideo.video
-    );
+    $scope.media = document.querySelector("#video-" + $scope.selectedVideo.id);
     $scope.media.addEventListener("ended", $scope.stopVideo);
     $scope.media.play();
     $scope.playing = true;

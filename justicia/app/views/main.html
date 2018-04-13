@@ -2,8 +2,8 @@
   <div id="video-container">
     <div class="video-item row" ng-repeat="d in data" ng-class="{selected:d.video==selectedVideo.video}">
       <div class="col-sm-3">
-        <video id="video-{{d.video}}" poster="images/poster.png" width="100%">
-            <source id="source" ng-src="{{baseDriveUrl+d.video}}" type='video/mp4'/>
+        <video id="video-{{d.id}}" poster="images/poster.png" width="100%">
+            <source id="source" ng-src="{{'videos/'+d.video}}" type='video/mp4'/>
         </video>
       </div>
       <div class="col-sm-9">
