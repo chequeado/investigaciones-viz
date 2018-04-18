@@ -1,6 +1,6 @@
 <div class="col-md-12">
   <div id="video-container">
-    <div class="video-item row" ng-repeat="d in data" ng-class="{selected:d.video==selectedVideo.video}">
+    <div class="video-item row" ng-repeat="d in data" ng-class="{selected:d.id==selectedVideo.id}">
       <div class="col-sm-3">
         <video id="video-{{d.id}}" poster="images/poster.png" width="100%">
             <source id="source" ng-src="{{'videos/'+d.video}}" type='video/mp4'/>
