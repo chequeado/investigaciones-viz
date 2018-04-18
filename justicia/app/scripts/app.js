@@ -31,6 +31,4 @@ angular
         return true;
       }
     };
-
-    console.log($rootScope.inIframe());
   });

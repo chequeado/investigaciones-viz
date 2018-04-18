@@ -11,15 +11,15 @@ angular.module("justiciaApp").controller("MainCtrl", function($scope) {
   $scope.data = [
     {
       id: 1,
-      title: "video1",
-      text: "Lorem ipsum 1",
-      video: "video-test-small-1.mp4"
+      title: "Video condena 1",
+      text: "Condena 1 Lorem Ipsum",
+      video: "condena.mp4"
     },
     {
       id: 2,
-      title: "video 2",
-      text: "Lorem ipsum 2",
-      video: "video-test-small-2.mp4"
+      title: "Video condena 2",
+      text: "Condena 2 Lorem Ipsum",
+      video: "condena.mp4"
     }
   ];
 
@@ -29,9 +29,8 @@ angular.module("justiciaApp").controller("MainCtrl", function($scope) {
   $scope.playing = false;
 
   $scope.playVideo = function() {
-    $scope.selectedVideo =
-      $scope.data[Math.floor(Math.random() * $scope.data.length)];
-
+    var random = Math.floor(Math.random() * $scope.data.length);
+    $scope.selectedVideo = $scope.data[random];
     $scope.media = document.querySelector("#video-" + $scope.selectedVideo.id);
     $scope.media.addEventListener("ended", $scope.stopVideo);
     $scope.media.play();
