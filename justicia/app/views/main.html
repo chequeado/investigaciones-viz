@@ -7,11 +7,17 @@
         </video>
       </div>
       <div class="col-sm-9">
-        <h2><a id="btn-play" ng-show="!playing" ng-click="playVideo()">Play Video!</a></h2>
-        <div ng-if="playing">
-          <h2>{{d.title}}</h2>
-          <p>{{d.text}}</p>
+        <h1 class="text-center">JUSTICIA EN TUCUMÁN</h1>
+        <h2 class="text-center">¿Querés saber cuántas denuncias por corrupción terminan en una condena firme en Tucumán? Lanzá tu denuncia en este flipper judicial y enterate.</h2>
+        <p class="text-center">Entre 2005 y 2017, se presentaron al menos 219 denuncias por corrupción en Tucumán. Pero sólo una terminó en una condena firme. En este juego, te contamos qué pasó con todas ellas.</p>
+        <div ng-if="playing && !ended">
+          <p><i class="glyphicon glyphicon-arrow-left"></i> Prestale atención al flipper!</p>
         </div>
+        <div ng-show="ended" class="jumbotron">
+            <p>Resultado: <b>{{d.title}}</b></p>
+            <p>{{d.text}}</p>
+        </div>
+        <a id="btn-play" class="btn btn-lg btn-default" ng-hide="playing" ng-click="playVideo()">Quiero jugar</a>
       </div>
     </div>
   </div>

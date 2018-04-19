@@ -1,3 +1,5 @@
+$colorMain: #000;
+
 #video-container {
 	min-height: 400px;
 }
@@ -18,4 +20,20 @@
 	p {
 		margin: 20px;
 	}
+}
+
+h1 {
+	background: $colorMain;
+	color: #fff;
+	margin: 0;
+	font-size: 25px;
+	padding: 10px;
+}
+h2 {
+	border: 1px solid $colorMain;
+	color: $colorMain;
+	margin: 0;
+	margin-bottom: 15px;
+	font-size: 25px;
+	padding: 10px;
 }
