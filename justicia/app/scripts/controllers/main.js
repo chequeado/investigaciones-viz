@@ -42,7 +42,7 @@ angular.module("justiciaApp").controller("MainCtrl", function($scope) {
       title: "En revisión",
       text:
         "Sos un ciudadano bastante afortunado. Tu denuncia avanzó y hoy tiene dos condenas. Sin embargo, el fallo está en revisión. Hasta ahora sólo una de las 219 denuncias por corrupción presentadas entre 2005 y 2017 culminó en una condena firme. ¿Tendrás la suerte de conseguir justicia?.",
-      video: "04.mp4"
+      video: "05.mp4"
     }
   ];
 
