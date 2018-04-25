@@ -1,39 +1,77 @@
 $colorMain: #000;
 
 #video-container {
-	min-height: 400px;
+  min-height: 400px;
 }
 
 .video-item {
-	position: relative;
-	background: white;
-	display: none;
-	margin: 0 auto;
+  position: relative;
+  background: white;
+  display: none;
+  margin: 0 auto;
 }
 
 .video-item.selected {
-	display: block;
+  display: block;
+}
+.lead {
+  font-size: 25px;
+}
+
+.result-item {
+  display: none;
+  & .label {
+    display: block;
+  }
+}
+
+.result-item.selected {
+  display: block;
 }
 
 #fuente {
-	background-color: #eee;
-	p {
-		margin: 20px;
-	}
+  margin-top: 30px;
+  background-color: #eee;
+  p {
+    margin: 20px;
+  }
 }
 
 h1 {
-	background: $colorMain;
-	color: #fff;
-	margin: 0;
-	font-size: 25px;
-	padding: 10px;
+  background: $colorMain;
+  color: #fff;
+  margin: 0;
+  font-size: 25px;
+  padding: 10px;
 }
 h2 {
-	border: 1px solid $colorMain;
-	color: $colorMain;
-	margin: 0;
-	margin-bottom: 15px;
-	font-size: 25px;
-	padding: 10px;
+  border: 1px solid $colorMain;
+  color: $colorMain;
+  margin: 0;
+  margin-bottom: 15px;
+  font-size: 25px;
+  padding: 10px;
+}
+
+.cols {
+  position: relative;
+  min-height: 1px;
+  float: left;
+}
+
+#col-video {
+  width: 40%;
+}
+
+#col-text {
+  width: 60%;
+  padding-top: 5.5%;
+  padding-left: 20px;
+}
+
+#btn-play {
+  margin: 0 auto;
+  border: none;
+  background-color: #ddd;
+  font-size: 35px;
 }

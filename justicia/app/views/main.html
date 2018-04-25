@@ -1,22 +1,23 @@
-<div class="col-md-12">
-  <div id="video-container">
-    <div class="video-item row" ng-repeat="d in data" ng-class="{selected:d.id==selectedVideo.id}">
-      <div class="col-sm-3">
-        <video id="video-{{d.id}}" poster="images/poster.png" width="100%">
-            <source id="source" ng-src="{{'videos/'+d.video}}" type='video/mp4'/>
-        </video>
+<div id="video-container">
+  <div class="row">
+    <div id="col-video" class="cols">
+      <video id="video-{{d.id}}" class="video-item" poster="images/poster.png" width="100%" ng-repeat="d in data" ng-class="{selected:d.id==selectedVideo.id}">
+          <source id="source" ng-src="{{'videos/'+d.video}}" type='video/mp4'/>
+      </video>
+    </div>
+    <div id="col-text" class="cols">
+      <div ng-if="first">
+        <p class="lead">Entre 2005 y 2017, se presentaron al menos <strong>219 denuncias</strong> por corrupción en Tucumán. Pero <strong>sólo una</strong> terminó en una condena firme. En este juego, te contamos qué pasó con todas ellas.</p>
+        <p class="lead"><strong>En este juego, te contamos qué pasó con todas ellas.</strong></p>
       </div>
-      <div class="col-sm-9">
-        <h1 class="text-center">JUSTICIA EN TUCUMÁN</h1>
-        <h2 class="text-center">¿Querés saber cuántas denuncias por corrupción terminan en una condena firme en Tucumán? Lanzá tu denuncia en este flipper judicial y enterate.</h2>
-        <p class="text-center">Entre 2005 y 2017, se presentaron al menos 219 denuncias por corrupción en Tucumán. Pero sólo una terminó en una condena firme. En este juego, te contamos qué pasó con todas ellas.</p>
-        <div ng-if="playing && !ended">
-          <p><i class="glyphicon glyphicon-arrow-left"></i> Prestale atención al flipper!</p>
-        </div>
-        <div ng-show="ended" class="jumbotron">
-            <p>Resultado: <b>{{d.title}}</b></p>
-            <p>{{d.text}}</p>
-        </div>
+      <div ng-if="playing && !ended">
+        <p><i class="glyphicon glyphicon-arrow-left"></i> Prestale atención al flipper!</p>
+      </div>
+      <div ng-show="ended" class="result-item" ng-repeat="d in data" ng-class="{selected:d.id==selectedVideo.id}">
+          <p id="label-{{d.id}}" class="lead label label-default" ng-style="{'background-color':d.color}"><strong>{{d.title}}</strong></p>
+          <p class="lead">{{d.text}}</p>
+      </div>
+      <div class="text-center">
         <a id="btn-play" class="btn btn-lg btn-default" ng-hide="playing" ng-click="playVideo()">Quiero jugar</a>
       </div>
     </div>
