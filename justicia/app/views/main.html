@@ -1,4 +1,16 @@
 <div id="video-container">
+  <div class="row show-mobile">
+    <div class="col-xs-12">
+        <p class="lead">Entre 2005 y 2017, se presentaron al menos <strong>219 denuncias</strong> por corrupción en Tucumán. Pero <strong>sólo una</strong> terminó en una condena firme.</p>
+        <p class="lead"><strong>En este juego, te contamos qué pasó con todas ellas.</strong></p>
+        <div class="text-center">
+          <a id="btn-play" class="btn btn-lg btn-default" ng-hide="playing" ng-click="playVideo()">Quiero jugar</a>
+          <div ng-if="playing && !ended">
+            <p id="loading" class="lead text-center"><i class="glyphicon glyphicon-arrow-down blink_me"></i> ¡Prestale atención al flipper! <i class="glyphicon glyphicon-arrow-down blink_me"></i></p>
+          </div>
+        </div>
+    </div>
+  </div>
   <div class="row">
     <div id="col-video" class="cols">
       <video id="video-{{d.id}}" class="video-item" poster="images/poster.png" width="100%" ng-repeat="d in data" ng-class="{selected:d.id==selectedVideo.id}">
@@ -6,12 +18,13 @@
       </video>
     </div>
     <div id="col-text" class="cols">
-      <div ng-if="first">
-        <p class="lead">Entre 2005 y 2017, se presentaron al menos <strong>219 denuncias</strong> por corrupción en Tucumán. Pero <strong>sólo una</strong> terminó en una condena firme. En este juego, te contamos qué pasó con todas ellas.</p>
+      <div class="hide-mobile" ng-if="first">
+        <p class="lead">Entre 2005 y 2017, se presentaron al menos <strong>219 denuncias</strong> por corrupción en Tucumán. Pero <strong>sólo una</strong> terminó en una condena firme.</p>
         <p class="lead"><strong>En este juego, te contamos qué pasó con todas ellas.</strong></p>
       </div>
       <div ng-if="playing && !ended">
-        <p><i class="glyphicon glyphicon-arrow-left"></i> Prestale atención al flipper!</p>
+        <p id="loading" class="lead hide-mobile"><i class="glyphicon glyphicon-arrow-left blink_me"></i> ¡Prestale atención al flipper!</p>
+        <p id="loading" class="lead show-mobile text-center"><i class="glyphicon glyphicon-arrow-up blink_me"></i> ¡Prestale atención al flipper! <i class="glyphicon glyphicon-arrow-up blink_me"></i></p>
       </div>
       <div ng-show="ended" class="result-item" ng-repeat="d in data" ng-class="{selected:d.id==selectedVideo.id}">
           <p id="label-{{d.id}}" class="lead label label-default" ng-style="{'background-color':d.color}"><strong>{{d.title}}</strong></p>

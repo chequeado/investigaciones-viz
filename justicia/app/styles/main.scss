@@ -60,12 +60,12 @@ h2 {
 }
 
 #col-video {
-  width: 40%;
+  width: 45%;
 }
 
 #col-text {
-  width: 60%;
-  padding-top: 5.5%;
+  width: 55%;
+  padding-top: 6%;
   padding-left: 20px;
 }
 
@@ -74,4 +74,79 @@ h2 {
   border: none;
   background-color: #ddd;
   font-size: 35px;
+}
+
+.show-mobile {
+  display: none;
+}
+.hide-mobile {
+  display: block;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width: 1200px) {
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width: 750px) {
+}
+
+@media only screen and (max-width: 620px) {
+  #col-video {
+    width: 50%;
+  }
+
+  #col-text {
+    width: 50%;
+    padding-top: 7%;
+  }
+  .lead {
+    font-size: 22px;
+  }
+  #btn-play {
+    font-size: 30px;
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 500px) {
+  .show-mobile {
+    display: block;
+  }
+  .hide-mobile {
+    display: none;
+  }
+  #col-video {
+    width: 100%;
+  }
+
+  #col-text {
+    width: 100%;
+    padding: 0px 15px 15px 15px;
+  }
+  .lead {
+    font-size: 20px;
+  }
+  .video-item {
+    margin: -35px auto;
+    z-index: -1;
+  }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width: 320px) {
 }
