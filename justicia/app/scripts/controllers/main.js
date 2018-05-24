@@ -35,15 +35,15 @@ angular.module("justiciaApp").controller("MainCtrl", function($scope) {
     },
     {
       id: 4,
-      title: "Archivada",
+      title: "¡Ups!",
       text:
-        "Ups, tu denuncia cayó en saco roto: es una de las 12 causas archivadas. Ojalá que la próxima vez tengas más suerte, pero no te entusiasmes demasiado. Lamentablemente sólo 1 de las 219 denuncias por corrupción presentadas en los últimos 13 años en Tucumán terminó en una condena firme.",
+        "Tu denuncia cayó en saco roto: es una de las 12 causas archivadas. Ojalá que la próxima vez tengas más suerte, pero no te entusiasmes demasiado. Lamentablemente sólo 1 de las 219 denuncias por corrupción presentadas en los últimos 13 años en Tucumán terminó en una condena firme.",
       video: "04.mp4",
       color: "#CDDB29"
     },
     {
       id: 5,
-      title: "En revisión",
+      title: "Hay esperanza",
       text:
         "Sos un ciudadano bastante afortunado. Tu denuncia avanzó y hoy tiene dos condenas. Sin embargo, el fallo está en revisión. Hasta ahora sólo una de las 219 denuncias por corrupción presentadas entre 2005 y 2017 culminó en una condena firme. ¿Tendrás la suerte de conseguir justicia?",
       video: "05.mp4",
